@@ -1,0 +1,884 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>在Azure云上使用HPC Services for Excel运行Excel运算</title>
+      <link href="/2020/06/13/Workbook-offload-to-Azure/"/>
+      <url>/2020/06/13/Workbook-offload-to-Azure/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><p>你需要安装最低Windows HPC server 2012 SP1</p><p>在你的桌面机（你用来做Excel运算的机器）上，你需要安装Excel 2010和HPC client utilities.</p><p>你还需要部署一些Azure虚拟机节点，安装有Excel,用于实际运算。</p><a id="more"></a><h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="ExcelService配置"><a href="#ExcelService配置" class="headerlink" title="ExcelService配置"></a>ExcelService配置</h3><p>在运行ExcelService之前，我们需要现在ZzureNode上部署excel service</p><ol><li><p>打包依赖文件</p></li><li><p>将这些文件上传到云存储里</p></li><li><p>同步到Azure节点上</p></li></ol><h3 id="例子1：在云上使用一个静态的workbook"><a href="#例子1：在云上使用一个静态的workbook" class="headerlink" title="例子1：在云上使用一个静态的workbook"></a>例子1：在云上使用一个静态的workbook</h3><h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>1.创建包</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; hpcpack create ConvertiblePricing_AzureCloud_Static.zip ConvertiblePricing_AzureCloud_Static.xlsb</span><br></pre></td></tr></table></figure><p>2.上传包</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; hpcpack upload ConvertiblePricing_AzureCloud_Static.zip /scheduler:HEADNODE /nodetemplate:<span class="string">"Default AzureNode Template"</span></span><br></pre></td></tr></table></figure><p>3.同步到Azure节点上</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; clusrun /scheduler:HEADNODE /template:AzureTemplate hpcsync</span><br></pre></td></tr></table></figure><p>4.配置</p><p>打开Excel文件，Alt+F11打开宏，修改HPCControlMacros</p><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Private</span> <span class="keyword">Const</span> HPC_ClusterScheduler = <span class="string">"HEADNODE"</span></span><br></pre></td></tr></table></figure><p>5.运行</p><p>先使用Calculate on Desktop测试在本机上运行</p><p>再使用Calculate on Cloud来测试在云上运行，你会发现这次快很多，因为每一个单元格的计算都会发送给云的计算节点单独运算</p><h3 id="例子2：在云上使用一个动态的workbook"><a href="#例子2：在云上使用一个动态的workbook" class="headerlink" title="例子2：在云上使用一个动态的workbook"></a>例子2：在云上使用一个动态的workbook</h3><p>与第一个例子不同，这个例子实现并没有向云上的计算节点部署Excel文件，而是在运行过程中通过一个帮助程序来下载Excel</p><h3 id="例子3：使用SOA服务的Excel和Azure"><a href="#例子3：使用SOA服务的Excel和Azure" class="headerlink" title="例子3：使用SOA服务的Excel和Azure"></a>例子3：使用SOA服务的Excel和Azure</h3><p>上面两个例子都是使用Excel VBA来直接运行计算，我们还可以定制一个SOA Service，在这个Service里面，使用HPC/Excel库来做计算。我们还可以做一个定制的客户端，运行在桌面机上，使用云端的服务。这个Case和IBM Spectrum Symphony SOAM application已经基本一致了。</p><h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h4><h5 id="编译SOA-service和client"><a href="#编译SOA-service和client" class="headerlink" title="编译SOA service和client"></a>编译SOA service和client</h5><h5 id="安装SOA-service"><a href="#安装SOA-service" class="headerlink" title="安装SOA service"></a>安装SOA service</h5><h4 id="运行示例代码"><a href="#运行示例代码" class="headerlink" title="运行示例代码"></a>运行示例代码</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> distributed computing </tag>
+            
+            <tag> HPC </tag>
+            
+            <tag> bigdata </tag>
+            
+            <tag> 分布式计算 </tag>
+            
+            <tag> 大数据 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何写专利</title>
+      <link href="/2020/05/08/how-to-write-patent/"/>
+      <url>/2020/05/08/how-to-write-patent/</url>
+      
+        <content type="html"><![CDATA[<h2 id="专利的三性："><a href="#专利的三性：" class="headerlink" title="专利的三性："></a>专利的三性：</h2><h3 id="1-新颖性"><a href="#1-新颖性" class="headerlink" title="1. 新颖性"></a>1. 新颖性</h3><p>以前没有</p><a id="more"></a><h3 id="2-创新性"><a href="#2-创新性" class="headerlink" title="2. 创新性"></a>2. 创新性</h3><p>相比较现有系统，有创造性</p><h3 id="3-实用性"><a href="#3-实用性" class="headerlink" title="3. 实用性"></a>3. 实用性</h3><p>有用处</p><h2 id="专利的命名："><a href="#专利的命名：" class="headerlink" title="专利的命名："></a>专利的命名：</h2><h3 id="1-系统、装置或者设备"><a href="#1-系统、装置或者设备" class="headerlink" title="1. 系统、装置或者设备"></a>1. 系统、装置或者设备</h3><h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2. 方法"></a>2. 方法</h3><h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul><li><p>算法本身不能是专利，但是解决了某个实际问题的算法可以是专利，例如：压缩算法是专利</p></li><li><p>Linux的某个文件系统是专利</p></li><li><p>专利描述的技术不容易绕过</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术方面的思考和总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> patent </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>计算机科学主要的研究领域</title>
+      <link href="/2020/05/05/computer-science-research-areas/"/>
+      <url>/2020/05/05/computer-science-research-areas/</url>
+      
+        <content type="html"><![CDATA[<h2 id><a href="#" class="headerlink" title></a></h2><a id="more"></a><ul><li>Mathematical foundations 数学基础</li><li>Theory of computation 计算机理论</li><li>Algorithms, data structures 算法与数据结构</li><li>Programming languages, compilers 编程语言, 编译器</li><li>Concurrent, parallel, distributed systems 并行, 分布式计算系统</li><li>Software engineering 软件工程</li><li>System architecture 计算机系统架构</li><li>Telecommunication, networking 通讯与网络</li><li>Databases 数据库</li><li>Artificial intelligence 人工智能</li><li>Computer graphics 计算机图形</li><li>Human–computer interaction 人机交互</li><li>Scientific computing 科学运算</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术方面的思考和总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> summary </tag>
+            
+            <tag> computer science </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Microsoft HPC Pack 2016 学习笔记</title>
+      <link href="/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/"/>
+      <url>/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Microsoft HPC Pack是微软的高性能分布式计算平台，类似于IBM Spectrum Symphony，是一种基于SOA架构的分布式计算框架。目前，它有三种部署方式如下，本文只介绍第一种。</p><ul><li>on-premises, 部署在本地，可以把计算节点扩展到云上</li><li>hybird, 部署在本地，通常会把计算节点扩展到云上</li><li>on-demand 部署在云上</li></ul><a id="more"></a><h2 id="on-premise部署"><a href="#on-premise部署" class="headerlink" title="on-premise部署"></a>on-premise部署</h2><h3 id="1-部署准备"><a href="#1-部署准备" class="headerlink" title="1. 部署准备"></a>1. 部署准备</h3><h4 id="1-1-评估操作系统是否达到要求"><a href="#1-1-评估操作系统是否达到要求" class="headerlink" title="1.1 评估操作系统是否达到要求"></a>1.1 评估操作系统是否达到要求</h4><h5 id="硬件要求"><a href="#硬件要求" class="headerlink" title="硬件要求"></a>硬件要求</h5><p>头节点</p><ul><li>CPU: 64位，推荐8核心以上，最小4核心</li><li>内存：推荐16 GB以上，最小8 GB</li><li>磁盘：推荐100 GB以上，最小50 GB</li></ul><p>其他节点</p><ul><li>CPU: 64位，推荐4核心以上，最小4核心</li><li>内存：推荐4 GB以上，最小2 GB</li><li>磁盘：推荐80 GB以上，最小50 GB</li></ul><h5 id="软件要求"><a href="#软件要求" class="headerlink" title="软件要求"></a>软件要求</h5><p>.NET Framework 4.6.1 (or later)</p><p>头节点： Windows Server 2016, Windows Server 2012 R2</p><p>计算节点：Windows Server 2019 (only for HPC Pack 2016 Update 3), Windows Server 2016, Windows Server 2012 R2, Windows Server 2012, Windows Server 2008 R2 SP1， </p><p>客户端节点：Windows 10, Windows 8.1</p><p>Linux node： Red Hat Enterprise Linux 7.0 - 7.6, Red Hat Enterprise Linux 6.7 - 6.10, CentOS-based 7.0 - 7.6, CentOS-based 6.7 - 6.10, Ubuntu Server 14.04 LTS, Ubuntu Server 16.04 LTS, Ubuntu Server 18.04 LTS, SUSE Linux Enterprise Server 12</p><p>1.2 评估是否需要High Availability</p><p>如果需要，就需要安装三个头节点配置为一个Service Fabric集群</p><p>1.3 决定是否需要远程数据库</p><p>1.4 决定需要多少个节点</p><ul><li>计算节点，用于执行任务</li><li>代理节点(Windows Communication Foundation (WCF) broker nodes)，负责路由SOA服务</li><li>工作站节点（workstation nodes），可以临时用于执行任务</li></ul><p>1.5 选择活动目录域</p><p>1.6 选择域账户来添加节点</p><p>1.7 为集群选择网络拓扑结构</p><p>1.8 准备两个证书用于节点之间的加密通讯</p><h3 id="2-部署头节点"><a href="#2-部署头节点" class="headerlink" title="2. 部署头节点"></a>2. 部署头节点</h3><p>2.1 在头节点上安装Windows Server</p><p>2.2 将头节点加入活动目录域里</p><p>2.3 在前两个头节点上安装前置组件（可选）</p><p>这一步是可选的，如果需要配置多个头节点才需要</p><p>2.4 在最后一个头节点上安装Microsoft HPC Pack</p><h3 id="3-配置集群"><a href="#3-配置集群" class="headerlink" title="3. 配置集群"></a>3. 配置集群</h3><p>3.1 配置集群的网络</p><p>3.2 提供安装凭证</p><p>3.3 配置新加入的节点的命名规则</p><p>3.4 为部署导入或者创建证书</p><p>3.5 创建节点模板（可选）</p><p>3.6 创建用户（可选）</p><h3 id="4-向集群里添加Windows计算节点"><a href="#4-向集群里添加Windows计算节点" class="headerlink" title="4. 向集群里添加Windows计算节点"></a>4. 向集群里添加Windows计算节点</h3><p>4.1 通过模板从物理机（bare metal）上部署节点</p><p>4.2 手工向集群添加节点</p><p>4.2.1 在计算节点上安装Windows操作系统</p><p>4.2.2 将计算节点加入域</p><p>4.2.3 在计算节点上安装Microsoft HPC Pack 2016</p><h3 id="5-向集群里添加Linux计算节点"><a href="#5-向集群里添加Linux计算节点" class="headerlink" title="5. 向集群里添加Linux计算节点"></a>5. 向集群里添加Linux计算节点</h3><p>5.1 在计算节点上安装Linux操作系统</p><p>5.2 下载Linux计算节点安装文件<br>在Windows头节点上执行Powershell命名</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Add-PSSnapin</span> microsoft.hpc </span><br><span class="line"></span><br><span class="line">Get-HpcClusterRegistry -PropertyName InstallShare</span><br></pre></td></tr></table></figure><p>5.3 搭建文件共享路径将5.2下载得到的文件共享给Linux计算节点</p><p>5.4 安装证书用于加密HPC节点之间的通讯</p><p>5.5 在Linux计算节点上安装Linux计算节点代理</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py -install -connectionstring:<span class="string">'&lt;connection string of the cluster&gt;'</span> -certfile:<span class="string">'&lt;path to PFX certificate&gt;'</span></span><br></pre></td></tr></table></figure><h2 id="HPC-Job-Manager"><a href="#HPC-Job-Manager" class="headerlink" title="HPC Job Manager"></a>HPC Job Manager</h2><p>使用HPC Job Manager，可以提交、监控和管理所有的计算任务。</p><p>基本的术语：</p><ul><li><p>Job, 一次计算任务</p></li><li><p>Task, 一个Job包含一个或者多个Task, Task不能脱离Job</p></li><li><p>Queue, Job提交以后会放在Queue里面，等待调度和分配到计算节点上</p></li><li><p>HPC Job Scheduler Service, 运行在头节点上的一个服务，负责调度队列里面的Job/Task，分配资源、分发任务到计算节点、监控任务的执行过程。</p></li></ul><h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><h3 id="Excel-2016-offloading-to-Azure-cluster"><a href="#Excel-2016-offloading-to-Azure-cluster" class="headerlink" title="Excel 2016 offloading to Azure cluster"></a>Excel 2016 offloading to Azure cluster</h3><p>这个教程展示了将Excel 2016 放在Azure集群上运行</p><h4 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h4><p>已经在本地的计算节点上安装好了Excel 2016和HPC Pack 2016 client utilities</p><h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><h5 id="1-在Azure上部署一个Excel集群，-设置头节点不要参加计算，因为头节点并没有安装Excel"><a href="#1-在Azure上部署一个Excel集群，-设置头节点不要参加计算，因为头节点并没有安装Excel" class="headerlink" title="1. 在Azure上部署一个Excel集群， 设置头节点不要参加计算，因为头节点并没有安装Excel"></a>1. 在Azure上部署一个Excel集群， 设置头节点不要参加计算，因为头节点并没有安装Excel</h5><h5 id="2-激活Execl产品，你必须要有一个Office的License"><a href="#2-激活Execl产品，你必须要有一个Office的License" class="headerlink" title="2. 激活Execl产品，你必须要有一个Office的License"></a>2. 激活Execl产品，你必须要有一个Office的License</h5><h5 id="3-使用Execl-workbook-offloading"><a href="#3-使用Execl-workbook-offloading" class="headerlink" title="3. 使用Execl workbook offloading"></a>3. 使用Execl workbook offloading</h5><p>3.1 下载sample <a href="https://github.com/amat27/HPC2016.SampleCode/raw/master/Excel/AzureSamplePack/Example2/ConvertiblePricing_Complete.xlsb" target="_blank" rel="noopener">xlsb</a> </p><p>3.2 在Excel 2016里将ConvertiblePricing_Complete.xlsb打开，并激活Excel Options -&gt; Customize Ribbon</p><p>3.3 在Develop ribbon，点击COM Add-Ins, 确认HPC Pack Excel COM Add-in已经成功载入</p><p>3.4 编辑Excel文件里的VBA宏HPCControlMacros </p><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'change Private Const HPC_ClusterScheduler = "hpchn01laj2kdgetycrw.southeastasia.cloudapp.azure.com" to</span></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Const</span> HPC_ClusterScheduler = <span class="string">"&lt;headnode DNS name saved above&gt;"</span></span><br><span class="line"><span class="comment">'change Private Const HPC_DependFiles = "D:\tmp\iaasexcel\upload\ConvertiblePricing_Complete.xlsb=ConvertiblePricing_Complete.xlsb" to</span></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Const</span> HPC_DependFiles = <span class="string">"&lt;upload directory path&gt;\ConvertiblePricing_Complete.xlsb=ConvertiblePricing_Complete.xlsb"</span></span><br><span class="line"><span class="comment">'change HPCExcelClient.OpenSession headNode:=HPC_ClusterScheduler, remoteWorkbookPath:=HPCWorkbookPath, UserName:="hpc\hpcadmin", Password:="********" to</span></span><br><span class="line">HPCExcelClient.OpenSession headNode:=HPC_ClusterScheduler, remoteWorkbookPath:=HPCWorkbookPath, UserName:=<span class="string">"&lt;domain&gt;\&lt;username&gt;"</span>, Password:=<span class="string">"&lt;YourPassword&gt;"</span></span><br></pre></td></tr></table></figure><p>3.5 将Excel workbook拷贝到上面指定的HPC_DependsFiles目录里</p><p>3.6 调集worksheet里的Cluster按钮，workbook将在会Azure里计算</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://docs.microsoft.com/en-us/powershell/high-performance-computing/overview?view=hpc16-ps" target="_blank" rel="noopener">Overview of Microsoft HPC Pack 2016</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> distributed computing </tag>
+            
+            <tag> Microsoft </tag>
+            
+            <tag> HPC </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>训练神经网络的基本流程</title>
+      <link href="/2020/05/03/neural-network-trainning/"/>
+      <url>/2020/05/03/neural-network-trainning/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-创建网络"><a href="#1-创建网络" class="headerlink" title="1. 创建网络"></a>1. 创建网络</h2><a id="more"></a><h3 id="创建多层网络"><a href="#创建多层网络" class="headerlink" title="创建多层网络"></a>创建多层网络</h3><p>各层网络是全连接层或者卷积层</p><h3 id="采样，池化"><a href="#采样，池化" class="headerlink" title="采样，池化"></a>采样，池化</h3><h2 id="2-定义误差函数（损失函数）"><a href="#2-定义误差函数（损失函数）" class="headerlink" title="2. 定义误差函数（损失函数）"></a>2. 定义误差函数（损失函数）</h2><h2 id="3-设定学习率-更新权重的步长"><a href="#3-设定学习率-更新权重的步长" class="headerlink" title="3. 设定学习率 (更新权重的步长)"></a>3. 设定学习率 (更新权重的步长)</h2><h2 id="4-给定权重的初值"><a href="#4-给定权重的初值" class="headerlink" title="4. 给定权重的初值"></a>4. 给定权重的初值</h2><h2 id="5-根据输入，正向计算"><a href="#5-根据输入，正向计算" class="headerlink" title="5. 根据输入，正向计算"></a>5. 根据输入，正向计算</h2><h2 id="6-得到输出，计算其与正确值之间的误差"><a href="#6-得到输出，计算其与正确值之间的误差" class="headerlink" title="6. 得到输出，计算其与正确值之间的误差"></a>6. 得到输出，计算其与正确值之间的误差</h2><h2 id="7-误差反向传播"><a href="#7-误差反向传播" class="headerlink" title="7. 误差反向传播"></a>7. 误差反向传播</h2><h2 id="8-更新权重值（梯度下降法）"><a href="#8-更新权重值（梯度下降法）" class="headerlink" title="8. 更新权重值（梯度下降法）"></a>8. 更新权重值（梯度下降法）</h2><h2 id="9-迭代5-8，直到误差收敛"><a href="#9-迭代5-8，直到误差收敛" class="headerlink" title="9. 迭代5-8，直到误差收敛"></a>9. 迭代5-8，直到误差收敛</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ai </tag>
+            
+            <tag> 神经网络 </tag>
+            
+            <tag> 机器学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Windows平台下进程的资源限制(Job Object)</title>
+      <link href="/2020/04/08/Process-Resource-Limis-Windows/"/>
+      <url>/2020/04/08/Process-Resource-Limis-Windows/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>与Linux平台上的cgroups类似， Windows平台上也有限制进程资源使用的机制，叫做Job Object，这篇文章是我对微软官方文档的中文翻译，然后加上我自己写的示例代码，代码和官方文档的链接都在文末。</p><a id="more"></a><h2 id="Job-Object"><a href="#Job-Object" class="headerlink" title="Job Object"></a>Job Object</h2><p>一个job object将一组进程管理成一个单元，它是可命名的、安全的、可共享的控制进程属性的对象。对一个job object的操作将会影响它管理的所有的进程，例如，可以通过修改job object来影响其管理的所有进程的working set的大小、优先级以及终止所有进程。</p><h3 id="创建Jobs"><a href="#创建Jobs" class="headerlink" title="创建Jobs"></a>创建Jobs</h3><p>函数CreateJobObject用来创建一个job object。新创建出来的job object没有关联任何进程。</p><p>函数AssignProcessToJobObject可以将一个进程关联到一个job上，当进程被关联到job上之后，就无法再分开。但是一个进程可以被关联到多个嵌套的job上。</p><p>嵌套job是从Windows 8和Windows Server 2012才引入的，所以在之前的操作系统里，一个进程只能被关联到一个job object上，而且一旦关联就无法再分开。</p><p>当调用CreateJobObject创建job object的时候，可以给job object指定security descriptor。</p><h3 id="管理Job关联的进程"><a href="#管理Job关联的进程" class="headerlink" title="管理Job关联的进程"></a>管理Job关联的进程</h3><p>当一个进程关联到一个job之后，这个进程创建的子进程默认也会被关联到这个job上。（注意：CreateProcess函数创建的子进程会被自动关联，但是Win32_Process.Create创建的则不会。）</p><p>可以通过设置JOB_OBJECT_LIMIT_BREAKAWAY_OK或者JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK来修改默认行为：</p><ul><li><p>如果job有extended limit/JOB_OBJECT_LIMIT_BREAKAWAY_OK, 并且在创建父进程的时候指定了CREATE_BREAKAWAY_FROM_JOB，那么子进程不会被自动的关联到父进程的job object。</p></li><li><p>如果job有extended limit/JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK，不需要在创建父进程的时候指定任何选项，子进程都不会自动被关联到父进程的job object。</p></li></ul><p>如果job是嵌套的，那么层级里的父job的breakaway设置会影响到层级里的其他job所关联的子进程。</p><p>函数IsProcessInJob可以判定一个进程是否运行在一个job里。</p><p>函数TerminateJobObject可以终止一个job里关联的所有的进程的运行。</p><h3 id="Job限制和通知"><a href="#Job限制和通知" class="headerlink" title="Job限制和通知"></a>Job限制和通知</h3><p>job可以强制设置它所关联的每一个进程的working set大小、进程优先级以及执行时间等限制。如果job所关联的进程试图超过限制，有两种结果（默认是第一种）：</p><ol><li>进程申请资源表面上返回成功，其实并没有被处理。</li><li>允许进程使用超过限制的资源，但是会触发一个通知。</li></ol><p>函数SetInformationJobObject用于设置job的限制。以下是资源限制的种类：</p><ul><li>JOBOBJECT_BASIC_LIMIT_INFORMATION</li><li>JOBOBJECT_BASIC_UI_RESTRICTIONS</li><li>JOBOBJECT_CPU_RATE_CONTROL_INFORMATION</li><li>JOBOBJECT_EXTENDED_LIMIT_INFORMATION</li><li>JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION</li></ul><p>如果job是嵌套的，层级里的父job会影响子job</p><p>如果job有一个关联的I/O completion端口，它可以在资源超限后收到通知。当资源超限或者某个事件来到，系统会发送消息给completion端口。使用带有job object信息类JobObjectAssociateCompletionPortInformation和一个JOBOBJECT_ASSOCIATE_COMPLETION_PORT结构体指针的函数SetInformationJobObject可以将一个completion端口关联到job。注意最好是在job不活动的时候做这个关联，以降低丢失消息的风险。</p><p>如果job调用了PostQueuedCompletionStatus函数，所有的消息都会被job直接发送。某个线程必须使用GetQueuedCompletionStatus函数来监控complition端口从而拿到消息。</p><p>带有JobObjectNotificationLimitInformation信息类的限制的异常，并不能保证被发送给completion端口，带有JobObjectNotificationLimitInformationx的通知是可以保证的。</p><h3 id="Job的资源账户"><a href="#Job的资源账户" class="headerlink" title="Job的资源账户"></a>Job的资源账户</h3><p>job object记录了其关联的所有进程的基本资源信息（包括终止的进程），使用QueryInformationJobObject函数可以获取这些资源信息。</p><ul><li>JOBOBJECT_BASIC_ACCOUNTING_INFORMATION</li><li>JOBOBJECT_BASIC_AND_IO_ACCOUNTING_INFORMATION</li></ul><p>如果一个job object是嵌套的，每一个子job的资源账户都会被累加到它的父job的资源账户上。</p><h3 id="管理Job-Object本身"><a href="#管理Job-Object本身" class="headerlink" title="管理Job Object本身"></a>管理Job Object本身</h3><p>因指定的end-of-job时间限制到达，造成一个job object关联的所有进程都终止时，job object的状态会被设置为signaled。我们可以使用 WaitForSingleObject或者WaitForSingleObjectEx来监控job object来获得这个信号。</p><p>指定job object名称、使用OpenJobObject函数可以获得一个已存在的job object的handle。</p><p>使用CloseHandle函数可以管理一个job object handle。当一个job所关联的所有的进程都终止并且job的最后一个handle被关闭，这个job就将被销毁。但是，如果一个job带有JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE标志，那么关闭job的最后一个handle，会强制终止它关联的所有进程并销毁job。如果一个嵌套的job带有JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE标志，那么关闭这个job的handle会终止它以及它的子job的所有的进程。</p><h3 id="使用Job-Objects-来管理进程树"><a href="#使用Job-Objects-来管理进程树" class="headerlink" title="使用Job Objects 来管理进程树"></a>使用Job Objects 来管理进程树</h3><p>从Windows 8和Windows Server 2012起，一个应用程序可以使用嵌套jobs来管理进程树。</p><p>但是之前的系统可以使用其他的方法来管理进程树。这里就不作介绍了。有需要可以看文末的参考。</p><h2 id="嵌套Job"><a href="#嵌套Job" class="headerlink" title="嵌套Job"></a>嵌套Job</h2><h3 id="嵌套job的层级"><a href="#嵌套job的层级" class="headerlink" title="嵌套job的层级"></a>嵌套job的层级</h3><p>在嵌套job里，每一个子job都包含了父job的进程的子集。如果一个已经在某个job里的进程被加到另外一个job里，如果这些job可以形成一个有效的层级并且没有任何一个job设置了UI限制，那么这些job就成为嵌套job</p><p><img src="https://docs.microsoft.com/en-us/windows/win32/procthread/images/nested-jobs-a.png" alt="图一"></p><p>上图展示了一个包含七个进程的进程树的job层级。Job1是job2和job4的父job，它是job3的祖先。job2是job3的父亲。job3是进程P2,P3,P4的直接job</p><p>嵌套job也可以用于管理同级的兄弟进程，例如下图，Job1是Job2的父亲。job层级可能只包含进程树的一部分，例如，P0并不在job层级里。</p><p><img src="https://docs.microsoft.com/en-us/windows/win32/procthread/images/nested-jobs-b.png" alt="图二"></p><h3 id="创建一个嵌套job层级"><a href="#创建一个嵌套job层级" class="headerlink" title="创建一个嵌套job层级"></a>创建一个嵌套job层级</h3><p>job层级里的进程可以用AssignProcessToJobObject函数显式的关联到job上，也可以在进程创建的时候自动的关联。job被创建以及进程被关联的顺序决定了层级是否可以被创建出来。</p><h4 id="1-显式关联"><a href="#1-显式关联" class="headerlink" title="1. 显式关联"></a>1. 显式关联</h4><p>所有的job object必须使用CreateJobObject创建，然后多次调用AssignProcessToJobObject，将每一个进程关联到每一个job上，为了确保层级有效，必须首先指定所有的进程到层级的根job上，然后指定进程的子集到直接的子job object上，以此类推。如果按照此顺序指定job,一个子job总是包含父job的进程的子集。如果顺序是随机的话，创建嵌套job将无法成功，AssignProcessToJobObject会返回失败。</p><h4 id="2-隐式关联"><a href="#2-隐式关联" class="headerlink" title="2. 隐式关联"></a>2. 隐式关联</h4><p>当子进程创建的时候，会自动的关联到它的父进程的job链上的所有的job上。直接job object允许脱离（breakaway），子进程脱离直接job object和job链上的每一个job object, 直到遇到了不允许脱离的job object。如果直接job object不允许脱离，那么即使job链上的父job允许脱离，该进程也不能再脱离。</p><h3 id="嵌套Job里的限制和通知"><a href="#嵌套Job里的限制和通知" class="headerlink" title="嵌套Job里的限制和通知"></a>嵌套Job里的限制和通知</h3><h4 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h4><p>设置在父job上的限制，会强制应用到子job上。子job的生效的限制值要比父job严格。举例来说，</p><p>如果一个子job的优先级类是ABOVE_NORMAL_PRIORITY_CLASS，而父job的优先级类是NORMAL_PRIORITY_CLASS，那么子job的生效的优先级是NORMAL_PRIORITY_CLASS。</p><p>但是，如果子job的优先级类是BELOW_NORMAL_PRIORITY_CLASS，那么生效的优先级类是BELOW_NORMAL_PRIORITY_CLASS</p><p>下列几种限制都由生效值的问题：</p><ul><li>priority class</li><li>affinity</li><li>commit charge</li><li>per-process execution time limit</li><li>scheduling class limit</li><li>working set minimum and maximum</li></ul><h4 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h4><p>当特点的事件（例如创建新进程、资源限制越界）发生，一个消息会被发送到job关联的I/O completion端口。job也可以接收消息。对于一个非嵌套的job，消息会被发送到该job关联的completion端口。对于一个嵌套的job,消息会被发送到该job所在的job链上的每一个job关联的completion端口。所以说子job不必一定有自己的completion端口。</p><h3 id="嵌套Job的资源账户"><a href="#嵌套Job的资源账户" class="headerlink" title="嵌套Job的资源账户"></a>嵌套Job的资源账户</h3><p>嵌套job的资源账户信息描述了该job关联的每一个进程的资源使用情况，包括子job的。job链上的每一个job都聚合了它自己关联的进程以及它所在的job链上的子job所关联的进程。</p><h3 id="终止嵌套Job"><a href="#终止嵌套Job" class="headerlink" title="终止嵌套Job"></a>终止嵌套Job</h3><p>当嵌套job里的一个job终止，系统将会终止这个job以及它的子job关联的所有进程。终止的进程的资源将会被父job来计入。</p><p>与普通job一样，嵌套job也必须有JOB_OBJECT_TERMINATE访问权限。</p><h2 id="Job-Object安全和访问权限"><a href="#Job-Object安全和访问权限" class="headerlink" title="Job Object安全和访问权限"></a>Job Object安全和访问权限</h2><p>可以控制对Job jobect的访问</p><p>当使用CreateJobObject创建job的时候，可以指定一个security descriptor，如果没有指定，job object会有一个默认的security descriptor。默认security descriptor的访问控制列表ACL来自于创建者的primary或者impersonation令牌。</p><p>当使用 CreateJobObject 创建job后，返回的handle具有JOB_OBJECT_ALL_ACCESS权限。</p><p>当使用 OpenJobObject，系统会检查请求访问权限。</p><p>如果一个job object在一个嵌套job层级里，调用者将具有子job的权限。</p><p>如果你想读写job object的SACL, 则需要请求一个job object的ACCESS_SYSTEM_SECURITY权限。</p><p>必须对job关联的每一个进程都设置安全限制，而不是设置job object本身。</p><h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><p><a href="https://github.com/ityuhui/ResLimitsOnWin" target="_blank" rel="noopener">ResLimitsOnWin on Github</a></p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://docs.microsoft.com/en-us/windows/win32/procthread/job-objects" target="_blank" rel="noopener">Job Objects</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Windows编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Excel Workbook Offloading to IBM Spectrum Symphony</title>
+      <link href="/2020/04/04/Excel-Workbook-Offloading-to-IBM-Spectrum-Symphony/"/>
+      <url>/2020/04/04/Excel-Workbook-Offloading-to-IBM-Spectrum-Symphony/</url>
+      
+        <content type="html"><![CDATA[<p>将Excel的计算分发到IBM Spectrum Symphony集群上进行</p><h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>IBM Spectrum Symphony是基于SOA架构的分布式计算框架，可以将任务调度到集群上计算并汇总计算结果。与之类似的框架还有Apache Hadoop, Apache Spark, Microsoft HPC Pack。受益于其底层优秀的资源调度框架EGO、由C++实现的中间件，Symphony的性能和可扩展性都极为优秀，在金融衍生品的定价以及风险模拟等金融领域得到广泛的应用。</p><p>很多数据分析师喜欢使用Microsoft Excel来进行数据的收集、建模和分析，但是，当金融模型的数据量很大，或者模型的计算非常复杂时，在单机上执行Excel数学运算将会极其耗费时间，所以，将Exel workbook上的数据分发到集群进行分布式计算非常必要。IBM Spectrum Symphony支持这一应用场景。</p><a id="more"></a><h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="1-Execl-VBA模式"><a href="#1-Execl-VBA模式" class="headerlink" title="1. Execl VBA模式"></a>1. Execl VBA模式</h3><p>将Excel作为客户端，当点击workbook/sheet上的宏计算按钮之后，Excel通过IBM Spectrum Symphony COM SDK连接Symphony集群，集群把计算任务和workbook分发到计算节点上，由服务端程序打开Excel workbook进行计算，计算结果返回给客户机器的Excel后，Excel将其填入单元格内。</p><p>这种模式下，服务端也可能是由编程语言自制的程序，Excel客户端只发来数据，不发来workbook, 服务端将发来的数据进行处理，返回给Excel客户端。</p><h3 id="2-定制客户端和服务端程序的模式"><a href="#2-定制客户端和服务端程序的模式" class="headerlink" title="2. 定制客户端和服务端程序的模式"></a>2. 定制客户端和服务端程序的模式</h3><p>使用任意一种编程语言编写自制的客户端程序，将参数和Excel workbook通过IBM Spectrum Symphony SDK发送给Symphony集群上自制的服务端程序，由服务端程序进行计算，计算结果返回给客户端，客户端再将结果进行后续的处理。</p><p>这种模式下，服务端也可根据需要，打开计算节点上的Excel对发送过来的workbook进行处理，将结果返回给客户端。</p><p>其实，如果把客户端实现为基于IBM Spectrum Symphony COM SDK的Excel workbook和宏, 把服务端实现为打开Excel workbook执行宏，这种模式就成为了第一种，所以我们可以认为，第一种模式是第二种模式的一个特例。接下来，我会展示一个第一种模式的实例来详细介绍一下。</p><h2 id="Excel-VBA模式-实例"><a href="#Excel-VBA模式-实例" class="headerlink" title="Excel VBA模式 实例"></a>Excel VBA模式 实例</h2><h3 id="1-编写服务端和客户端程序"><a href="#1-编写服务端和客户端程序" class="headerlink" title="1. 编写服务端和客户端程序"></a>1. 编写服务端和客户端程序</h3><h4 id="a-编写Excel客户端"><a href="#a-编写Excel客户端" class="headerlink" title="a) 编写Excel客户端"></a>a) 编写Excel客户端</h4><p>首先使用Excel新建一个workbook, Alt+F11进入Visual Basic for Application界面。</p><p>点击Tools-&gt;Reference，Browse, 找到并选中IBM Spectrum Symphony COM SDK的DLL文件。</p><p>然后，新建类模块MyMessage，用于在客户端和服务端传送消息。</p><p>第三，新建一个宏SymphonyClient, 用于放置客户端VBA代码，下面是一个基本的框架：</p><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'' 初始化</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'' 建立连接</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'' 发送计算</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'' 接收计算结果</span></span><br><span class="line"></span><br><span class="line"><span class="comment">'' 在单元格内显示</span></span><br></pre></td></tr></table></figure><p>第四，在Excel workbook的界面上，新增一个按钮，将按钮的响应函数指向上面一步写好的函数上</p><h4 id="b-编写服务端"><a href="#b-编写服务端" class="headerlink" title="b) 编写服务端"></a>b) 编写服务端</h4><p>打开上面创建的workbook, 新建一个宏SymphonyService, 用于放置服务端VBA代码</p><figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'' 实际的计算逻辑代码</span></span><br></pre></td></tr></table></figure><p>使用Symphony C++ SDK，编写打开Excel workbook并执行宏的代码，用于启动Excel计算</p><h3 id="2-打包和部署服务端"><a href="#2-打包和部署服务端" class="headerlink" title="2. 打包和部署服务端"></a>2. 打包和部署服务端</h3><p>在Symphony Web管理界面上，找到或者新建一个拥有合适的resource group的consumer，在resource plan界面下，选择好slot分配。</p><p>在服务端的Application Profile文件里，填入正确的consumer。</p><p>将服务端打包，使用soamdeploy部署到Repository Server（RS）上，使用soamreg命令注册服务端程序，再通过soamview查看服务端程序是否已经激活。</p><h3 id="3-运行客户端"><a href="#3-运行客户端" class="headerlink" title="3. 运行客户端"></a>3. 运行客户端</h3><p>在Excel workbook上，点击上面新建好的按钮，计算将会发送给Symphony集群，等计算完成后数据会从集群发送回来，Excel workbook收到后更新单元格上的数据。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> distributed computing </tag>
+            
+            <tag> bigdata </tag>
+            
+            <tag> 分布式计算 </tag>
+            
+            <tag> 大数据 </tag>
+            
+            <tag> Symphony </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>kubernetes scheduler 介绍</title>
+      <link href="/2020/04/03/kubernetes-scheduler-introduction/"/>
+      <url>/2020/04/03/kubernetes-scheduler-introduction/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、什么是-kubernetes-scheduler"><a href="#一、什么是-kubernetes-scheduler" class="headerlink" title="一、什么是 kubernetes scheduler"></a>一、什么是 kubernetes scheduler</h2><p>kubernetes scheduler 是 kubernetes 的核心组件，负责给需要执行的pod选择合适的node。</p><a id="more"></a><h2 id="二、kubernetes-scheduler-工作流程"><a href="#二、kubernetes-scheduler-工作流程" class="headerlink" title="二、kubernetes scheduler 工作流程"></a>二、kubernetes scheduler 工作流程</h2><p>kube-scheduler在API server处留有Watcher, 当有新的pod请求到达后，kube-scheduler查看pod的spec里是否指定了执行的node, 如果有，就忽略这个pod, 如果没有，就为这个pod启动调度流程，找到一个执行节点，将其回填回API server的pod信息里。</p><p>各节点上的kubelet从API server处观察到有pod的执行节点是自己所在的节点的时候，就在自己所在的节点上，创建并执行pod。</p><p>具体的调度（查找合适的执行节点）过程如下</p><h3 id="第一阶段：预选"><a href="#第一阶段：预选" class="headerlink" title="第一阶段：预选"></a>第一阶段：预选</h3><p>预选的作用，是找到满足条件的节点，如具有SSD硬盘，系统内存大于某个值，去掉不满足条件的节点。以下是几个比较重要的策略：</p><ul><li><p>防止过度提交</p></li><li><p>反亲和</p></li><li><p>亲和</p></li><li><p>污染和容忍</p></li></ul><h3 id="第二阶段：优选"><a href="#第二阶段：优选" class="headerlink" title="第二阶段：优选"></a>第二阶段：优选</h3><p>预选可能找到多个满足条件的node, 优选阶段将按照一些规则对其进行打分并汇总，打分高者最后会被选中。以下是几个优选的策略：</p><ul><li><p>节点漫延</p></li><li><p>反亲和</p></li><li><p>亲和</p></li></ul><p>打分后线性相加，得到最后的总分，分高的node将会被选中。</p><h2 id="三、kubernetes-scheduler-源代码分析"><a href="#三、kubernetes-scheduler-源代码分析" class="headerlink" title="三、kubernetes scheduler 源代码分析"></a>三、kubernetes scheduler 源代码分析</h2><p>kubernetes scheduler 是一个单独的进程，但是从代码逻辑上，分为两个部分：cmd和pkg</p><h3 id="cmd"><a href="#cmd" class="headerlink" title="cmd"></a>cmd</h3><p>接收命令行参数</p><h3 id="pkg"><a href="#pkg" class="headerlink" title="pkg"></a>pkg</h3><p>调度的核心代码</p><h2 id="四、如何扩展scheduler"><a href="#四、如何扩展scheduler" class="headerlink" title="四、如何扩展scheduler"></a>四、如何扩展scheduler</h2><p>有的时候，k8s 自带的kube-scheduler无法满足我们自己的需求，这时我们需要来扩展scheduler，目前，扩展schedule有以下几种方式：</p><h3 id="1-编写自己的sheduler-与kube-scheduler共存"><a href="#1-编写自己的sheduler-与kube-scheduler共存" class="headerlink" title="1. 编写自己的sheduler, 与kube-scheduler共存"></a>1. 编写自己的sheduler, 与kube-scheduler共存</h3><p>优点：自己有很大控制权。</p><p>缺点：不能利用到kube-scheduler已有的逻辑，需要自己从头写。</p><h3 id="2-使用externder-webhook"><a href="#2-使用externder-webhook" class="headerlink" title="2. 使用externder/webhook"></a>2. 使用externder/webhook</h3><p><a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/scheduling/scheduler_extender.md" target="_blank" rel="noopener">参考</a></p><p>优点：可以利用kube-scheduler里的已有的逻辑</p><p>缺点：http连接可能会有性能问题； 只能编写一个扩展器，插入到一个地点，无法做到多个扩展共同生效。</p><h3 id="3-使用scheduler-framwork"><a href="#3-使用scheduler-framwork" class="headerlink" title="3. 使用scheduler framwork"></a>3. 使用scheduler framwork</h3><p><a href="https://github.com/kubernetes/enhancements/blob/master/keps/sig-scheduling/20180409-scheduling-framework.md" target="_blank" rel="noopener">参考</a></p><p>kuber-scheduler提供的扩展框架，可以编写我们自己的插件，将其插入kube-sheduler的执行流程，是未来主要的扩展方式。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用libyaml</title>
+      <link href="/2020/03/30/libyaml-introduction/"/>
+      <url>/2020/03/30/libyaml-introduction/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>libyaml是用于解析和生成yaml文件的C语言库，是yaml官方推荐的C语言库之一。</p><a id="more"></a><h2 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h2><p>本文只关注于读取yaml文件，没有涉及生成和修改。</p><p>libyaml支持三种读取模式：</p><h3 id="基于token"><a href="#基于token" class="headerlink" title="基于token"></a>基于token</h3><p>我个人觉得已经可以被基于event的模式取代</p><h3 id="基于event"><a href="#基于event" class="headerlink" title="基于event"></a>基于event</h3><p>这是官方页面的实例代码介绍的模式，应用程序处理各种yaml定义的事件</p><ul><li>STREAM-START</li><li>STREAM-END</li><li>DOCUMENT-START</li><li>DOCUMENT-END</li><li>ALIAS</li><li>SCALAR</li><li>SEQUENCE-START</li><li>SEQUENCE-END</li><li>MAPPING-START</li><li>MAPPING-END</li></ul><p>来读取yaml文件内的元素</p><ul><li>stream ::= STREAM-START document* STREAM-END</li><li>document ::= DOCUMENT-START node DOCUMENT-END</li><li>node ::= ALIAS | SCALAR | sequence | mapping</li><li>sequence ::= SEQUENCE-START node* SEQUENCE-END</li><li>mapping ::= MAPPING-START (node node)* MAPPING-END</li></ul><p>这种方法需要自己实现一个状态机，根据事件来判断下一步处理的事件，同时读取元素。</p><h3 id="基于document"><a href="#基于document" class="headerlink" title="基于document"></a>基于document</h3><p>使用这种模式，libyaml将整个yaml读入内存，应用程序不需要再处理上面两种模式里的事件或者token, 只需要按照libyaml在内存中的数据结构安排，将其遍历出来，比较方便，也类似于libxml的模式。</p><p>使用这种模式，我实现了读取kubeconfig yaml文件，代码在</p><p><a href="https://github.com/ityuhui/libkubeyaml" target="_blank" rel="noopener">kubeyaml</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> libyaml </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>以太坊的一些基本概念</title>
+      <link href="/2019/12/21/ethereum-introduction-2019/"/>
+      <url>/2019/12/21/ethereum-introduction-2019/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>以太坊是一个区块链平台，提供了运行智能合约的虚拟机，利用这个平台，任何人都可以快速的开发出一个自己的基于区块链的应用，例如一种加密货币，而不需要从最底层的区块链一步步的实现。</p><a id="more"></a><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h3><p>智能合约指的是运行在以太坊网络上的分布式的应用程序。</p><h3 id="Gas"><a href="#Gas" class="headerlink" title="Gas"></a>Gas</h3><p>智能合约在以太坊网络上的每一个节点上执行，需要消耗的电能和时间，因此引入Gas来计算成本。Gas指的是以太坊底层的虚拟机EVM执行代码的代价。如果你的智能合约程序用光了账户里的Gas，那么你的计算程序就将会被以太坊网络拒绝。</p><p>Gas的价格由市场决定，与比特币的交易费类似。如果你出价高，网络中的节点会优先计算你的事务。通常来说，读取状态时免费，存储状态时收费。</p><h3 id="分布式应用程序-dApp"><a href="#分布式应用程序-dApp" class="headerlink" title="分布式应用程序 dApp"></a>分布式应用程序 dApp</h3><p>分布式应用程序指的是服务端放在以太坊网络上的智能合约程序。它不并需要将全部的状态和计算都放在区块链上，因为那很昂贵。但是一个分布式程序最终必须将可信任状态存放到以太坊区块链上以供任何人读取。</p><p>以太坊组织在Github上有一些关于分布式应用程序dApp的<a href="https://github.com/ethereum/dapp-bin" target="_blank" rel="noopener">参考和例子</a></p><h3 id="dApp-客户端"><a href="#dApp-客户端" class="headerlink" title="dApp 客户端"></a>dApp 客户端</h3><p>一个dApp 客户端是以太坊区块链上的程序的前端，通常用Javascript或者Go/Rust编写。</p><h3 id="dApp-浏览器"><a href="#dApp-浏览器" class="headerlink" title="dApp 浏览器"></a>dApp 浏览器</h3><p>是一个可以运行dApp Javascript客户端程序的应用程序，连接以太坊节点、提供一个账户接口。</p><p>Mist是官方的以太坊dApp浏览器。</p><h3 id="以太坊节点"><a href="#以太坊节点" class="headerlink" title="以太坊节点"></a>以太坊节点</h3><p>节点保存着区块链的副本，可以执行所有的事务来确认结果状态，运行着geth或者parity</p><p>节点需要知道下载哪个区块链、和哪个peer通讯。</p><p>通常使用docker来运行节点客户端，但是也可以使用Infra在本机运行（主要是为了测试和开发）</p><p>如果你向用户分发dApp客户端，你不必提供对以太坊节点的访问方法。用户只需要运行dApp浏览器就可以了。</p><h3 id="以太坊令牌"><a href="#以太坊令牌" class="headerlink" title="以太坊令牌"></a>以太坊令牌</h3><p>令牌就是在一个分布式哈希表里的通过API来做加运算和减运算的一些数字，通常用于去中心化的交互、资产所有权证明、投票权证明等。</p><h3 id="REC20-ERC223-ERC777-ERC827-令牌"><a href="#REC20-ERC223-ERC777-ERC827-令牌" class="headerlink" title="REC20/ERC223/ERC777/ERC827 令牌"></a>REC20/ERC223/ERC777/ERC827 令牌</h3><p>用于定义令牌的协议</p><h3 id="ERC721-NFT-令牌"><a href="#ERC721-NFT-令牌" class="headerlink" title="ERC721/NFT 令牌"></a>ERC721/NFT 令牌</h3><p>定义了一个不可替代的令牌的标准。所谓“不可替代”，指的是每一个令牌都不等于其他令牌，都有自己的独一无二的属性。</p><h3 id="智能合约的接口"><a href="#智能合约的接口" class="headerlink" title="智能合约的接口"></a>智能合约的接口</h3><p>你可以使用 JSON RPC API与智能合约交互。geth和parity都提供了命令行/浏览器用于交互。</p><p>如果你想编程与智能合约交互，那么可以使用web3.js, ethjs, abigen，你也可以写自己的客户端库来操作 JSON PRC API。</p><p>为了测试和开发，可以使用Ganache来运行一个本地的以太坊节点。</p><p>当你部署一个智能合约的时候，你所有要做的，就是向地址0 （0x0）发送一个事务（将合约的字节码作为参数）</p><h3 id="Truffle-Embark-Populous-Perigord-和其他"><a href="#Truffle-Embark-Populous-Perigord-和其他" class="headerlink" title="Truffle, Embark, Populous, Perigord 和其他"></a>Truffle, Embark, Populous, Perigord 和其他</h3><p>一旦你开始写智能合约，你所作的事情会有大量的重复：编译源代码成为字节码、部署字节码到网络上、测试部署的合约等等。</p><p>Truffle, Embark, Populous, Perigord 这些框架标准化和自动化了这些细节，他们提供了一个很好的编写、部署和测试合约的开发流程。</p><p>其中最受欢迎的是用Node编写Truffle。</p><p>当你第一次写合约的时候，最好不要使用这些框架，而是从头手写。这样可以让自己理解这些框架是干什么用的。当你熟悉了怎么手写智能合约之后，再使用这些框架。</p><h3 id="ETHPM"><a href="#ETHPM" class="headerlink" title="ETHPM"></a>ETHPM</h3><p>ETHPM是一个去中心化的智能合约的包的仓库。使用它，你可以复用其他知名的合约和库，减少代码的重复。</p><h3 id="主要的网络"><a href="#主要的网络" class="headerlink" title="主要的网络"></a>主要的网络</h3><p>Mainnet: 是主以太坊网络</p><p>Repsten: 是主要的测试网络，使用工作量证明。</p><h3 id="账户-钱包"><a href="#账户-钱包" class="headerlink" title="账户 钱包"></a>账户 钱包</h3><p>一个以太坊账户是一个私钥和地址对，他们用来存储以太币，无需Gas来创建，所有以太坊网络上的事务都起源于一个账户，合约不能发起一个事务。</p><p>一个钱包可能是下列二者之一：</p><p>1） 一个使用你的账户创建和发送事务的接口</p><p>2） 只是一个发送和接收以太的智能合约</p><h3 id="EVM"><a href="#EVM" class="headerlink" title="EVM"></a>EVM</h3><p>你的智能合约会被编译成一种机器码，它们会运行于网络上每一个节点的EVM（以太坊虚拟机）里。Solidity 是官方的编写智能合约的语言。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 区块链 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> block chain </tag>
+            
+            <tag> ethereum </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Hyperledger Fabric的简单介绍</title>
+      <link href="/2019/12/16/Hyperledger-Fabric-Introduction/"/>
+      <url>/2019/12/16/Hyperledger-Fabric-Introduction/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Hyperledger是Linux基金会旗下的项目，里面包含了多个区块链的实现以及辅助项目。如Fabric, Indy, Iroha, Sawtooth等。</p><a id="more"></a><h2 id="Fabric"><a href="#Fabric" class="headerlink" title="Fabric"></a>Fabric</h2><p>Fabric是Hyperledger项目里最早也是目前应用最广泛的区块链项目，最初由IBM开发，后来捐助给基金会。</p><h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><ul><li>客户端应用程序</li><li>认可节点（chaincode也就是智能合约运行在这上面，认可节点同时也作为提交节点）</li><li>提交节点</li><li>排序服务器</li><li>账本</li></ul><h3 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h3><ol><li>客户端应用程序 向 认可节点 发送事务请求；</li><li>认可节点开始认可（模拟运行），并把签名的认可结果发回客户端应用程序；</li><li>客户端应用程序然后再提交到 排序服务器上（之前使用kafka，自v1.14.1后改用raft);</li><li>排序服务器通知提交节点创建一个block，提交到账本上，完成一次事务。</li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 区块链 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> block chain </tag>
+            
+            <tag> hyperledger </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用kubebuilder创建kubernetes的operator</title>
+      <link href="/2019/10/06/kuberbuild-k8s-operator/"/>
+      <url>/2019/10/06/kuberbuild-k8s-operator/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>在kubernetes（以下简称k8s）里，operator指的是由CRD和controller共同构成的某项业务。CRD负责表示业务数据，controller负责业务操作（对业务数据的修改），两者共同完成某项业务在k8s里的运营。</p><p>创建CRD不需要编写程序，只需要写yaml文件，然后使用kubectrl命令部署到k8s里面就可以了，CRD部署到k8s之后，数据是存储在etcd里面的，只能手工（例如使用kubectrl）查询和修改，并没有什么实际作用，要想自动完成实际的业务，需要controller来实现。</p><a id="more"></a><p>创建controller需要编程，controller的基本的流程是：</p><ol><li>监听CRD的变化<br>通过向API server放置watch/informer，当CRD发生变化，API server会通知controller</li><li>操作<br>根据业务需要，对获得的CRD或者k8s里的其他资源进行修改</li><li>写回<br>将变更的CRD信息写回API server</li></ol><p>其中，第一步和第三步都可以通过REST操作来完成，所以理论上使用任何的编程语言都可以编写controller，但是，k8s社区已经把这些操作都封装成了各种语言的包来调用，省去了我们直接操作REST的不方便（特别是鉴权），在这些语言的包里，最推荐的无疑是k8s的原生语言golang编写的client-go</p><p>虽然有了client-go，我们还是需要自己编写很多的与具体业务无关的基础框架代码，例如监听CRD变化，写回状态，以及编写CRD的yaml，为了加快Operator的编写，k8s社区提供了kubebuilder，它可以为我们生成基础框架代码和CRD的yaml，我们只需要填写业务的数据成员和业务代码就可以了。</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="安装-kubebuilder"><a href="#安装-kubebuilder" class="headerlink" title="安装 kubebuilder"></a>安装 kubebuilder</h3><p><a href="https://book.kubebuilder.io/quick-start.html#installation" target="_blank" rel="noopener">Reference</a></p><h3 id="安装-kustomize"><a href="#安装-kustomize" class="headerlink" title="安装 kustomize"></a>安装 kustomize</h3><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go mod init module_name</span><br><span class="line"></span><br><span class="line">kubebuilder init --domain example.com</span><br></pre></td></tr></table></figure><h3 id="创建API和controller"><a href="#创建API和controller" class="headerlink" title="创建API和controller"></a>创建API和controller</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubebuilder create api --group ego --version v1 --kind Activity</span><br></pre></td></tr></table></figure><h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make install # 安装CRD</span><br><span class="line">make run # 启动controller</span><br></pre></td></tr></table></figure><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make docker-build docker-push IMG=yuhuixa/manager-controller</span><br><span class="line">make deploy</span><br></pre></td></tr></table></figure><h2 id="开发"><a href="#开发" class="headerlink" title="开发"></a>开发</h2><h3 id="增加对象数据参数"><a href="#增加对象数据参数" class="headerlink" title="增加对象数据参数"></a>增加对象数据参数</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ActivitySpec defines the desired state of Activity</span></span><br><span class="line"><span class="keyword">type</span> ActivitySpec <span class="keyword">struct</span> &#123;</span><br><span class="line">        Command <span class="keyword">string</span> <span class="string">`json:"command"`</span></span><br><span class="line">        Host    <span class="keyword">string</span> <span class="string">`json:"host"`</span></span><br><span class="line">        <span class="comment">// +optional</span></span><br><span class="line">        Execuser <span class="keyword">string</span> <span class="string">`json:"execuser"`</span></span><br><span class="line">        <span class="comment">// +optional</span></span><br><span class="line">        Execcwd <span class="keyword">string</span> <span class="string">`json:"execcwd"`</span></span><br><span class="line">        <span class="comment">// +optional</span></span><br><span class="line">        Envs []<span class="keyword">string</span> <span class="string">`json:"envs"`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ActivityStatus defines the observed state of Activity</span></span><br><span class="line"><span class="keyword">type</span> ActivityStatus <span class="keyword">struct</span> &#123;</span><br><span class="line">        ProSta <span class="keyword">string</span> <span class="string">`json:"prosta"`</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">make &amp;&amp; make install &amp;&amp; make run</span><br><span class="line">kustomize build config/default # 重新渲染yaml</span><br><span class="line">kubectl apply -f config/samples</span><br></pre></td></tr></table></figure><h3 id="实现接口-Reconcile"><a href="#实现接口-Reconcile" class="headerlink" title="实现接口 Reconcile"></a>实现接口 Reconcile</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">        <span class="string">"context"</span></span><br><span class="line">        <span class="string">"fmt"</span></span><br><span class="line">        <span class="string">"strings"</span></span><br><span class="line"></span><br><span class="line">        <span class="string">"github.com/go-logr/logr"</span></span><br><span class="line">        corev1 <span class="string">"k8s.io/api/core/v1"</span></span><br><span class="line">        metav1 <span class="string">"k8s.io/apimachinery/pkg/apis/meta/v1"</span></span><br><span class="line">        ctrl <span class="string">"sigs.k8s.io/controller-runtime"</span></span><br><span class="line">        <span class="string">"sigs.k8s.io/controller-runtime/pkg/client"</span></span><br><span class="line"></span><br><span class="line">        egov1 <span class="string">"symoperator/api/v1"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *VirtulMachineReconciler)</span> <span class="title">Reconcile</span><span class="params">(req ctrl.Request)</span> <span class="params">(ctrl.Result, error)</span></span> &#123;</span><br><span class="line">        ctx := context.Background()</span><br><span class="line">        log := r.Log.WithValues(<span class="string">"activity"</span>, req.NamespacedName)</span><br><span class="line"></span><br><span class="line">        activity := &amp;egov1.Activity&#123;&#125;</span><br><span class="line">        <span class="keyword">if</span> err := r.Get(ctx, req.NamespacedName, activity); err != <span class="literal">nil</span> &#123;</span><br><span class="line">                log.Error(err, <span class="string">"unable to fetch activity"</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                fmt.Println(<span class="string">"activity.Spec.Command: "</span>, activity.Spec.Command)</span><br><span class="line">                fmt.Println(<span class="string">"activity.Spec.Host: "</span>, activity.Spec.Host)</span><br><span class="line">                fmt.Println(<span class="string">"activity.Status.ProSta: "</span> + activity.Status.ProSta)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="一些有用的参考代码"><a href="#一些有用的参考代码" class="headerlink" title="一些有用的参考代码"></a>一些有用的参考代码</h3><h4 id="获得系统pod"><a href="#获得系统pod" class="headerlink" title="获得系统pod"></a>获得系统pod</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">podList := &amp;corev1.PodList&#123;&#125;</span><br><span class="line">err := r.List(ctx, podList, client.InNamespace(<span class="string">"kube-system"</span>))</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Printf(<span class="string">"failed to list pods in namespace default: %v\n"</span>, err)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> _, pod := <span class="keyword">range</span> podList.Items &#123;</span><br><span class="line">                fmt.Println(pod.Spec.NodeName)</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="创建一个只运行一次的pod"><a href="#创建一个只运行一次的pod" class="headerlink" title="创建一个只运行一次的pod"></a>创建一个只运行一次的pod</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">podName := <span class="string">"pod-sample-"</span> + strconv.FormatInt(time.Now().Unix(), <span class="number">10</span>)</span><br><span class="line">podCmd := []<span class="keyword">string</span>&#123;<span class="string">"sleep"</span>&#125;</span><br><span class="line">podArgs := []<span class="keyword">string</span>&#123;<span class="string">"50"</span>&#125;</span><br><span class="line"></span><br><span class="line">pod := &amp;corev1.Pod&#123;</span><br><span class="line">        ObjectMeta: metav1.ObjectMeta&#123;</span><br><span class="line">                Namespace: <span class="string">"default"</span>,</span><br><span class="line">                Name:      podName,</span><br><span class="line">        &#125;,</span><br><span class="line">        Spec: corev1.PodSpec&#123;</span><br><span class="line">                Containers: []corev1.Container&#123;</span><br><span class="line">                        corev1.Container&#123;</span><br><span class="line">                                Image:   <span class="string">"ubuntu"</span>,</span><br><span class="line">                                Name:    <span class="string">"ubuntu"</span>,</span><br><span class="line">                                Command: podCmd,</span><br><span class="line">                                Args:    podArgs,</span><br><span class="line">                        &#125;,</span><br><span class="line">                &#125;,</span><br><span class="line">                RestartPolicy: <span class="string">"Never"</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// c is a created client.</span></span><br><span class="line">_ = r.Create(ctx, pod)</span><br></pre></td></tr></table></figure><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li><a href="https://segmentfault.com/a/1190000019892302" target="_blank" rel="noopener">使用kubebuilder开发kubernetes CRD</a></li><li><a href="https://github.com/kubernetes-sigs/controller-runtime/blob/master/pkg/client/example_test.go" target="_blank" rel="noopener">K8S resource CURD samples</a></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>libxml2 删除节点以后出现空行怎么办</title>
+      <link href="/2019/08/14/libxml2-remove-blank-line/"/>
+      <url>/2019/08/14/libxml2-remove-blank-line/</url>
+      
+        <content type="html"><![CDATA[<h2 id="问题的产生"><a href="#问题的产生" class="headerlink" title="问题的产生"></a>问题的产生</h2><p>使用libxml2操作XML的时候，有的时候会调用</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xmlUnlinkNode(node_to_del);</span><br><span class="line">xmlFreeNode(node_to_del);</span><br></pre></td></tr></table></figure><p>来删除节点，但是执行了之后，保存成XML文件的时候，会在删除的节点那一行显示出一个空行，很不美观。</p><a id="more"></a><h2 id="问题的原因"><a href="#问题的原因" class="headerlink" title="问题的原因"></a>问题的原因</h2><p>xmlNodePtr指向的元素，其实并不全是XML的元素节点（XML_ELEMENT_NODE），还会有一些用于缩进显示的节点（XML_TEXT_NODE），在删除元素节点的时候，需要把这个元素节点之前的文本节点也删除掉。</p><h2 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">node_to_del = xml;</span><br><span class="line">node_for_text_indent = xml-&gt;prev;</span><br><span class="line">xml = xml-&gt;next;</span><br><span class="line"></span><br><span class="line">xmlUnlinkNode(node_to_del);</span><br><span class="line">xmlFreeNode(node_to_del);</span><br><span class="line"></span><br><span class="line">xmlUnlinkNode(node_for_text_indent); <span class="comment">// delete the useless TEXT indent node</span></span><br><span class="line">xmlFreeNode(node_for_text_indent);</span><br></pre></td></tr></table></figure><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>要删除元素节点前面（-&gt;prev）的文本节点，不要删除元素节点后面（-&gt;next）的文本节点。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> libxml2 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用 Visual Studio 2015 编写Windows平台下的OpenGL程序</title>
+      <link href="/2016/03/01/using-vs2015-and-glut-to-develop-opengl-program-on-Windows/"/>
+      <url>/2016/03/01/using-vs2015-and-glut-to-develop-opengl-program-on-Windows/</url>
+      
+        <content type="html"><![CDATA[<p>OpenGL是跨平台的三维图形库，本文介绍如何使用Visual Studio ( VC++ ) 2015搭建Windows平台下的OpenGL开发环境</p><a id="more"></a><h2 id="无需下载"><a href="#无需下载" class="headerlink" title="无需下载"></a>无需下载</h2><p>笔者使用的Windows 7 Professional，在安装了Visual Studio 2015之后，默认已有OpenGL的库文件和头文件。</p><h2 id="下载freeglut"><a href="#下载freeglut" class="headerlink" title="下载freeglut"></a>下载freeglut</h2><p>freeglut是一个小型的图形工具库，用于提供创建和关闭窗口，Windows事件循环，响应鼠标键盘事件等功能，特别适宜于编写OpenGL小型程序，有了它，我们无需再使用MFC，QT等大型的图形框架（GUI Framework）。</p><blockquote><p>到OpenGL的官网，找到freeglut的下载地址，里面有源代码和预编译二进制两种包，为了简单，笔者下载了预编译好的二进制包。</p></blockquote><h2 id="建立工程"><a href="#建立工程" class="headerlink" title="建立工程"></a>建立工程</h2><h3 id="1-新建工程"><a href="#1-新建工程" class="headerlink" title="1. 新建工程"></a>1. 新建工程</h3><p>打开VS2015，新建一个Win32 Console Application，名字为openglsam, 其他选择默认。</p><h3 id="2-设置正确的Solution-Platforms"><a href="#2-设置正确的Solution-Platforms" class="headerlink" title="2. 设置正确的Solution Platforms"></a>2. 设置正确的Solution Platforms</h3><p>将工具栏上Solution Platforms设置为x64</p><h3 id="3-配置头文件和库文件依赖"><a href="#3-配置头文件和库文件依赖" class="headerlink" title="3. 配置头文件和库文件依赖"></a>3. 配置头文件和库文件依赖</h3><p>打开Project –&gt; openglsam Properites –&gt; C/C++ –&gt; General –&gt; Additional Include Directories<br>加入freeglut里的include目录</p><p>打开Project –&gt; openglsam Properites –&gt; Linker –&gt; General –&gt; Additional Library Directories<br>加入freeglut里的lib/x64目录</p><p>打开Project –&gt; openglsam Properites –&gt; Linker –&gt; Input –&gt; Additional Dependencies<br>加入freeglut.lib</p><h3 id="4-拷贝动态库文件"><a href="#4-拷贝动态库文件" class="headerlink" title="4. 拷贝动态库文件"></a>4. 拷贝动态库文件</h3><p>将freeglut/bin/x64/freeglut.dll拷贝到项目openglsam目录 openglsam\x64\Debug下</p><h3 id="5-编写代码"><a href="#5-编写代码" class="headerlink" title="5. 编写代码"></a>5. 编写代码</h3><p><a href="https://github.com/ityuhui/openglsam" target="_blank" rel="noopener">https://github.com/ityuhui/openglsam</a></p><h2 id="评论"><a href="#评论" class="headerlink" title="评论"></a><a href="https://github.com/ityuhui/BlogComments/issues" target="_blank" rel="noopener">评论</a></h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> Windows编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+            <tag> OpenGL </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++ 使用 libcurl</title>
+      <link href="/2016/02/02/C-Plus-Plus-uses-libcurl/"/>
+      <url>/2016/02/02/C-Plus-Plus-uses-libcurl/</url>
+      
+        <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>使用C++编写http客户端程序，主要有下面两个方法：</p><blockquote><ul><li><strong>socket</strong><br>自己组装http包，向server的80端口发起请求，接收响应，处理。</li><li><strong>http library</strong><br>使用libcurl库，其他知名的还有boost::asio,ACE，目前，libcurl的应用比较广泛。</li></ul></blockquote><a id="more"></a><h1 id="获得libcurl"><a href="#获得libcurl" class="headerlink" title="获得libcurl"></a>获得libcurl</h1><h2 id="到官方网站下载源代码包到本地"><a href="#到官方网站下载源代码包到本地" class="headerlink" title="到官方网站下载源代码包到本地"></a>到官方网站下载源代码包到本地</h2><p>例如我的目录 $home/opt/libcurl</p><h2 id="编译源代码"><a href="#编译源代码" class="headerlink" title="编译源代码"></a>编译源代码</h2><blockquote><p>./configure<br>make</p></blockquote><p>得到静态库 libcurl.a<br>其实也得到了动态库，但是为了简单，我没有使用。</p><h2 id="拷贝头文件"><a href="#拷贝头文件" class="headerlink" title="拷贝头文件"></a>拷贝头文件</h2><p>将include/curl目录拷贝到/usr/local/include下面</p><h2 id="其实OSX系统自带libcurl"><a href="#其实OSX系统自带libcurl" class="headerlink" title="其实OSX系统自带libcurl"></a>其实OSX系统自带libcurl</h2><p>/usr/lib/libcurl.dylib，也可以链接使用</p><h1 id="使用libcurl"><a href="#使用libcurl" class="headerlink" title="使用libcurl"></a>使用libcurl</h1><h2 id="创建工程，将-libcurl-a拷贝到此工程目录下"><a href="#创建工程，将-libcurl-a拷贝到此工程目录下" class="headerlink" title="创建工程，将 libcurl.a拷贝到此工程目录下"></a>创建工程，将 libcurl.a拷贝到此工程目录下</h2><p><a href="https://github.com/ityuhui/mycurlsample" target="_blank" rel="noopener">https://github.com/ityuhui/mycurlsample</a></p><h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网络编程 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> libcurl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++ STL里的容器</title>
+      <link href="/2016/02/01/C-Data-Structure/"/>
+      <url>/2016/02/01/C-Data-Structure/</url>
+      
+        <content type="html"><![CDATA[<h2 id="顺序容器："><a href="#顺序容器：" class="headerlink" title="顺序容器："></a>顺序容器：</h2><p>vector: 数组实现，单向，相当于Java的 ArrayList<br>list： 双向链表，相当于Java的 LinkedList<br>deque：双向队列</p><a id="more"></a><h2 id="关联容器，用树实现"><a href="#关联容器，用树实现" class="headerlink" title="关联容器，用树实现"></a>关联容器，用树实现</h2><p>map</p><h2 id="hash容器"><a href="#hash容器" class="headerlink" title="hash容器"></a>hash容器</h2><p>unordered_map</p><h2 id="容器适配器，使用容器实现"><a href="#容器适配器，使用容器实现" class="headerlink" title="容器适配器，使用容器实现"></a>容器适配器，使用容器实现</h2><p>stack：实现deque实现<br>queue：使用deque实现<br>priority_queue：使用vector实现</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> stl </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Notes for Learning Javascript Design Patten</title>
+      <link href="/2015/04/16/Notes-for-Learning-Javascript-Design-Patten/"/>
+      <url>/2015/04/16/Notes-for-Learning-Javascript-Design-Patten/</url>
+      
+        <content type="html"><![CDATA[<h2 id="设计模式的分类："><a href="#设计模式的分类：" class="headerlink" title="设计模式的分类："></a>设计模式的分类：</h2><h3 id="创建型设计模式："><a href="#创建型设计模式：" class="headerlink" title="创建型设计模式："></a>创建型设计模式：</h3><p>Constructor, Factory, Abstract, Prototype, Singleton and Builder</p><h3 id="结构型设计模式"><a href="#结构型设计模式" class="headerlink" title="结构型设计模式"></a>结构型设计模式</h3><p>Decorator, Facade, Flyweight, Adapter and Proxy</p><h3 id="行为型设计模式"><a href="#行为型设计模式" class="headerlink" title="行为型设计模式"></a>行为型设计模式</h3><p>Iterator, Mediator, Observer and Visitor</p><p>Tips:<br>Javascript是一门没有“类”的语言，但是可以用function来模拟”类”</p><a id="more"></a><h2 id="The-Constructor-Pattern"><a href="#The-Constructor-Pattern" class="headerlink" title="The Constructor Pattern"></a>The Constructor Pattern</h2><p>这是Javascript特有的模式，其实就是传统面向对象编程语言里的类的构造函数</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var car1=new Car();</span><br><span class="line">function Car()&#123;</span><br><span class="line">  this.toString = function()&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>toString函数会在每个对象中存在一份，所以应该使用prototype</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Car.prototype.toString = function () &#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Python装饰器模式</title>
+      <link href="/2015/03/22/python-decorator/"/>
+      <url>/2015/03/22/python-decorator/</url>
+      
+        <content type="html"><![CDATA[<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@deco</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">()</span>:</span></span><br><span class="line">     <span class="keyword">pass</span></span><br></pre></td></tr></table></figure><a id="more"></a><p>其实@只是个语法糖, 可以翻译成</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">foo=deco(foo)</span><br></pre></td></tr></table></figure><p>deco函数要定义成嵌套函数，并且返回内嵌套函数，这样才能修改foo</p><p><a href="http://www.cnblogs.com/PandaBamboo/archive/2013/01/17/2865003.html" target="_blank" rel="noopener">参考</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> 装饰器 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>对数据结构的简单总结</title>
+      <link href="/2015/03/11/data-structure-summary/"/>
+      <url>/2015/03/11/data-structure-summary/</url>
+      
+        <content type="html"><![CDATA[<h2 id="底层"><a href="#底层" class="headerlink" title="底层"></a>底层</h2><p>在数据结构的范畴里，底层物理实现只有两种：</p><ul><li>数组 array</li><li>链表 linked</li></ul><a id="more"></a><h2 id="高层"><a href="#高层" class="headerlink" title="高层"></a>高层</h2><h3 id="最常见的（一般高级一点的编程语言自带实现）"><a href="#最常见的（一般高级一点的编程语言自带实现）" class="headerlink" title="最常见的（一般高级一点的编程语言自带实现）:"></a>最常见的（一般高级一点的编程语言自带实现）:</h3><ul><li>线性表 list</li><li>哈希表 hash</li></ul><h3 id="比较常见的"><a href="#比较常见的" class="headerlink" title="比较常见的"></a>比较常见的</h3><ul><li>栈 stack</li><li>队列 queue</li></ul><h3 id="高级的："><a href="#高级的：" class="headerlink" title="高级的："></a>高级的：</h3><ul><li>堆 heap</li><li>树 tree</li><li>图 graphic</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件开发的基础知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>从哪里买技术书</title>
+      <link href="/2015/03/11/reading-books-from/"/>
+      <url>/2015/03/11/reading-books-from/</url>
+      
+        <content type="html"><![CDATA[<h2 id="实体书"><a href="#实体书" class="headerlink" title="实体书"></a>实体书</h2><a id="more"></a><ul><li>人民邮电出版社及旗下的异步社区，以及图灵社区</li><li>机械工业出版社及旗下的华章图书和china-pub</li><li>电子工业出版社及旗下的博文视点</li><li>清华大学出版社</li></ul><h2 id="电子书"><a href="#电子书" class="headerlink" title="电子书"></a>电子书</h2><ul><li>safari (O’Relly)</li><li>kindle</li><li>豆瓣阅读</li><li>多看</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术方面的思考和总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 书 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>树莓派实现家庭监控</title>
+      <link href="/2014/10/18/raspberrypi-home-monitor/"/>
+      <url>/2014/10/18/raspberrypi-home-monitor/</url>
+      
+        <content type="html"><![CDATA[<h2 id="器材"><a href="#器材" class="headerlink" title="器材"></a>器材</h2><p>树莓派 B版本</p><p>摄像头  Z-Star Microelectronics Corp. ZC0301 Webcam</p><p>电源 5V2A</p><a id="more"></a><h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>摄像头需要调整，就是旋转摄像头前面的镜头对焦，否则拍出来的照片很模糊。</p><h2 id="fswebcam方案"><a href="#fswebcam方案" class="headerlink" title="fswebcam方案"></a>fswebcam方案</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>安装之前要升级一下树莓派系统</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get upgrade</span><br></pre></td></tr></table></figure><p>安装fswebcam</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install fswebcam</span><br></pre></td></tr></table></figure><h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>发命令</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fswebcam -r 640x480 -d /dev/video0 testpictire.jpg</span><br></pre></td></tr></table></figure><p>就可以了，再写一个将这个文件发送到邮箱里的脚本，或者scp到自己的VPS上去，或者直接在树莓派上安装httpd或者samba</p><h2 id="motion-方案"><a href="#motion-方案" class="headerlink" title="motion 方案"></a>motion 方案</h2><h3 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h3><p>安装motion</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install motion</span><br></pre></td></tr></table></figure><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>修改/etc/motion/motion.conf<br>修改下面三项：</p><p>这一项是因为我的摄像头只支持jpeg格式，你可能不需要修改</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v4l2_palette 3</span><br></pre></td></tr></table></figure><p>为了能让外部机器访问</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">webcam_localhost off</span><br></pre></td></tr></table></figure><p>自动保存的照片的地址：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target_dir</span><br></pre></td></tr></table></figure><p>然后启动</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">motion -n</span><br></pre></td></tr></table></figure><h3 id="使用-1"><a href="#使用-1" class="headerlink" title="使用"></a>使用</h3><p>用浏览器打开ip:8081就可以观看视频了</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 树莓派 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 树莓派 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>使用spring boot构建web app</title>
+      <link href="/2014/05/31/using-spring-boot-to-build-web-app/"/>
+      <url>/2014/05/31/using-spring-boot-to-build-web-app/</url>
+      
+        <content type="html"><![CDATA[<p>在2014年5月，流行的Java web框架可能只有struts2和springMVC了。</p><p>spring是一个非常大的项目组合，几乎涵盖了java web开发领域的各个方面。目前官方推荐的使用spring boot来开发web app。另外，官方的例子都使用了gradle工具来进行build和依赖管理，由于我找不到一个好用的gradle plugin for eclipse, 所以，我仍然使用了maven(m2eclipse)。</p><a id="more"></a><h3 id="安装和配置好m2eclipse"><a href="#安装和配置好m2eclipse" class="headerlink" title="安装和配置好m2eclipse"></a>安装和配置好m2eclipse</h3><h3 id="创建一个空的java项目，当然也可以使用maven创建项目。"><a href="#创建一个空的java项目，当然也可以使用maven创建项目。" class="headerlink" title="创建一个空的java项目，当然也可以使用maven创建项目。"></a>创建一个空的java项目，当然也可以使用maven创建项目。</h3><h3 id="将项目转为maven项目，注意pom-xml一定要放到项目的根目录下。"><a href="#将项目转为maven项目，注意pom-xml一定要放到项目的根目录下。" class="headerlink" title="将项目转为maven项目，注意pom.xml一定要放到项目的根目录下。"></a>将项目转为maven项目，注意pom.xml一定要放到项目的根目录下。</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag"><span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.yuhui.webapp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>YangCheJi<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>YangCheJi<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-thymeleaf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.17<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>ch.qos.logback<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>logback-classic<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">start-class</span>&gt;</span>hello.Application<span class="tag">&lt;/<span class="name">start-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">repositories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">repository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">id</span>&gt;</span>spring-milestone<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url</span>&gt;</span>http://repo.spring.io/libs-milestone<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">repository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">repositories</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">id</span>&gt;</span>spring-milestone<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">url</span>&gt;</span>http://repo.spring.io/libs-milestone<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">snapshots</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">enabled</span>&gt;</span>false<span class="tag">&lt;/<span class="name">enabled</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">snapshots</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">pluginRepository</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">pluginRepositories</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="创建目录"><a href="#创建目录" class="headerlink" title="创建目录"></a>创建目录</h3><p>src/main/java/hello</p><p>src/main/resources/templates</p><h3 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h3><p>src/main/java/hello/GreetingController.java</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.Model;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestParam;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GreetingController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/greeting"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">greeting</span><span class="params">(@RequestParam(value=<span class="string">"name"</span>, required=<span class="keyword">false</span>, defaultValue=<span class="string">"World"</span>)</span> String name, Model model) </span>&#123;</span><br><span class="line">        model.addAttribute(<span class="string">"name"</span>, name);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"greeting"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>src/main/java/hello/Application.java</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> hello;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.EnableAutoConfiguration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.ComponentScan;</span><br><span class="line"> </span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">SpringApplication.run(Application.class, args);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>src/main/resources/templates/greeting.html</p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE HTML&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Getting Started: Serving Web Content<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">th:text</span>=<span class="string">"'hi, ' + $&#123;name&#125; + '!'"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="run-as-maven-“spring-boot-run”，访问http-127-0-0-1-8080-greeting"><a href="#run-as-maven-“spring-boot-run”，访问http-127-0-0-1-8080-greeting" class="headerlink" title="run as maven “spring-boot:run”，访问http://127.0.0.1:8080/greeting"></a>run as maven “spring-boot:run”，访问<a href="http://127.0.0.1:8080/greeting" target="_blank" rel="noopener">http://127.0.0.1:8080/greeting</a></h3><h3 id="生成了一个jar文件，也可以用命令行启动-java-jar-XX-jar"><a href="#生成了一个jar文件，也可以用命令行启动-java-jar-XX-jar" class="headerlink" title="生成了一个jar文件，也可以用命令行启动, java -jar XX.jar"></a>生成了一个jar文件，也可以用命令行启动, java -jar XX.jar</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> spring </tag>
+            
+            <tag> web development </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>什么是编译器里的前端和后端</title>
+      <link href="/2014/02/04/front-backend-for-compiler/"/>
+      <url>/2014/02/04/front-backend-for-compiler/</url>
+      
+        <content type="html"><![CDATA[<p>编译器粗略分为词法分析，语法分析，类型检查，中间代码生成，代码优化，目标代码生成，目标代码优化。把中间代码生成及之前阶段划分问编译器的前端，那么后端与前端是独立的。后端只需要一种中间代码表示，可以是三地址代码或四元式等，而这些都与前端生成的方式无关。</p><p>按照这个分类，自己动手编写编译器，可以不必从头开始了。使用LLVM，我们可以做一个前端，然后和LLVM后端对接。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 编译器 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 编译器 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何创建一个自己的git服务器</title>
+      <link href="/2014/01/27/create-git-server/"/>
+      <url>/2014/01/27/create-git-server/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><p>客户端：Windows</p><p>服务器：Ubuntu</p><a id="more"></a><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="客户端的安装"><a href="#客户端的安装" class="headerlink" title="客户端的安装"></a>客户端的安装</h3><p>安装git</p><p>生成 idrsa, idrsa.pub</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure><h3 id="服务器的安装和使用"><a href="#服务器的安装和使用" class="headerlink" title="服务器的安装和使用"></a>服务器的安装和使用</h3><p>安装git</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install git-core</span><br></pre></td></tr></table></figure><p>将客户端的id_rsa.pub里的内容放到.ssh目录下的配置文件里</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat 客户端的id_rsa_user1.pub &gt;&gt; 服务器的~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure><p>建立Git Repository</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /some/dir/project_name.git</span><br><span class="line">cd /some/dir/project_name.git</span><br><span class="line">git init --bare --shared</span><br></pre></td></tr></table></figure><h3 id="客户端的使用"><a href="#客户端的使用" class="headerlink" title="客户端的使用"></a>客户端的使用</h3><p>有两种方法</p><h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git clone git@example.com:/var/cache/git/project_name.git</span><br><span class="line">cd project_name</span><br><span class="line">vim test.txt</span><br><span class="line">git add .</span><br><span class="line">git commit -m 'add test.txt'</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><h4 id="2"><a href="#2" class="headerlink" title="2"></a>2</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mkdir project_name</span><br><span class="line">cd project_name</span><br><span class="line">git init</span><br><span class="line">git add .</span><br><span class="line">git commit -m 'initial commit'</span><br><span class="line">git remote add origin git@example.com:/var/cache/git/project_name.git</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="http://blog.csdn.net/markddi/article/details/8278015" target="_blank" rel="noopener">http://blog.csdn.net/markddi/article/details/8278015</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> git的使用 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>source and export</title>
+      <link href="/2014/01/27/source-and-export/"/>
+      <url>/2014/01/27/source-and-export/</url>
+      
+        <content type="html"><![CDATA[<h2 id="export"><a href="#export" class="headerlink" title="export"></a>export</h2><p>让子进程获得父进程的变量，没有其他的解释</p><h2 id="source"><a href="#source" class="headerlink" title="source"></a>source</h2><p>让source的脚本在当前的shell环境下运行，不再fork一个新shell运行，没有其他的解释</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> shell </tag>
+            
+            <tag> bash </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>在x86机器的屏幕上显示的三种方法</title>
+      <link href="/2014/01/25/display-on-x86/"/>
+      <url>/2014/01/25/display-on-x86/</url>
+      
+        <content type="html"><![CDATA[<p>在实现x86操作系统的时候，肯定要在屏幕上显示字符、图形和图像，我个人总结，有三种在屏幕上显示的方法。</p><a id="more"></a><h2 id="1-调用BIOS中断"><a href="#1-调用BIOS中断" class="headerlink" title="1. 调用BIOS中断"></a>1. 调用BIOS中断</h2><p>将数据写入内存，将内存指针存入CPU寄存器，调用中断。实模式下使用。相比较第二种方法的好处是，BIOS自带英文字库，编程简单。使用汇编实现。最终BIOS肯定是将数据发送到了显卡上的显存（帧缓存）上。</p><h2 id="2-向显存里直接写数据"><a href="#2-向显存里直接写数据" class="headerlink" title="2. 向显存里直接写数据"></a>2. 向显存里直接写数据</h2><p>也就是所谓的“直接写屏”。</p><p>实模式和保护模式下都可以使用，但是只有640KB。这640KB是和内存统一编址的，所以实际上这段物理内存被屏蔽了。通常用C语言实现。超过640KB的部分需要使用第三种方法。最终写到显卡的显存上。</p><h2 id="3-向显卡外设端口写指令和数据"><a href="#3-向显卡外设端口写指令和数据" class="headerlink" title="3. 向显卡外设端口写指令和数据"></a>3. 向显卡外设端口写指令和数据</h2><p>这也是平时我们在使用电脑时的方法，当然，指令和数据是由应用程序发出的。保护模式下使用。最终由GPU处理后写到显存上。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 操作系统开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 操作系统开发 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>对桌面GUI库的思考</title>
+      <link href="/2013/09/11/thinking-about-desktop-gui/"/>
+      <url>/2013/09/11/thinking-about-desktop-gui/</url>
+      
+        <content type="html"><![CDATA[<h2 id="QT"><a href="#QT" class="headerlink" title="QT"></a>QT</h2><p>先说QT吧，不管怎么说我也做过两年左右的开发，直到现在，我也认为是最好的C++跨平台GUI库，消息和槽的机制，比Win32/MFC的消息机制要简单很多。</p><a id="more"></a><h2 id="GTK"><a href="#GTK" class="headerlink" title="GTK"></a>GTK</h2><p>再说GTK，*nix系的C图形库，几乎在Linux桌面一统江湖。</p><h2 id="SWT"><a href="#SWT" class="headerlink" title="SWT"></a>SWT</h2><p>然后说SWT，eclipse的GUI库，外观超过jdk自身的桌面GUI库swing，配置eclipse，可以写出很漂亮的应用，还可以跨平台。不过目前已经无人采用了。</p><h2 id="MFC"><a href="#MFC" class="headerlink" title="MFC"></a>MFC</h2><p>接下来就是MFC/Win32了吧，不知道这个东西现在用的人还有多少，不过写高性能的Windows桌面程序还就得靠他。另外，自己写图形库的话，底层肯定也绕不过Win32。</p><h2 id="net"><a href="#net" class="headerlink" title=".net"></a>.net</h2><p>再就是.net的桌面应用，写起来容易，也是微软力推的。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术方面的思考和总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 思考 </tag>
+            
+            <tag> GUI </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何学习</title>
+      <link href="/2013/08/24/how-to-learn-tech/"/>
+      <url>/2013/08/24/how-to-learn-tech/</url>
+      
+        <content type="html"><![CDATA[<p>首先，肯定还要看书，书是前人总结的经验，相比较网络上的博文，书的内容，比较系统，也比较精致。最近一两年，技术书的价格涨得很厉害，但是我觉得，好书还是对得起它的标价。与其从网络上浏览和搜集，不如看书，可以节省时间。技术书，至少要看两遍，第一遍，阅读，第二遍，完成书上所有的例子，提供完整源代码的书，是值得买的。</p><a id="more"></a><p>其次，看书绝对不是掌握技术的最好方法，最好的方法，是在工作中学习，由于有考核的压力，工作中遇到的新技术是一定要掌握的，而且是一定要形成生产力的。</p><p>最后，我觉得也是最重要的，是在业余时间做自己设计的项目。这种项目出于自己的兴趣和需求所以会比较有动力。就我个人的经验，在大公司里，你很难在工作中遇到自己想要做的项目，总是在做一些公司项目里修补和改善，无法对自己的技术能力有较快和较大的提升。但是这样做会挤占本来就不多的业余时间，对于有家的程序员来说，需要在家庭生活和技术提高上找到一个平衡点。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术方面的思考和总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 学习 </tag>
+            
+            <tag> 思考 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>如何将python脚本转换成在Windows系统的可执行程序exe</title>
+      <link href="/2013/08/24/convert-python-app-to-exe/"/>
+      <url>/2013/08/24/convert-python-app-to-exe/</url>
+      
+        <content type="html"><![CDATA[<p>截止到2012年12月，将python脚本转换成exe的最好的工具是pyinstaller</p><a id="more"></a><h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><p>下载python，可以下载2系列的，也可以下载3系列的，安装。</p><p>下载pywin32（请使用搜索引擎，官方网站在sourceforge上）,下载对应于python的版本号，以及电脑CPU架构（32位或64位）的版本，安装。</p><h3 id="2"><a href="#2" class="headerlink" title="2"></a>2</h3><p>如果pywin32安装不成功，可以卸载掉python和pywin32，然后下载另外一个版本号的版本</p><h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><p>下载pyinstaller（请使用搜索引擎，官方网站在sourceforge上），解压缩到某个目录，例如/to/your/path/pyinstaller-2.0</p><h3 id="4"><a href="#4" class="headerlink" title="4"></a>4</h3><p>确保python脚本，例如 test.py可以正常执行，无错误。</p><h3 id="5"><a href="#5" class="headerlink" title="5"></a>5</h3><p>将test.py放到/to/your/path/pyinstaller-2.0目录下</p><h3 id="6"><a href="#6" class="headerlink" title="6"></a>6</h3><p>在/to/your/path/pyinstaller-2.0目录下执行python pyinstaller.py –-onefile test.py （注意onefile前面有两个-符号）</p><h3 id="7"><a href="#7" class="headerlink" title="7"></a>7</h3><p>test.exe将生成在/to/your/path/pyinstaller-2.0/test/dist/目录下</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Python </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> pyinstaller </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>x86系统引导</title>
+      <link href="/2010/04/29/boot-x86/"/>
+      <url>/2010/04/29/boot-x86/</url>
+      
+        <content type="html"><![CDATA[<p>电脑加电后，BIOS里的程序先运行，装入硬盘的第一个扇区（512B），这里就是MBR，包括硬盘分区表和引导程序。</p><p>引导程序引导到逻辑盘里的操作系统引导程序。<br>也可以把操作系统引导程序（例如GRUB）放到MBR里，省去一个步骤。这就是为什么GRUB可以装在MBR里，也可以装载到逻辑分区里。</p><a id="more"></a><p>GRUB负责引导Linux内核源代码arch/i386/boot/里的汇编代码写的启动程序，这个启动程序再启动内核。</p><p>BIOS-&gt;GRUB-&gt;初始化程序<br>没有GRUB的话，BIOS-&gt;初始化程序</p><p>bootsect还是16位实模式，在Setup中进行保护模式。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 操作系统开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 操作系统开发 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C语言二级指针和二维数组</title>
+      <link href="/2010/04/21/c-array-2-lvl-pointer/"/>
+      <url>/2010/04/21/c-array-2-lvl-pointer/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Examples"><a href="#Examples" class="headerlink" title="Examples:"></a>Examples:</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">int</span> c[<span class="number">1</span>][<span class="number">2</span>]=&#123;<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"> <span class="keyword">int</span> (*b)[<span class="number">2</span>];</span><br><span class="line"> b=c;</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**b</span><br></pre></td></tr></table></figure><p>和</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b[][]</span><br></pre></td></tr></table></figure><p>是不同的。但是</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(*b)[]</span><br></pre></td></tr></table></figure><p>和</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b[][]</span><br></pre></td></tr></table></figure><p>是相通的。</p><h2 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h2><p>理解这些，首先，要说，这是一个什么，然后说，什么的什么</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*b[<span class="number">2</span>]</span><br></pre></td></tr></table></figure><p>b是一个一维数组，数组的长度是2，每个元素是一个指针</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(*b)[<span class="number">2</span>]</span><br></pre></td></tr></table></figure><p>b是一个指针，指向一个数组，这个数组的长度是2</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c[<span class="number">1</span>][<span class="number">2</span>]</span><br></pre></td></tr></table></figure><p>c是一个二维数组，也可以说是一个指针，指向一个长度为2的数组</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**d</span><br></pre></td></tr></table></figure><p>d是一个指针的指针，指向的内容也是一个指针</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C语言 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c </tag>
+            
+            <tag> 二级指针 </tag>
+            
+            <tag> 二维数组 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>VTK的小总结</title>
+      <link href="/2010/04/10/about-vtk/"/>
+      <url>/2010/04/10/about-vtk/</url>
+      
+        <content type="html"><![CDATA[<p>vtk是一个开源的可视化工具包</p><p>用于计算机图形学，图像处理，医学图像处理等研究和开发领域</p><p>是OpenGL的上层封装库，C++编写</p><p>支持多语言二次开发，可以和MFC集成</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> VTK </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> vtk </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C语言字符编码的一点总结</title>
+      <link href="/2010/04/10/computer-encoding-summary/"/>
+      <url>/2010/04/10/computer-encoding-summary/</url>
+      
+        <content type="html"><![CDATA[<p>wchar_t 其实只是对应于UTF-16的，也就是UCS2，但是编译器一般实现为4个字节</p><a id="more"></a><p>Linux下广泛使用UFT-8，UTF-8并不是宽字符，而是多字符</p><p>Unicode并不等于宽字符，UTF-16才是宽字符</p><p>wout输出要先设置locale，是因为要进行宽字符到多字符的转换，多字符的现实，需要指定活动代码页</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件开发的基础知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 计算机编码 </tag>
+            
+            <tag> utf </tag>
+            
+            <tag> 宽字符 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>

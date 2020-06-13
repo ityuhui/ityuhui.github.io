@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="介绍Microsoft HPC Pack是微软的高性能分布式计算平台，类似于IBM Spectrum Symphony，是一种基于SOA架构的分布式计算框架。目前，它有三种部署方式如下，本文只介绍第一种。  on-premises, 部署在本地，可以把计算节点扩展到云上 hybird, 部署在本地，通常会把计算节点扩展到云上 on-demand 部署在云上">
+<meta name="keywords" content="distributed computing,Microsoft,HPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Microsoft HPC Pack 2016 学习笔记">
+<meta property="og:url" content="ityuhui.github.io/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/index.html">
+<meta property="og:site_name" content="Hui Yu">
+<meta property="og:description" content="介绍Microsoft HPC Pack是微软的高性能分布式计算平台，类似于IBM Spectrum Symphony，是一种基于SOA架构的分布式计算框架。目前，它有三种部署方式如下，本文只介绍第一种。  on-premises, 部署在本地，可以把计算节点扩展到云上 hybird, 部署在本地，通常会把计算节点扩展到云上 on-demand 部署在云上">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-06-13T12:48:12.894Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Microsoft HPC Pack 2016 学习笔记">
+<meta name="twitter:description" content="介绍Microsoft HPC Pack是微软的高性能分布式计算平台，类似于IBM Spectrum Symphony，是一种基于SOA架构的分布式计算框架。目前，它有三种部署方式如下，本文只介绍第一种。  on-premises, 部署在本地，可以把计算节点扩展到云上 hybird, 部署在本地，通常会把计算节点扩展到云上 on-demand 部署在云上">
+
+<link rel="canonical" href="ityuhui.github.io/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Microsoft HPC Pack 2016 学习笔记 | Hui Yu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hui Yu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Microsoft HPC Pack 2016 学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-05 16:10:43" itemprop="dateCreated datePublished" datetime="2020-05-05T16:10:43+08:00">2020-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-13 20:48:12" itemprop="dateModified" datetime="2020-06-13T20:48:12+08:00">2020-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Microsoft HPC Pack是微软的高性能分布式计算平台，类似于IBM Spectrum Symphony，是一种基于SOA架构的分布式计算框架。目前，它有三种部署方式如下，本文只介绍第一种。</p>
+<ul>
+<li>on-premises, 部署在本地，可以把计算节点扩展到云上</li>
+<li>hybird, 部署在本地，通常会把计算节点扩展到云上</li>
+<li>on-demand 部署在云上</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="on-premise部署"><a href="#on-premise部署" class="headerlink" title="on-premise部署"></a>on-premise部署</h2><h3 id="1-部署准备"><a href="#1-部署准备" class="headerlink" title="1. 部署准备"></a>1. 部署准备</h3><h4 id="1-1-评估操作系统是否达到要求"><a href="#1-1-评估操作系统是否达到要求" class="headerlink" title="1.1 评估操作系统是否达到要求"></a>1.1 评估操作系统是否达到要求</h4><h5 id="硬件要求"><a href="#硬件要求" class="headerlink" title="硬件要求"></a>硬件要求</h5><p>头节点</p>
+<ul>
+<li>CPU: 64位，推荐8核心以上，最小4核心</li>
+<li>内存：推荐16 GB以上，最小8 GB</li>
+<li>磁盘：推荐100 GB以上，最小50 GB</li>
+</ul>
+<p>其他节点</p>
+<ul>
+<li>CPU: 64位，推荐4核心以上，最小4核心</li>
+<li>内存：推荐4 GB以上，最小2 GB</li>
+<li>磁盘：推荐80 GB以上，最小50 GB</li>
+</ul>
+<h5 id="软件要求"><a href="#软件要求" class="headerlink" title="软件要求"></a>软件要求</h5><p>.NET Framework 4.6.1 (or later)</p>
+<p>头节点： Windows Server 2016, Windows Server 2012 R2</p>
+<p>计算节点：Windows Server 2019 (only for HPC Pack 2016 Update 3), Windows Server 2016, Windows Server 2012 R2, Windows Server 2012, Windows Server 2008 R2 SP1， </p>
+<p>客户端节点：Windows 10, Windows 8.1</p>
+<p>Linux node： Red Hat Enterprise Linux 7.0 - 7.6, Red Hat Enterprise Linux 6.7 - 6.10, CentOS-based 7.0 - 7.6, CentOS-based 6.7 - 6.10, Ubuntu Server 14.04 LTS, Ubuntu Server 16.04 LTS, Ubuntu Server 18.04 LTS, SUSE Linux Enterprise Server 12</p>
+<p>1.2 评估是否需要High Availability</p>
+<p>如果需要，就需要安装三个头节点配置为一个Service Fabric集群</p>
+<p>1.3 决定是否需要远程数据库</p>
+<p>1.4 决定需要多少个节点</p>
+<ul>
+<li>计算节点，用于执行任务</li>
+<li>代理节点(Windows Communication Foundation (WCF) broker nodes)，负责路由SOA服务</li>
+<li>工作站节点（workstation nodes），可以临时用于执行任务</li>
+</ul>
+<p>1.5 选择活动目录域</p>
+<p>1.6 选择域账户来添加节点</p>
+<p>1.7 为集群选择网络拓扑结构</p>
+<p>1.8 准备两个证书用于节点之间的加密通讯</p>
+<h3 id="2-部署头节点"><a href="#2-部署头节点" class="headerlink" title="2. 部署头节点"></a>2. 部署头节点</h3><p>2.1 在头节点上安装Windows Server</p>
+<p>2.2 将头节点加入活动目录域里</p>
+<p>2.3 在前两个头节点上安装前置组件（可选）</p>
+<p>这一步是可选的，如果需要配置多个头节点才需要</p>
+<p>2.4 在最后一个头节点上安装Microsoft HPC Pack</p>
+<h3 id="3-配置集群"><a href="#3-配置集群" class="headerlink" title="3. 配置集群"></a>3. 配置集群</h3><p>3.1 配置集群的网络</p>
+<p>3.2 提供安装凭证</p>
+<p>3.3 配置新加入的节点的命名规则</p>
+<p>3.4 为部署导入或者创建证书</p>
+<p>3.5 创建节点模板（可选）</p>
+<p>3.6 创建用户（可选）</p>
+<h3 id="4-向集群里添加Windows计算节点"><a href="#4-向集群里添加Windows计算节点" class="headerlink" title="4. 向集群里添加Windows计算节点"></a>4. 向集群里添加Windows计算节点</h3><p>4.1 通过模板从物理机（bare metal）上部署节点</p>
+<p>4.2 手工向集群添加节点</p>
+<p>4.2.1 在计算节点上安装Windows操作系统</p>
+<p>4.2.2 将计算节点加入域</p>
+<p>4.2.3 在计算节点上安装Microsoft HPC Pack 2016</p>
+<h3 id="5-向集群里添加Linux计算节点"><a href="#5-向集群里添加Linux计算节点" class="headerlink" title="5. 向集群里添加Linux计算节点"></a>5. 向集群里添加Linux计算节点</h3><p>5.1 在计算节点上安装Linux操作系统</p>
+<p>5.2 下载Linux计算节点安装文件<br>在Windows头节点上执行Powershell命名</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Add-PSSnapin</span> microsoft.hpc </span><br><span class="line"></span><br><span class="line">Get-HpcClusterRegistry -PropertyName InstallShare</span><br></pre></td></tr></table></figure>
+
+<p>5.3 搭建文件共享路径将5.2下载得到的文件共享给Linux计算节点</p>
+<p>5.4 安装证书用于加密HPC节点之间的通讯</p>
+<p>5.5 在Linux计算节点上安装Linux计算节点代理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python setup.py -install -connectionstring:<span class="string">'&lt;connection string of the cluster&gt;'</span> -certfile:<span class="string">'&lt;path to PFX certificate&gt;'</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="HPC-Job-Manager"><a href="#HPC-Job-Manager" class="headerlink" title="HPC Job Manager"></a>HPC Job Manager</h2><p>使用HPC Job Manager，可以提交、监控和管理所有的计算任务。</p>
+<p>基本的术语：</p>
+<ul>
+<li><p>Job, 一次计算任务</p>
+</li>
+<li><p>Task, 一个Job包含一个或者多个Task, Task不能脱离Job</p>
+</li>
+<li><p>Queue, Job提交以后会放在Queue里面，等待调度和分配到计算节点上</p>
+</li>
+<li><p>HPC Job Scheduler Service, 运行在头节点上的一个服务，负责调度队列里面的Job/Task，分配资源、分发任务到计算节点、监控任务的执行过程。</p>
+</li>
+</ul>
+<h2 id="教程"><a href="#教程" class="headerlink" title="教程"></a>教程</h2><h3 id="Excel-2016-offloading-to-Azure-cluster"><a href="#Excel-2016-offloading-to-Azure-cluster" class="headerlink" title="Excel 2016 offloading to Azure cluster"></a>Excel 2016 offloading to Azure cluster</h3><p>这个教程展示了将Excel 2016 放在Azure集群上运行</p>
+<h4 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h4><p>已经在本地的计算节点上安装好了Excel 2016和HPC Pack 2016 client utilities</p>
+<h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><h5 id="1-在Azure上部署一个Excel集群，-设置头节点不要参加计算，因为头节点并没有安装Excel"><a href="#1-在Azure上部署一个Excel集群，-设置头节点不要参加计算，因为头节点并没有安装Excel" class="headerlink" title="1. 在Azure上部署一个Excel集群， 设置头节点不要参加计算，因为头节点并没有安装Excel"></a>1. 在Azure上部署一个Excel集群， 设置头节点不要参加计算，因为头节点并没有安装Excel</h5><h5 id="2-激活Execl产品，你必须要有一个Office的License"><a href="#2-激活Execl产品，你必须要有一个Office的License" class="headerlink" title="2. 激活Execl产品，你必须要有一个Office的License"></a>2. 激活Execl产品，你必须要有一个Office的License</h5><h5 id="3-使用Execl-workbook-offloading"><a href="#3-使用Execl-workbook-offloading" class="headerlink" title="3. 使用Execl workbook offloading"></a>3. 使用Execl workbook offloading</h5><p>3.1 下载sample <a href="https://github.com/amat27/HPC2016.SampleCode/raw/master/Excel/AzureSamplePack/Example2/ConvertiblePricing_Complete.xlsb" target="_blank" rel="noopener">xlsb</a> </p>
+<p>3.2 在Excel 2016里将ConvertiblePricing_Complete.xlsb打开，并激活Excel Options -&gt; Customize Ribbon</p>
+<p>3.3 在Develop ribbon，点击COM Add-Ins, 确认HPC Pack Excel COM Add-in已经成功载入</p>
+<p>3.4 编辑Excel文件里的VBA宏HPCControlMacros </p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">'change Private Const HPC_ClusterScheduler = "hpchn01laj2kdgetycrw.southeastasia.cloudapp.azure.com" to</span></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Const</span> HPC_ClusterScheduler = <span class="string">"&lt;headnode DNS name saved above&gt;"</span></span><br><span class="line"><span class="comment">'change Private Const HPC_DependFiles = "D:\tmp\iaasexcel\upload\ConvertiblePricing_Complete.xlsb=ConvertiblePricing_Complete.xlsb" to</span></span><br><span class="line"><span class="keyword">Private</span> <span class="keyword">Const</span> HPC_DependFiles = <span class="string">"&lt;upload directory path&gt;\ConvertiblePricing_Complete.xlsb=ConvertiblePricing_Complete.xlsb"</span></span><br><span class="line"><span class="comment">'change HPCExcelClient.OpenSession headNode:=HPC_ClusterScheduler, remoteWorkbookPath:=HPCWorkbookPath, UserName:="hpc\hpcadmin", Password:="********" to</span></span><br><span class="line">HPCExcelClient.OpenSession headNode:=HPC_ClusterScheduler, remoteWorkbookPath:=HPCWorkbookPath, UserName:=<span class="string">"&lt;domain&gt;\&lt;username&gt;"</span>, Password:=<span class="string">"&lt;YourPassword&gt;"</span></span><br></pre></td></tr></table></figure>
+
+<p>3.5 将Excel workbook拷贝到上面指定的HPC_DependsFiles目录里</p>
+<p>3.6 调集worksheet里的Cluster按钮，workbook将在会Azure里计算</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://docs.microsoft.com/en-us/powershell/high-performance-computing/overview?view=hpc16-ps" target="_blank" rel="noopener">Overview of Microsoft HPC Pack 2016</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/distributed-computing/" rel="tag"># distributed computing</a>
+              <a href="/tags/Microsoft/" rel="tag"># Microsoft</a>
+              <a href="/tags/HPC/" rel="tag"># HPC</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/03/neural-network-trainning/" rel="prev" title="训练神经网络的基本流程">
+      <i class="fa fa-chevron-left"></i> 训练神经网络的基本流程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/05/computer-science-research-areas/" rel="next" title="计算机科学主要的研究领域">
+      计算机科学主要的研究领域 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#on-premise部署"><span class="nav-number">2.</span> <span class="nav-text">on-premise部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-部署准备"><span class="nav-number">2.1.</span> <span class="nav-text">1. 部署准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-评估操作系统是否达到要求"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1 评估操作系统是否达到要求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#硬件要求"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">硬件要求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#软件要求"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">软件要求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-部署头节点"><span class="nav-number">2.2.</span> <span class="nav-text">2. 部署头节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-配置集群"><span class="nav-number">2.3.</span> <span class="nav-text">3. 配置集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-向集群里添加Windows计算节点"><span class="nav-number">2.4.</span> <span class="nav-text">4. 向集群里添加Windows计算节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-向集群里添加Linux计算节点"><span class="nav-number">2.5.</span> <span class="nav-text">5. 向集群里添加Linux计算节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HPC-Job-Manager"><span class="nav-number">3.</span> <span class="nav-text">HPC Job Manager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#教程"><span class="nav-number">4.</span> <span class="nav-text">教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Excel-2016-offloading-to-Azure-cluster"><span class="nav-number">4.1.</span> <span class="nav-text">Excel 2016 offloading to Azure cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前提"><span class="nav-number">4.1.1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤"><span class="nav-number">4.1.2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-在Azure上部署一个Excel集群，-设置头节点不要参加计算，因为头节点并没有安装Excel"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">1. 在Azure上部署一个Excel集群， 设置头节点不要参加计算，因为头节点并没有安装Excel</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-激活Execl产品，你必须要有一个Office的License"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">2. 激活Execl产品，你必须要有一个Office的License</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-使用Execl-workbook-offloading"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">3. 使用Execl workbook offloading</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hui Yu"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Hui Yu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ityuhui" title="GitHub → https://github.com/ityuhui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

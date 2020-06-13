@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="介绍与Linux平台上的cgroups类似， Windows平台上也有限制进程资源使用的机制，叫做Job Object，这篇文章是我对微软官方文档的中文翻译，然后加上我自己写的示例代码，代码和官方文档的链接都在文末。">
+<meta name="keywords" content="Windows">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows平台下进程的资源限制(Job Object)">
+<meta property="og:url" content="ityuhui.github.io/2020/04/08/Process-Resource-Limis-Windows/index.html">
+<meta property="og:site_name" content="Hui Yu">
+<meta property="og:description" content="介绍与Linux平台上的cgroups类似， Windows平台上也有限制进程资源使用的机制，叫做Job Object，这篇文章是我对微软官方文档的中文翻译，然后加上我自己写的示例代码，代码和官方文档的链接都在文末。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://docs.microsoft.com/en-us/windows/win32/procthread/images/nested-jobs-a.png">
+<meta property="og:image" content="https://docs.microsoft.com/en-us/windows/win32/procthread/images/nested-jobs-b.png">
+<meta property="og:updated_time" content="2020-06-13T12:48:12.894Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows平台下进程的资源限制(Job Object)">
+<meta name="twitter:description" content="介绍与Linux平台上的cgroups类似， Windows平台上也有限制进程资源使用的机制，叫做Job Object，这篇文章是我对微软官方文档的中文翻译，然后加上我自己写的示例代码，代码和官方文档的链接都在文末。">
+<meta name="twitter:image" content="https://docs.microsoft.com/en-us/windows/win32/procthread/images/nested-jobs-a.png">
+
+<link rel="canonical" href="ityuhui.github.io/2020/04/08/Process-Resource-Limis-Windows/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Windows平台下进程的资源限制(Job Object) | Hui Yu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hui Yu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/04/08/Process-Resource-Limis-Windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Windows平台下进程的资源限制(Job Object)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-08 19:58:56" itemprop="dateCreated datePublished" datetime="2020-04-08T19:58:56+08:00">2020-04-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-13 20:48:12" itemprop="dateModified" datetime="2020-06-13T20:48:12+08:00">2020-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Windows编程/" itemprop="url" rel="index"><span itemprop="name">Windows编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>与Linux平台上的cgroups类似， Windows平台上也有限制进程资源使用的机制，叫做Job Object，这篇文章是我对微软官方文档的中文翻译，然后加上我自己写的示例代码，代码和官方文档的链接都在文末。</p>
+<a id="more"></a>
+
+<h2 id="Job-Object"><a href="#Job-Object" class="headerlink" title="Job Object"></a>Job Object</h2><p>一个job object将一组进程管理成一个单元，它是可命名的、安全的、可共享的控制进程属性的对象。对一个job object的操作将会影响它管理的所有的进程，例如，可以通过修改job object来影响其管理的所有进程的working set的大小、优先级以及终止所有进程。</p>
+<h3 id="创建Jobs"><a href="#创建Jobs" class="headerlink" title="创建Jobs"></a>创建Jobs</h3><p>函数CreateJobObject用来创建一个job object。新创建出来的job object没有关联任何进程。</p>
+<p>函数AssignProcessToJobObject可以将一个进程关联到一个job上，当进程被关联到job上之后，就无法再分开。但是一个进程可以被关联到多个嵌套的job上。</p>
+<p>嵌套job是从Windows 8和Windows Server 2012才引入的，所以在之前的操作系统里，一个进程只能被关联到一个job object上，而且一旦关联就无法再分开。</p>
+<p>当调用CreateJobObject创建job object的时候，可以给job object指定security descriptor。</p>
+<h3 id="管理Job关联的进程"><a href="#管理Job关联的进程" class="headerlink" title="管理Job关联的进程"></a>管理Job关联的进程</h3><p>当一个进程关联到一个job之后，这个进程创建的子进程默认也会被关联到这个job上。（注意：CreateProcess函数创建的子进程会被自动关联，但是Win32_Process.Create创建的则不会。）</p>
+<p>可以通过设置JOB_OBJECT_LIMIT_BREAKAWAY_OK或者JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK来修改默认行为：</p>
+<ul>
+<li><p>如果job有extended limit/JOB_OBJECT_LIMIT_BREAKAWAY_OK, 并且在创建父进程的时候指定了CREATE_BREAKAWAY_FROM_JOB，那么子进程不会被自动的关联到父进程的job object。</p>
+</li>
+<li><p>如果job有extended limit/JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK，不需要在创建父进程的时候指定任何选项，子进程都不会自动被关联到父进程的job object。</p>
+</li>
+</ul>
+<p>如果job是嵌套的，那么层级里的父job的breakaway设置会影响到层级里的其他job所关联的子进程。</p>
+<p>函数IsProcessInJob可以判定一个进程是否运行在一个job里。</p>
+<p>函数TerminateJobObject可以终止一个job里关联的所有的进程的运行。</p>
+<h3 id="Job限制和通知"><a href="#Job限制和通知" class="headerlink" title="Job限制和通知"></a>Job限制和通知</h3><p>job可以强制设置它所关联的每一个进程的working set大小、进程优先级以及执行时间等限制。如果job所关联的进程试图超过限制，有两种结果（默认是第一种）：</p>
+<ol>
+<li>进程申请资源表面上返回成功，其实并没有被处理。</li>
+<li>允许进程使用超过限制的资源，但是会触发一个通知。</li>
+</ol>
+<p>函数SetInformationJobObject用于设置job的限制。以下是资源限制的种类：</p>
+<ul>
+<li>JOBOBJECT_BASIC_LIMIT_INFORMATION</li>
+<li>JOBOBJECT_BASIC_UI_RESTRICTIONS</li>
+<li>JOBOBJECT_CPU_RATE_CONTROL_INFORMATION</li>
+<li>JOBOBJECT_EXTENDED_LIMIT_INFORMATION</li>
+<li>JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION</li>
+</ul>
+<p>如果job是嵌套的，层级里的父job会影响子job</p>
+<p>如果job有一个关联的I/O completion端口，它可以在资源超限后收到通知。当资源超限或者某个事件来到，系统会发送消息给completion端口。使用带有job object信息类JobObjectAssociateCompletionPortInformation和一个JOBOBJECT_ASSOCIATE_COMPLETION_PORT结构体指针的函数SetInformationJobObject可以将一个completion端口关联到job。注意最好是在job不活动的时候做这个关联，以降低丢失消息的风险。</p>
+<p>如果job调用了PostQueuedCompletionStatus函数，所有的消息都会被job直接发送。某个线程必须使用GetQueuedCompletionStatus函数来监控complition端口从而拿到消息。</p>
+<p>带有JobObjectNotificationLimitInformation信息类的限制的异常，并不能保证被发送给completion端口，带有JobObjectNotificationLimitInformationx的通知是可以保证的。</p>
+<h3 id="Job的资源账户"><a href="#Job的资源账户" class="headerlink" title="Job的资源账户"></a>Job的资源账户</h3><p>job object记录了其关联的所有进程的基本资源信息（包括终止的进程），使用QueryInformationJobObject函数可以获取这些资源信息。</p>
+<ul>
+<li>JOBOBJECT_BASIC_ACCOUNTING_INFORMATION</li>
+<li>JOBOBJECT_BASIC_AND_IO_ACCOUNTING_INFORMATION</li>
+</ul>
+<p>如果一个job object是嵌套的，每一个子job的资源账户都会被累加到它的父job的资源账户上。</p>
+<h3 id="管理Job-Object本身"><a href="#管理Job-Object本身" class="headerlink" title="管理Job Object本身"></a>管理Job Object本身</h3><p>因指定的end-of-job时间限制到达，造成一个job object关联的所有进程都终止时，job object的状态会被设置为signaled。我们可以使用 WaitForSingleObject或者WaitForSingleObjectEx来监控job object来获得这个信号。</p>
+<p>指定job object名称、使用OpenJobObject函数可以获得一个已存在的job object的handle。</p>
+<p>使用CloseHandle函数可以管理一个job object handle。当一个job所关联的所有的进程都终止并且job的最后一个handle被关闭，这个job就将被销毁。但是，如果一个job带有JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE标志，那么关闭job的最后一个handle，会强制终止它关联的所有进程并销毁job。如果一个嵌套的job带有JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE标志，那么关闭这个job的handle会终止它以及它的子job的所有的进程。</p>
+<h3 id="使用Job-Objects-来管理进程树"><a href="#使用Job-Objects-来管理进程树" class="headerlink" title="使用Job Objects 来管理进程树"></a>使用Job Objects 来管理进程树</h3><p>从Windows 8和Windows Server 2012起，一个应用程序可以使用嵌套jobs来管理进程树。</p>
+<p>但是之前的系统可以使用其他的方法来管理进程树。这里就不作介绍了。有需要可以看文末的参考。</p>
+<h2 id="嵌套Job"><a href="#嵌套Job" class="headerlink" title="嵌套Job"></a>嵌套Job</h2><h3 id="嵌套job的层级"><a href="#嵌套job的层级" class="headerlink" title="嵌套job的层级"></a>嵌套job的层级</h3><p>在嵌套job里，每一个子job都包含了父job的进程的子集。如果一个已经在某个job里的进程被加到另外一个job里，如果这些job可以形成一个有效的层级并且没有任何一个job设置了UI限制，那么这些job就成为嵌套job</p>
+<p><img src="https://docs.microsoft.com/en-us/windows/win32/procthread/images/nested-jobs-a.png" alt="图一"></p>
+<p>上图展示了一个包含七个进程的进程树的job层级。Job1是job2和job4的父job，它是job3的祖先。job2是job3的父亲。job3是进程P2,P3,P4的直接job</p>
+<p>嵌套job也可以用于管理同级的兄弟进程，例如下图，Job1是Job2的父亲。job层级可能只包含进程树的一部分，例如，P0并不在job层级里。</p>
+<p><img src="https://docs.microsoft.com/en-us/windows/win32/procthread/images/nested-jobs-b.png" alt="图二"></p>
+<h3 id="创建一个嵌套job层级"><a href="#创建一个嵌套job层级" class="headerlink" title="创建一个嵌套job层级"></a>创建一个嵌套job层级</h3><p>job层级里的进程可以用AssignProcessToJobObject函数显式的关联到job上，也可以在进程创建的时候自动的关联。job被创建以及进程被关联的顺序决定了层级是否可以被创建出来。</p>
+<h4 id="1-显式关联"><a href="#1-显式关联" class="headerlink" title="1. 显式关联"></a>1. 显式关联</h4><p>所有的job object必须使用CreateJobObject创建，然后多次调用AssignProcessToJobObject，将每一个进程关联到每一个job上，为了确保层级有效，必须首先指定所有的进程到层级的根job上，然后指定进程的子集到直接的子job object上，以此类推。如果按照此顺序指定job,一个子job总是包含父job的进程的子集。如果顺序是随机的话，创建嵌套job将无法成功，AssignProcessToJobObject会返回失败。</p>
+<h4 id="2-隐式关联"><a href="#2-隐式关联" class="headerlink" title="2. 隐式关联"></a>2. 隐式关联</h4><p>当子进程创建的时候，会自动的关联到它的父进程的job链上的所有的job上。直接job object允许脱离（breakaway），子进程脱离直接job object和job链上的每一个job object, 直到遇到了不允许脱离的job object。如果直接job object不允许脱离，那么即使job链上的父job允许脱离，该进程也不能再脱离。</p>
+<h3 id="嵌套Job里的限制和通知"><a href="#嵌套Job里的限制和通知" class="headerlink" title="嵌套Job里的限制和通知"></a>嵌套Job里的限制和通知</h3><h4 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h4><p>设置在父job上的限制，会强制应用到子job上。子job的生效的限制值要比父job严格。举例来说，</p>
+<p>如果一个子job的优先级类是ABOVE_NORMAL_PRIORITY_CLASS，而父job的优先级类是NORMAL_PRIORITY_CLASS，那么子job的生效的优先级是NORMAL_PRIORITY_CLASS。</p>
+<p>但是，如果子job的优先级类是BELOW_NORMAL_PRIORITY_CLASS，那么生效的优先级类是BELOW_NORMAL_PRIORITY_CLASS</p>
+<p>下列几种限制都由生效值的问题：</p>
+<ul>
+<li>priority class</li>
+<li>affinity</li>
+<li>commit charge</li>
+<li>per-process execution time limit</li>
+<li>scheduling class limit</li>
+<li>working set minimum and maximum</li>
+</ul>
+<h4 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h4><p>当特点的事件（例如创建新进程、资源限制越界）发生，一个消息会被发送到job关联的I/O completion端口。job也可以接收消息。对于一个非嵌套的job，消息会被发送到该job关联的completion端口。对于一个嵌套的job,消息会被发送到该job所在的job链上的每一个job关联的completion端口。所以说子job不必一定有自己的completion端口。</p>
+<h3 id="嵌套Job的资源账户"><a href="#嵌套Job的资源账户" class="headerlink" title="嵌套Job的资源账户"></a>嵌套Job的资源账户</h3><p>嵌套job的资源账户信息描述了该job关联的每一个进程的资源使用情况，包括子job的。job链上的每一个job都聚合了它自己关联的进程以及它所在的job链上的子job所关联的进程。</p>
+<h3 id="终止嵌套Job"><a href="#终止嵌套Job" class="headerlink" title="终止嵌套Job"></a>终止嵌套Job</h3><p>当嵌套job里的一个job终止，系统将会终止这个job以及它的子job关联的所有进程。终止的进程的资源将会被父job来计入。</p>
+<p>与普通job一样，嵌套job也必须有JOB_OBJECT_TERMINATE访问权限。</p>
+<h2 id="Job-Object安全和访问权限"><a href="#Job-Object安全和访问权限" class="headerlink" title="Job Object安全和访问权限"></a>Job Object安全和访问权限</h2><p>可以控制对Job jobect的访问</p>
+<p>当使用CreateJobObject创建job的时候，可以指定一个security descriptor，如果没有指定，job object会有一个默认的security descriptor。默认security descriptor的访问控制列表ACL来自于创建者的primary或者impersonation令牌。</p>
+<p>当使用 CreateJobObject 创建job后，返回的handle具有JOB_OBJECT_ALL_ACCESS权限。</p>
+<p>当使用 OpenJobObject，系统会检查请求访问权限。</p>
+<p>如果一个job object在一个嵌套job层级里，调用者将具有子job的权限。</p>
+<p>如果你想读写job object的SACL, 则需要请求一个job object的ACCESS_SYSTEM_SECURITY权限。</p>
+<p>必须对job关联的每一个进程都设置安全限制，而不是设置job object本身。</p>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><p><a href="https://github.com/ityuhui/ResLimitsOnWin" target="_blank" rel="noopener">ResLimitsOnWin on Github</a></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://docs.microsoft.com/en-us/windows/win32/procthread/job-objects" target="_blank" rel="noopener">Job Objects</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Windows/" rel="tag"># Windows</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/04/04/Excel-Workbook-Offloading-to-IBM-Spectrum-Symphony/" rel="prev" title="Excel Workbook Offloading to IBM Spectrum Symphony">
+      <i class="fa fa-chevron-left"></i> Excel Workbook Offloading to IBM Spectrum Symphony
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/03/neural-network-trainning/" rel="next" title="训练神经网络的基本流程">
+      训练神经网络的基本流程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Job-Object"><span class="nav-number">2.</span> <span class="nav-text">Job Object</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Jobs"><span class="nav-number">2.1.</span> <span class="nav-text">创建Jobs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理Job关联的进程"><span class="nav-number">2.2.</span> <span class="nav-text">管理Job关联的进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Job限制和通知"><span class="nav-number">2.3.</span> <span class="nav-text">Job限制和通知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Job的资源账户"><span class="nav-number">2.4.</span> <span class="nav-text">Job的资源账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管理Job-Object本身"><span class="nav-number">2.5.</span> <span class="nav-text">管理Job Object本身</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Job-Objects-来管理进程树"><span class="nav-number">2.6.</span> <span class="nav-text">使用Job Objects 来管理进程树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#嵌套Job"><span class="nav-number">3.</span> <span class="nav-text">嵌套Job</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套job的层级"><span class="nav-number">3.1.</span> <span class="nav-text">嵌套job的层级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个嵌套job层级"><span class="nav-number">3.2.</span> <span class="nav-text">创建一个嵌套job层级</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-显式关联"><span class="nav-number">3.2.1.</span> <span class="nav-text">1. 显式关联</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-隐式关联"><span class="nav-number">3.2.2.</span> <span class="nav-text">2. 隐式关联</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套Job里的限制和通知"><span class="nav-number">3.3.</span> <span class="nav-text">嵌套Job里的限制和通知</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#限制"><span class="nav-number">3.3.1.</span> <span class="nav-text">限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通知"><span class="nav-number">3.3.2.</span> <span class="nav-text">通知</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套Job的资源账户"><span class="nav-number">3.4.</span> <span class="nav-text">嵌套Job的资源账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#终止嵌套Job"><span class="nav-number">3.5.</span> <span class="nav-text">终止嵌套Job</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Job-Object安全和访问权限"><span class="nav-number">4.</span> <span class="nav-text">Job Object安全和访问权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码"><span class="nav-number">5.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hui Yu"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Hui Yu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ityuhui" title="GitHub → https://github.com/ityuhui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

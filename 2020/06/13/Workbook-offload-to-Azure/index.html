@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前提条件你需要安装最低Windows HPC server 2012 SP1 在你的桌面机（你用来做Excel运算的机器）上，你需要安装Excel 2010和HPC client utilities. 你还需要部署一些Azure虚拟机节点，安装有Excel,用于实际运算。">
+<meta name="keywords" content="distributed computing,HPC,bigdata,分布式计算,大数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Azure云上使用HPC Services for Excel运行Excel运算">
+<meta property="og:url" content="ityuhui.github.io/2020/06/13/Workbook-offload-to-Azure/index.html">
+<meta property="og:site_name" content="Hui Yu">
+<meta property="og:description" content="前提条件你需要安装最低Windows HPC server 2012 SP1 在你的桌面机（你用来做Excel运算的机器）上，你需要安装Excel 2010和HPC client utilities. 你还需要部署一些Azure虚拟机节点，安装有Excel,用于实际运算。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-06-13T13:46:45.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Azure云上使用HPC Services for Excel运行Excel运算">
+<meta name="twitter:description" content="前提条件你需要安装最低Windows HPC server 2012 SP1 在你的桌面机（你用来做Excel运算的机器）上，你需要安装Excel 2010和HPC client utilities. 你还需要部署一些Azure虚拟机节点，安装有Excel,用于实际运算。">
+
+<link rel="canonical" href="ityuhui.github.io/2020/06/13/Workbook-offload-to-Azure/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>在Azure云上使用HPC Services for Excel运行Excel运算 | Hui Yu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hui Yu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/13/Workbook-offload-to-Azure/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          在Azure云上使用HPC Services for Excel运行Excel运算
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-13 21:29:22 / 修改时间：21:46:45" itemprop="dateCreated datePublished" datetime="2020-06-13T21:29:22+08:00">2020-06-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h2><p>你需要安装最低Windows HPC server 2012 SP1</p>
+<p>在你的桌面机（你用来做Excel运算的机器）上，你需要安装Excel 2010和HPC client utilities.</p>
+<p>你还需要部署一些Azure虚拟机节点，安装有Excel,用于实际运算。</p>
+<a id="more"></a>
+
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><h3 id="ExcelService配置"><a href="#ExcelService配置" class="headerlink" title="ExcelService配置"></a>ExcelService配置</h3><p>在运行ExcelService之前，我们需要现在ZzureNode上部署excel service</p>
+<ol>
+<li><p>打包依赖文件</p>
+</li>
+<li><p>将这些文件上传到云存储里</p>
+</li>
+<li><p>同步到Azure节点上</p>
+</li>
+</ol>
+<h3 id="例子1：在云上使用一个静态的workbook"><a href="#例子1：在云上使用一个静态的workbook" class="headerlink" title="例子1：在云上使用一个静态的workbook"></a>例子1：在云上使用一个静态的workbook</h3><h4 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h4><p>1.创建包</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; hpcpack create ConvertiblePricing_AzureCloud_Static.zip ConvertiblePricing_AzureCloud_Static.xlsb</span><br></pre></td></tr></table></figure>
+
+<p>2.上传包</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; hpcpack upload ConvertiblePricing_AzureCloud_Static.zip /scheduler:HEADNODE /nodetemplate:<span class="string">"Default AzureNode Template"</span></span><br></pre></td></tr></table></figure>
+
+<p>3.同步到Azure节点上</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; clusrun /scheduler:HEADNODE /template:AzureTemplate hpcsync</span><br></pre></td></tr></table></figure>
+
+<p>4.配置</p>
+<p>打开Excel文件，Alt+F11打开宏，修改HPCControlMacros</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Private</span> <span class="keyword">Const</span> HPC_ClusterScheduler = <span class="string">"HEADNODE"</span></span><br></pre></td></tr></table></figure>
+
+<p>5.运行</p>
+<p>先使用Calculate on Desktop测试在本机上运行</p>
+<p>再使用Calculate on Cloud来测试在云上运行，你会发现这次快很多，因为每一个单元格的计算都会发送给云的计算节点单独运算</p>
+<h3 id="例子2：在云上使用一个动态的workbook"><a href="#例子2：在云上使用一个动态的workbook" class="headerlink" title="例子2：在云上使用一个动态的workbook"></a>例子2：在云上使用一个动态的workbook</h3><p>与第一个例子不同，这个例子实现并没有向云上的计算节点部署Excel文件，而是在运行过程中通过一个帮助程序来下载Excel</p>
+<h3 id="例子3：使用SOA服务的Excel和Azure"><a href="#例子3：使用SOA服务的Excel和Azure" class="headerlink" title="例子3：使用SOA服务的Excel和Azure"></a>例子3：使用SOA服务的Excel和Azure</h3><p>上面两个例子都是使用Excel VBA来直接运行计算，我们还可以定制一个SOA Service，在这个Service里面，使用HPC/Excel库来做计算。我们还可以做一个定制的客户端，运行在桌面机上，使用云端的服务。这个Case和IBM Spectrum Symphony SOAM application已经基本一致了。</p>
+<h4 id="安装包"><a href="#安装包" class="headerlink" title="安装包"></a>安装包</h4><h5 id="编译SOA-service和client"><a href="#编译SOA-service和client" class="headerlink" title="编译SOA service和client"></a>编译SOA service和client</h5><h5 id="安装SOA-service"><a href="#安装SOA-service" class="headerlink" title="安装SOA service"></a>安装SOA service</h5><h4 id="运行示例代码"><a href="#运行示例代码" class="headerlink" title="运行示例代码"></a>运行示例代码</h4>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/distributed-computing/" rel="tag"># distributed computing</a>
+              <a href="/tags/HPC/" rel="tag"># HPC</a>
+              <a href="/tags/bigdata/" rel="tag"># bigdata</a>
+              <a href="/tags/分布式计算/" rel="tag"># 分布式计算</a>
+              <a href="/tags/大数据/" rel="tag"># 大数据</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/08/how-to-write-patent/" rel="prev" title="如何写专利">
+      <i class="fa fa-chevron-left"></i> 如何写专利
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前提条件"><span class="nav-number">1.</span> <span class="nav-text">前提条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ExcelService配置"><span class="nav-number">2.1.</span> <span class="nav-text">ExcelService配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子1：在云上使用一个静态的workbook"><span class="nav-number">2.2.</span> <span class="nav-text">例子1：在云上使用一个静态的workbook</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#步骤"><span class="nav-number">2.2.1.</span> <span class="nav-text">步骤</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子2：在云上使用一个动态的workbook"><span class="nav-number">2.3.</span> <span class="nav-text">例子2：在云上使用一个动态的workbook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#例子3：使用SOA服务的Excel和Azure"><span class="nav-number">2.4.</span> <span class="nav-text">例子3：使用SOA服务的Excel和Azure</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装包"><span class="nav-number">2.4.1.</span> <span class="nav-text">安装包</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#编译SOA-service和client"><span class="nav-number">2.4.1.1.</span> <span class="nav-text">编译SOA service和client</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装SOA-service"><span class="nav-number">2.4.1.2.</span> <span class="nav-text">安装SOA service</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行示例代码"><span class="nav-number">2.4.2.</span> <span class="nav-text">运行示例代码</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hui Yu"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Hui Yu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ityuhui" title="GitHub → https://github.com/ityuhui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

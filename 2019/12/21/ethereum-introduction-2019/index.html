@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="介绍以太坊是一个区块链平台，提供了运行智能合约的虚拟机，利用这个平台，任何人都可以快速的开发出一个自己的基于区块链的应用，例如一种加密货币，而不需要从最底层的区块链一步步的实现。">
+<meta name="keywords" content="block chain,ethereum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以太坊的一些基本概念">
+<meta property="og:url" content="ityuhui.github.io/2019/12/21/ethereum-introduction-2019/index.html">
+<meta property="og:site_name" content="Hui Yu">
+<meta property="og:description" content="介绍以太坊是一个区块链平台，提供了运行智能合约的虚拟机，利用这个平台，任何人都可以快速的开发出一个自己的基于区块链的应用，例如一种加密货币，而不需要从最底层的区块链一步步的实现。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-06-13T12:48:12.910Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以太坊的一些基本概念">
+<meta name="twitter:description" content="介绍以太坊是一个区块链平台，提供了运行智能合约的虚拟机，利用这个平台，任何人都可以快速的开发出一个自己的基于区块链的应用，例如一种加密货币，而不需要从最底层的区块链一步步的实现。">
+
+<link rel="canonical" href="ityuhui.github.io/2019/12/21/ethereum-introduction-2019/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>以太坊的一些基本概念 | Hui Yu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hui Yu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2019/12/21/ethereum-introduction-2019/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          以太坊的一些基本概念
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-21 20:50:00" itemprop="dateCreated datePublished" datetime="2019-12-21T20:50:00+08:00">2019-12-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-13 20:48:12" itemprop="dateModified" datetime="2020-06-13T20:48:12+08:00">2020-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/区块链/" itemprop="url" rel="index"><span itemprop="name">区块链</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>以太坊是一个区块链平台，提供了运行智能合约的虚拟机，利用这个平台，任何人都可以快速的开发出一个自己的基于区块链的应用，例如一种加密货币，而不需要从最底层的区块链一步步的实现。</p>
+<a id="more"></a>
+
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h3><p>智能合约指的是运行在以太坊网络上的分布式的应用程序。</p>
+<h3 id="Gas"><a href="#Gas" class="headerlink" title="Gas"></a>Gas</h3><p>智能合约在以太坊网络上的每一个节点上执行，需要消耗的电能和时间，因此引入Gas来计算成本。Gas指的是以太坊底层的虚拟机EVM执行代码的代价。如果你的智能合约程序用光了账户里的Gas，那么你的计算程序就将会被以太坊网络拒绝。</p>
+<p>Gas的价格由市场决定，与比特币的交易费类似。如果你出价高，网络中的节点会优先计算你的事务。通常来说，读取状态时免费，存储状态时收费。</p>
+<h3 id="分布式应用程序-dApp"><a href="#分布式应用程序-dApp" class="headerlink" title="分布式应用程序 dApp"></a>分布式应用程序 dApp</h3><p>分布式应用程序指的是服务端放在以太坊网络上的智能合约程序。它不并需要将全部的状态和计算都放在区块链上，因为那很昂贵。但是一个分布式程序最终必须将可信任状态存放到以太坊区块链上以供任何人读取。</p>
+<p>以太坊组织在Github上有一些关于分布式应用程序dApp的<a href="https://github.com/ethereum/dapp-bin" target="_blank" rel="noopener">参考和例子</a></p>
+<h3 id="dApp-客户端"><a href="#dApp-客户端" class="headerlink" title="dApp 客户端"></a>dApp 客户端</h3><p>一个dApp 客户端是以太坊区块链上的程序的前端，通常用Javascript或者Go/Rust编写。</p>
+<h3 id="dApp-浏览器"><a href="#dApp-浏览器" class="headerlink" title="dApp 浏览器"></a>dApp 浏览器</h3><p>是一个可以运行dApp Javascript客户端程序的应用程序，连接以太坊节点、提供一个账户接口。</p>
+<p>Mist是官方的以太坊dApp浏览器。</p>
+<h3 id="以太坊节点"><a href="#以太坊节点" class="headerlink" title="以太坊节点"></a>以太坊节点</h3><p>节点保存着区块链的副本，可以执行所有的事务来确认结果状态，运行着geth或者parity</p>
+<p>节点需要知道下载哪个区块链、和哪个peer通讯。</p>
+<p>通常使用docker来运行节点客户端，但是也可以使用Infra在本机运行（主要是为了测试和开发）</p>
+<p>如果你向用户分发dApp客户端，你不必提供对以太坊节点的访问方法。用户只需要运行dApp浏览器就可以了。</p>
+<h3 id="以太坊令牌"><a href="#以太坊令牌" class="headerlink" title="以太坊令牌"></a>以太坊令牌</h3><p>令牌就是在一个分布式哈希表里的通过API来做加运算和减运算的一些数字，通常用于去中心化的交互、资产所有权证明、投票权证明等。</p>
+<h3 id="REC20-ERC223-ERC777-ERC827-令牌"><a href="#REC20-ERC223-ERC777-ERC827-令牌" class="headerlink" title="REC20/ERC223/ERC777/ERC827 令牌"></a>REC20/ERC223/ERC777/ERC827 令牌</h3><p>用于定义令牌的协议</p>
+<h3 id="ERC721-NFT-令牌"><a href="#ERC721-NFT-令牌" class="headerlink" title="ERC721/NFT 令牌"></a>ERC721/NFT 令牌</h3><p>定义了一个不可替代的令牌的标准。所谓“不可替代”，指的是每一个令牌都不等于其他令牌，都有自己的独一无二的属性。</p>
+<h3 id="智能合约的接口"><a href="#智能合约的接口" class="headerlink" title="智能合约的接口"></a>智能合约的接口</h3><p>你可以使用 JSON RPC API与智能合约交互。geth和parity都提供了命令行/浏览器用于交互。</p>
+<p>如果你想编程与智能合约交互，那么可以使用web3.js, ethjs, abigen，你也可以写自己的客户端库来操作 JSON PRC API。</p>
+<p>为了测试和开发，可以使用Ganache来运行一个本地的以太坊节点。</p>
+<p>当你部署一个智能合约的时候，你所有要做的，就是向地址0 （0x0）发送一个事务（将合约的字节码作为参数）</p>
+<h3 id="Truffle-Embark-Populous-Perigord-和其他"><a href="#Truffle-Embark-Populous-Perigord-和其他" class="headerlink" title="Truffle, Embark, Populous, Perigord 和其他"></a>Truffle, Embark, Populous, Perigord 和其他</h3><p>一旦你开始写智能合约，你所作的事情会有大量的重复：编译源代码成为字节码、部署字节码到网络上、测试部署的合约等等。</p>
+<p>Truffle, Embark, Populous, Perigord 这些框架标准化和自动化了这些细节，他们提供了一个很好的编写、部署和测试合约的开发流程。</p>
+<p>其中最受欢迎的是用Node编写Truffle。</p>
+<p>当你第一次写合约的时候，最好不要使用这些框架，而是从头手写。这样可以让自己理解这些框架是干什么用的。当你熟悉了怎么手写智能合约之后，再使用这些框架。</p>
+<h3 id="ETHPM"><a href="#ETHPM" class="headerlink" title="ETHPM"></a>ETHPM</h3><p>ETHPM是一个去中心化的智能合约的包的仓库。使用它，你可以复用其他知名的合约和库，减少代码的重复。</p>
+<h3 id="主要的网络"><a href="#主要的网络" class="headerlink" title="主要的网络"></a>主要的网络</h3><p>Mainnet: 是主以太坊网络</p>
+<p>Repsten: 是主要的测试网络，使用工作量证明。</p>
+<h3 id="账户-钱包"><a href="#账户-钱包" class="headerlink" title="账户 钱包"></a>账户 钱包</h3><p>一个以太坊账户是一个私钥和地址对，他们用来存储以太币，无需Gas来创建，所有以太坊网络上的事务都起源于一个账户，合约不能发起一个事务。</p>
+<p>一个钱包可能是下列二者之一：</p>
+<p>1） 一个使用你的账户创建和发送事务的接口</p>
+<p>2） 只是一个发送和接收以太的智能合约</p>
+<h3 id="EVM"><a href="#EVM" class="headerlink" title="EVM"></a>EVM</h3><p>你的智能合约会被编译成一种机器码，它们会运行于网络上每一个节点的EVM（以太坊虚拟机）里。Solidity 是官方的编写智能合约的语言。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/block-chain/" rel="tag"># block chain</a>
+              <a href="/tags/ethereum/" rel="tag"># ethereum</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/16/Hyperledger-Fabric-Introduction/" rel="prev" title="Hyperledger Fabric的简单介绍">
+      <i class="fa fa-chevron-left"></i> Hyperledger Fabric的简单介绍
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/30/libyaml-introduction/" rel="next" title="使用libyaml">
+      使用libyaml <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#智能合约"><span class="nav-number">2.1.</span> <span class="nav-text">智能合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gas"><span class="nav-number">2.2.</span> <span class="nav-text">Gas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式应用程序-dApp"><span class="nav-number">2.3.</span> <span class="nav-text">分布式应用程序 dApp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dApp-客户端"><span class="nav-number">2.4.</span> <span class="nav-text">dApp 客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dApp-浏览器"><span class="nav-number">2.5.</span> <span class="nav-text">dApp 浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以太坊节点"><span class="nav-number">2.6.</span> <span class="nav-text">以太坊节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以太坊令牌"><span class="nav-number">2.7.</span> <span class="nav-text">以太坊令牌</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#REC20-ERC223-ERC777-ERC827-令牌"><span class="nav-number">2.8.</span> <span class="nav-text">REC20/ERC223/ERC777/ERC827 令牌</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ERC721-NFT-令牌"><span class="nav-number">2.9.</span> <span class="nav-text">ERC721/NFT 令牌</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#智能合约的接口"><span class="nav-number">2.10.</span> <span class="nav-text">智能合约的接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Truffle-Embark-Populous-Perigord-和其他"><span class="nav-number">2.11.</span> <span class="nav-text">Truffle, Embark, Populous, Perigord 和其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ETHPM"><span class="nav-number">2.12.</span> <span class="nav-text">ETHPM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主要的网络"><span class="nav-number">2.13.</span> <span class="nav-text">主要的网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#账户-钱包"><span class="nav-number">2.14.</span> <span class="nav-text">账户 钱包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EVM"><span class="nav-number">2.15.</span> <span class="nav-text">EVM</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hui Yu"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Hui Yu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ityuhui" title="GitHub → https://github.com/ityuhui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
