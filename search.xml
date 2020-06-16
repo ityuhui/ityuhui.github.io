@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>现代C++</title>
+      <link href="/2020/06/16/modern-c-plus-plus/"/>
+      <url>/2020/06/16/modern-c-plus-plus/</url>
+      
+        <content type="html"><![CDATA[<h2 id="智能指针的推荐用法"><a href="#智能指针的推荐用法" class="headerlink" title="智能指针的推荐用法"></a>智能指针的推荐用法</h2><h3 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h3><p>不要再使用new, delete, 一律用make_shared,make_unique代替</p><h3 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h3><p>只有具有ownership的关系，才用智能指针，否则使用 T &amp;, 或者 T *</p><a id="more"></a><h2 id="新的数据类型"><a href="#新的数据类型" class="headerlink" title="新的数据类型"></a>新的数据类型</h2><h3 id="std-any"><a href="#std-any" class="headerlink" title="std::any"></a>std::any</h3><p>类似于void *</p><h3 id="std-variant"><a href="#std-variant" class="headerlink" title="std::variant"></a>std::variant</h3><p>类似于c语言里的union</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C-plus-plus </tag>
+            
+            <tag> C++ </tag>
+            
+            <tag> Modern C++ </tag>
+            
+            <tag> C++17 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在Azure云上使用HPC Services for Excel运行Excel运算</title>
       <link href="/2020/06/13/Workbook-offload-to-Azure/"/>
       <url>/2020/06/13/Workbook-offload-to-Azure/</url>
@@ -20,15 +51,15 @@
       
         <tags>
             
-            <tag> distributed computing </tag>
-            
-            <tag> HPC </tag>
-            
             <tag> bigdata </tag>
+            
+            <tag> distributed computing </tag>
             
             <tag> 分布式计算 </tag>
             
             <tag> 大数据 </tag>
+            
+            <tag> HPC </tag>
             
         </tags>
       
@@ -188,9 +219,9 @@
       
         <tags>
             
-            <tag> distributed computing </tag>
-            
             <tag> bigdata </tag>
+            
+            <tag> distributed computing </tag>
             
             <tag> 分布式计算 </tag>
             
@@ -408,6 +439,8 @@
       
         <tags>
             
+            <tag> C-plus-plus </tag>
+            
             <tag> C++ </tag>
             
             <tag> libcurl </tag>
@@ -435,7 +468,7 @@
       
         <tags>
             
-            <tag> C++ </tag>
+            <tag> C-plus-plus </tag>
             
             <tag> stl </tag>
             
