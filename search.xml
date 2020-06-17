@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>GraphQL介绍</title>
+      <link href="/2020/06/17/GraphQL-introduction/"/>
+      <url>/2020/06/17/GraphQL-introduction/</url>
+      
+        <content type="html"><![CDATA[<h2 id="什么是GraphQL"><a href="#什么是GraphQL" class="headerlink" title="什么是GraphQL"></a>什么是GraphQL</h2><p>GraphQL 一种用于API的查询语言，具有优于RESTful的特点。它可以只用一个请求获取多个资源。</p><a id="more"></a><h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><p>Request</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    hero &#123;</span><br><span class="line">        name</span><br><span class="line">        height</span><br><span class="line">        mass</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>Response</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;hero&quot;:&#123;</span><br><span class="line">        &quot;name&quot;: &quot;Luke Skywalker&quot;,</span><br><span class="line">        &quot;height&quot; : 77</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Web开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> web </tag>
+            
+            <tag> GraphQL </tag>
+            
+            <tag> REST </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>现代C++</title>
       <link href="/2020/06/16/modern-c-plus-plus/"/>
       <url>/2020/06/16/modern-c-plus-plus/</url>
@@ -20,9 +49,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> Modern C++ </tag>
             
@@ -439,9 +468,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> libcurl </tag>
             
