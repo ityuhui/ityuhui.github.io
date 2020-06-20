@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>raft算法</title>
+      <link href="/2020/06/20/raft-introduction/"/>
+      <url>/2020/06/20/raft-introduction/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>当一个集群里的每台机器上都有一套自己的数据，让所有机器上的数据都保证一致的算法，就叫做分布式数据一致性算法。</p><p>最知名的分布式一致性算法是paxos，但是它非常难懂，并且由于论文并没有将其算法的细节描述清楚，导致了不同的工程实现。</p><p>Raft是另外一个知名的分布式数据一致性算法，由于采用了“强领导人”机制，使其较paxos简单，再加上论文比较详细的描述了算法的细节，使得其在工程上容易实现，所以目前生产环境上应用最广泛，例如etcd。</p><a id="more"></a><h2 id="算法的组成"><a href="#算法的组成" class="headerlink" title="算法的组成"></a>算法的组成</h2><h3 id="选举"><a href="#选举" class="headerlink" title="选举"></a>选举</h3><p>节点有三种状态</p><ul><li>follower</li><li>candidate</li><li>leader</li></ul><p>当节点启动的时候，进入follower状态，接收来自leader的心跳消息。当节点在一段时间后没有收到心跳消息，则认为leader死亡，就自行进入candidate状态，发起选举。向集群里的其他节点发送消息。当收到多数节点的同意消息之后，该节点由candidate状态进入leader状态，向集群里的其他follower发送心跳。</p><h3 id="日志复制"><a href="#日志复制" class="headerlink" title="日志复制"></a>日志复制</h3><h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://github.com/maemual/raft-zh_cn/blob/master/raft-zh_cn.md" target="_blank" rel="noopener">Raft论文中文翻译</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> raft </tag>
+            
+            <tag> 分布式一致性 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Dominant Resource Fairness算法</title>
+      <link href="/2020/06/17/DRF/"/>
+      <url>/2020/06/17/DRF/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。它不同于slot-based调度。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 调度 </tag>
+            
+            <tag> DRF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>GraphQL介绍</title>
       <link href="/2020/06/17/GraphQL-introduction/"/>
       <url>/2020/06/17/GraphQL-introduction/</url>
