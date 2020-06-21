@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hui Yu">
-<meta property="og:url" content="ityuhui.github.io/tags/调度/index.html">
+  <meta name="description" content="介绍DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。 动机基于slot的算法，不是没有用尽资源，就是过度使用资源。 分配的属性为了可以评估一个算法是否公平，论文提出了四个属性，以此来指导算法的开发。 Sharing incentive每一个用户应该更好的分享集群里的资源，而不是排他性使用他所有的那一部分。假设一个集群里有相同的机器和n个用户，每个用户都不可能在一个1/n资源分">
+<meta name="keywords" content="资源调度,DRF">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dominant Resource Fairness算法">
+<meta property="og:url" content="ityuhui.github.io/2020/06/20/DRF/index.html">
 <meta property="og:site_name" content="Hui Yu">
+<meta property="og:description" content="介绍DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。 动机基于slot的算法，不是没有用尽资源，就是过度使用资源。 分配的属性为了可以评估一个算法是否公平，论文提出了四个属性，以此来指导算法的开发。 Sharing incentive每一个用户应该更好的分享集群里的资源，而不是排他性使用他所有的那一部分。假设一个集群里有相同的机器和n个用户，每个用户都不可能在一个1/n资源分">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-06-20T14:06:07.409Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hui Yu">
+<meta name="twitter:title" content="Dominant Resource Fairness算法">
+<meta name="twitter:description" content="介绍DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。 动机基于slot的算法，不是没有用尽资源，就是过度使用资源。 分配的属性为了可以评估一个算法是否公平，论文提出了四个属性，以此来指导算法的开发。 Sharing incentive每一个用户应该更好的分享集群里的资源，而不是排他性使用他所有的那一部分。假设一个集群里有相同的机器和n个用户，每个用户都不可能在一个1/n资源分">
 
-<link rel="canonical" href="ityuhui.github.io/tags/调度/">
+<link rel="canonical" href="ityuhui.github.io/2020/06/20/DRF/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 调度 | Hui Yu</title>
+  <title>Dominant Resource Fairness算法 | Hui Yu</title>
   
 
 
@@ -153,51 +158,100 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">调度
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/20/DRF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Dominant Resource Fairness算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-20 21:36:36 / 修改时间：22:06:07" itemprop="dateCreated datePublished" datetime="2020-06-20T21:36:36+08:00">2020-06-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。</p>
+<h2 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h2><p>基于slot的算法，不是没有用尽资源，就是过度使用资源。</p>
+<h2 id="分配的属性"><a href="#分配的属性" class="headerlink" title="分配的属性"></a>分配的属性</h2><p>为了可以评估一个算法是否公平，论文提出了四个属性，以此来指导算法的开发。</p>
+<h3 id="Sharing-incentive"><a href="#Sharing-incentive" class="headerlink" title="Sharing incentive"></a>Sharing incentive</h3><p>每一个用户应该更好的分享集群里的资源，而不是排他性使用他所有的那一部分。假设一个集群里有相同的机器和n个用户，每个用户都不可能在一个1/n资源分区里分配更多的任务。</p>
+<h3 id="Strategy-proofness"><a href="#Strategy-proofness" class="headerlink" title="Strategy-proofness"></a>Strategy-proofness</h3><p>用户不可能通过撒谎的方式，获得更多的资源。</p>
+<h3 id="Envy-freeness"><a href="#Envy-freeness" class="headerlink" title="Envy-freeness"></a>Envy-freeness</h3><p>一个用户不能获的另外一个用户的分配资源。</p>
+<h3 id="Pareto-efficiency"><a href="#Pareto-efficiency" class="headerlink" title="Pareto efficiency"></a>Pareto efficiency</h3><p>如果一个用户没有降低他的分配，那么其他用户不可能提高分配。</p>
+<h2 id="DRF算法"><a href="#DRF算法" class="headerlink" title="DRF算法"></a>DRF算法</h2><p>DRF算法满足前一章所提出的四个属性。对于每一个用户，DRF计算出给该用户分配的每一个资源的份额。一个用户的所有的资源份额中，最大的数量，被称之为该用户的“主导份额”，该资源，被称之该用户的“主导资源”</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-06-17T21:36:36+08:00"
-              content="2020-06-17">
-          06-17
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/资源调度/" rel="tag"># 资源调度</a>
+              <a href="/tags/DRF/" rel="tag"># DRF</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/06/17/DRF/" itemprop="url">
-            <span itemprop="name">Dominant Resource Fairness算法</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/20/raft-introduction/" rel="prev" title="raft算法">
+      <i class="fa fa-chevron-left"></i> raft算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/21/Spark-Introduction/" rel="next" title="Introduction to Apache Spark">
+      Introduction to Apache Spark <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -250,6 +304,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动机"><span class="nav-number">2.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分配的属性"><span class="nav-number">3.</span> <span class="nav-text">分配的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sharing-incentive"><span class="nav-number">3.1.</span> <span class="nav-text">Sharing incentive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Strategy-proofness"><span class="nav-number">3.2.</span> <span class="nav-text">Strategy-proofness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Envy-freeness"><span class="nav-number">3.3.</span> <span class="nav-text">Envy-freeness</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pareto-efficiency"><span class="nav-number">3.4.</span> <span class="nav-text">Pareto efficiency</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DRF算法"><span class="nav-number">4.</span> <span class="nav-text">DRF算法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -265,7 +320,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -278,7 +333,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">61</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
