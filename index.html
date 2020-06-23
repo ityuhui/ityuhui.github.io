@@ -159,6 +159,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/23/git-merge-upstream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/23/git-merge-upstream/" class="post-title-link" itemprop="url">git merge 操作</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-06-23 19:33:28 / 修改时间：19:36:38" itemprop="dateCreated datePublished" datetime="2020-06-23T19:33:28+08:00">2020-06-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git的使用/" itemprop="url" rel="index"><span itemprop="name">git的使用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="git-merge-upstream"><a href="#git-merge-upstream" class="headerlink" title="git merge upstream"></a>git merge upstream</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git remote add upstream https://github.com/OpenAPITools/openapi-generator</span><br><span class="line"></span><br><span class="line">git fetch upstream</span><br><span class="line">git checkout master</span><br><span class="line">git merge upstream/master</span><br><span class="line"></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/06/23/git-merge-upstream/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/22/python-virtualenv-requirements-pytest-jupyter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -341,7 +416,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-21 11:21:53" itemprop="dateModified" datetime="2020-06-21T11:21:53+08:00">2020-06-21</time>
+                <time title="修改时间：2020-06-22 22:14:12" itemprop="dateModified" datetime="2020-06-22T22:14:12+08:00">2020-06-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -372,7 +447,19 @@
 <h3 id="Envy-freeness"><a href="#Envy-freeness" class="headerlink" title="Envy-freeness"></a>Envy-freeness</h3><p>一个用户不能获的另外一个用户的分配资源。</p>
 <h3 id="Pareto-efficiency"><a href="#Pareto-efficiency" class="headerlink" title="Pareto efficiency"></a>Pareto efficiency</h3><p>如果一个用户没有降低他的分配，那么其他用户不可能提高分配。</p>
 <h2 id="4-DRF算法"><a href="#4-DRF算法" class="headerlink" title="4. DRF算法"></a>4. DRF算法</h2><p>DRF算法满足前一章所提出的四个属性。对于每一个用户，DRF计算出给该用户分配的每一个资源的份额。一个用户的所有的资源份额中，数量最大的，被称之为该用户的“主导份额”，该资源被称之该用户的“主导资源”。不同的用户可能有不同的主导资源。</p>
-<h3 id="4-1-例子"><a href="#4-1-例子" class="headerlink" title="4.1 例子"></a>4.1 例子</h3><p>假设一个系统，有9 CPU，18GB 内存。两个用户，A运行任务（1 CPU，4 GB）</p>
+<h3 id="4-1-例子"><a href="#4-1-例子" class="headerlink" title="4.1 例子"></a>4.1 例子</h3><p>假设一个系统，有9 CPU，18GB 内存。两个用户，A运行任务（1 CPU，4 GB），B运行任务(3 CPU, 1 GB)。</p>
+<p>用户A的每个task消耗1/9的总CPU，2/9的总内存，所以A的主导资源是内存。</p>
+<p>用户B的每个task消耗1/3的总CPU，1/18的总内存，所以B的主导资源是CPU。</p>
+<p>DRF算法会让所有用户的主导份额保持相等：<br>A执行3个Task, 共消耗（3 CPU， 12 GB）<br>B执行2个Task，共消耗（6 CPU， 2 GB）<br>在这个分配下，每个用户都获得了相等的主导份额：<br>A得到了2/3的总内存，B得到了2/3的总CPU</p>
+<p>这一分配可以使用数学计算来表达，设x是A的task数，y是B的task数，那么，A收到（x CPU,4x GB）, B得到（3y CPU , y GB）, 总的资源分配是（x+3y CPU, 4x+y GB）, 让A的主导份额 4x/18 等于B的主导份额 3y/9, 那么，DRF的计算如下：</p>
+<p>max(x,y)<br>需要满足：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x + <span class="number">3</span>y &lt;= <span class="number">9</span></span><br><span class="line"><span class="number">4</span>x + y &lt;= <span class="number">18</span></span><br><span class="line"><span class="number">2</span>x / <span class="number">9</span> = y / <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>解答这个问题可得</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">3</span></span><br><span class="line">y = <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>因此,A得到（3 CPU，12 GB），B得到（6 CPU，2 GB）</p>
+<p>注意，DRF并不需要让用户的主导份额总是相等。当一个用户的总需求已经得到满足，该用户就不会在需要新的task，因此超过的资源会被其他用户分配，就像max-min fairness一样，除此之外，如果一个资源已经耗尽</p>
 
       
     </div>
@@ -861,92 +948,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hui Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hui Yu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/" class="post-title-link" itemprop="url">Microsoft HPC Pack 2016 学习笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-05 16:10:43" itemprop="dateCreated datePublished" datetime="2020-05-05T16:10:43+08:00">2020-05-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-13 20:48:12" itemprop="dateModified" datetime="2020-06-13T20:48:12+08:00">2020-06-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Microsoft HPC Pack是微软的高性能分布式计算平台，类似于IBM Spectrum Symphony，是一种基于SOA架构的分布式计算框架。目前，它有三种部署方式如下，本文只介绍第一种。</p>
-<ul>
-<li>on-premises, 部署在本地，可以把计算节点扩展到云上</li>
-<li>hybird, 部署在本地，通常会把计算节点扩展到云上</li>
-<li>on-demand 部署在云上</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/05/Microsoft-HPC-Pack-2016-Introduction/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1018,7 +1019,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
