@@ -416,7 +416,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-22 22:14:12" itemprop="dateModified" datetime="2020-06-22T22:14:12+08:00">2020-06-22</time>
+                <time title="修改时间：2020-06-24 20:33:58" itemprop="dateModified" datetime="2020-06-24T20:33:58+08:00">2020-06-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -459,8 +459,16 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">3</span></span><br><span class="line">y = <span class="number">2</span></span><br></pre></td></tr></table></figure>
 
 <p>因此,A得到（3 CPU，12 GB），B得到（6 CPU，2 GB）</p>
-<p>注意，DRF并不需要让用户的主导份额总是相等。当一个用户的总需求已经得到满足，该用户就不会在需要新的task，因此超过的资源会被其他用户分配，就像max-min fairness一样，除此之外，如果一个资源已经耗尽</p>
-
+<p>注意，DRF并不需要让用户的主导份额总是相等。当一个用户的总需求已经得到满足，该用户就不会在需要新的task，因此超过的资源会被其他用户分配，就像max-min fairness一样，除此之外，如果一个资源已经耗尽，不需要该资源的用户可以继续得到更高份额的其他资源。</p>
+<h3 id="4-2-DRF-调度算法"><a href="#4-2-DRF-调度算法" class="headerlink" title="4.2 DRF 调度算法"></a>4.2 DRF 调度算法</h3><p>4.1说的是最终的分配结果，并没有给出具体的每一步的算法，下面来详细说明算法：</p>
+<p>在每一步，DRF挑出主导份额最小的用户，（刚开始都是0，所以随便选一个），如果有足够的资源可以启动一个task,那么就分配资源给该用户，启动Task, 直到系统里没有资源可用。</p>
+<p>假设第一步挑出了B，那么B的份额变成了（3/9， 1/18），B的主导份额是1/3，这个时候A的主导份额是0，开始调度A。</p>
+<p>A得到（1/9，4/18），A的主导份额变成了2/9，还是比B的主导份额小，所以接下来还是调度A。</p>
+<p>A变成（2/9，8/18），A的主导份额变成了4/9，大于B的主导份额1/3，所以接下来调度B。</p>
+<p>一直到最后，A和B的主导份额都变成了2/3，这个时候集群里的CPU分配完了，调度无法继续，调度结束。</p>
+<p>在这个例子里，分配停止是因为资源用光了。但是，一般情况下，当某个资源用光了以后，分配可能还会继续，因为有些task根本不需要这种被用光的资源。</p>
+<p>上述算法可以使用二叉堆来存储每一个用户的主导份额，每一次对n的用户的调度的时间复杂度是O(log n)</p>
+<h3 id="4-3-加权的DRF"><a href="#4-3-加权的DRF" class="headerlink" title="4.3 加权的DRF"></a>4.3 加权的DRF</h3>
       
     </div>
 
