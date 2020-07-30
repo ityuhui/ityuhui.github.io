@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="Hui Yu">
 <meta property="og:description" content="1. 介绍DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。 2. 动机基于slot的算法，不是没有用尽资源，就是过度使用资源。 3. 分配的属性为了可以评估一个算法是否公平，论文提出了四个属性，以此来指导算法的开发。 Sharing incentive每一个用户应该更好的分享集群里的资源，而不是排他性使用他所有的那一部分。假设一个集群里有相同的机器和n个用户，每个用户都不可能">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-24T12:33:58.297Z">
+<meta property="og:updated_time" content="2020-06-30T13:09:52.937Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dominant Resource Fairness算法">
 <meta name="twitter:description" content="1. 介绍DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。 2. 动机基于slot的算法，不是没有用尽资源，就是过度使用资源。 3. 分配的属性为了可以评估一个算法是否公平，论文提出了四个属性，以此来指导算法的开发。 Sharing incentive每一个用户应该更好的分享集群里的资源，而不是排他性使用他所有的那一部分。假设一个集群里有相同的机器和n个用户，每个用户都不可能">
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-24 20:33:58" itemprop="dateModified" datetime="2020-06-24T20:33:58+08:00">2020-06-24</time>
+                <time title="修改时间：2020-06-30 21:09:52" itemprop="dateModified" datetime="2020-06-30T21:09:52+08:00">2020-06-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +247,9 @@
 <p>一直到最后，A和B的主导份额都变成了2/3，这个时候集群里的CPU分配完了，调度无法继续，调度结束。</p>
 <p>在这个例子里，分配停止是因为资源用光了。但是，一般情况下，当某个资源用光了以后，分配可能还会继续，因为有些task根本不需要这种被用光的资源。</p>
 <p>上述算法可以使用二叉堆来存储每一个用户的主导份额，每一次对n的用户的调度的时间复杂度是O(log n)</p>
-<h3 id="4-3-加权的DRF"><a href="#4-3-加权的DRF" class="headerlink" title="4.3 加权的DRF"></a>4.3 加权的DRF</h3>
+<h3 id="4-3-加权的DRF"><a href="#4-3-加权的DRF" class="headerlink" title="4.3 加权的DRF"></a>4.3 加权的DRF</h3><p>在实际应用中，很多时候用户得到的资源并不应该是相等的，例如，执行重要的任务的用户应该得到更多的资源。因此，我们提出了加权DRF。</p>
+<p>在这一算法里，每一个用户i都被关联一个加权向量Wi = (wi1,…,wim), wij代表用户i对于资源j的权重，这个时候，用户i的主导份额变成 maxj{ uij / wij}, uij是用户i</p>
+
     </div>
 
     
