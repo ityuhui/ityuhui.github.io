@@ -8,7 +8,7 @@
       <link href="/2020/09/13/solidity-summary/"/>
       <url>/2020/09/13/solidity-summary/</url>
       
-        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>solidity是etherum上的智能合约编程语言，其语义类似于Javascript、C++、Python，由C++开发</p><a id="more"></a><h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p><a href="https://solidity.readthedocs.io/" target="_blank" rel="noopener">https://solidity.readthedocs.io/</a></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>solidity是etherum上的智能合约编程语言，其语义类似于Javascript、C++、Python，由C++开发</p><a id="more"></a><h2 id="IDE"><a href="#IDE" class="headerlink" title="IDE"></a>IDE</h2><p>最好的solidity IDE是<a href="https://remix.ethereum.org/" target="_blank" rel="noopener">Remix</a>，这是一个网页版的IDE。</p><h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p><a href="https://solidity.readthedocs.io/" target="_blank" rel="noopener">https://solidity.readthedocs.io/</a></p>]]></content>
       
       
       <categories>
@@ -387,9 +387,9 @@
             
             <tag> distributed computing </tag>
             
-            <tag> Microsoft </tag>
-            
             <tag> HPC </tag>
+            
+            <tag> Microsoft </tag>
             
         </tags>
       
