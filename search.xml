@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>进程间通信</title>
+      <link href="/2020/10/01/interproces-communication/"/>
+      <url>/2020/10/01/interproces-communication/</url>
+      
+        <content type="html"><![CDATA[<p>在操作系统原理里，进程间通讯有几种方法： </p><ul><li>信号</li><li>管道</li><li>共享内存</li><li>消息队列</li><li>socket</li></ul><p>在软件开发中，常用最后一种方法，就是通过网络，但是网络又有几种方法：</p><ul><li>REST</li><li>SOAP</li><li>Message Queue</li><li>gPRC</li><li>自己实现socket server,socket client,自己定义消息</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件开发的基础知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 操作系统 </tag>
+            
+            <tag> 进程间通信 </tag>
+            
+            <tag> interprocess communication </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Solidity的一些总结</title>
       <link href="/2020/09/13/solidity-summary/"/>
       <url>/2020/09/13/solidity-summary/</url>
@@ -91,7 +120,7 @@
       <link href="/2020/06/23/git-merge-upstream/"/>
       <url>/2020/06/23/git-merge-upstream/</url>
       
-        <content type="html"><![CDATA[<h2 id="git-merge-upstream"><a href="#git-merge-upstream" class="headerlink" title="git merge upstream"></a>git merge upstream</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git remote add upstream https://github.com/OpenAPITools/openapi-generator</span><br><span class="line"></span><br><span class="line">git fetch upstream</span><br><span class="line">git checkout master</span><br><span class="line">git merge upstream/master</span><br><span class="line"></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="git-branch-merge"><a href="#git-branch-merge" class="headerlink" title="git branch merge"></a>git branch merge</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git branch -a  #先查看下当前的本地和远程分支</span><br><span class="line"></span><br><span class="line">git checkout -b my_dev origin/dev  #或者是切换到本地的my_dev分支，假如已经存在的话，即git checkout my_dev </span><br><span class="line"></span><br><span class="line">git pull #将本地分支my_dev对应的远程分支dev拉下来</span><br><span class="line"></span><br><span class="line">git checkout master #切换到master分支</span><br><span class="line"></span><br><span class="line">git pull #确保master分支也是最新的</span><br><span class="line"></span><br><span class="line">git merge my_dev #执行合并的关键代码，此时执行结果时将本地的my_dev合并到本地master分支</span><br><span class="line"></span><br><span class="line">git push origin master #将合并的本地master分支推送到远程master</span><br></pre></td></tr></table></figure><h2 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h2><h3 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a>删除本地分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d &lt;BranchName&gt;</span><br></pre></td></tr></table></figure><h3 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete &lt;BranchName&gt;</span><br></pre></td></tr></table></figure><h3 id="查看本地分支的追踪情况"><a href="#查看本地分支的追踪情况" class="headerlink" title="查看本地分支的追踪情况"></a>查看本地分支的追踪情况</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote show origin</span><br></pre></td></tr></table></figure><h3 id="删除已经被远程删除的分支"><a href="#删除已经被远程删除的分支" class="headerlink" title="删除已经被远程删除的分支"></a>删除已经被远程删除的分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure><h2 id="代码归滚"><a href="#代码归滚" class="headerlink" title="代码归滚"></a>代码归滚</h2><h3 id="方式一，使用revert"><a href="#方式一，使用revert" class="headerlink" title="方式一，使用revert"></a>方式一，使用revert</h3><p>会产生新的提交记录</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><h3 id="方式二，使用reset"><a href="#方式二，使用reset" class="headerlink" title="方式二，使用reset"></a>方式二，使用reset</h3><p>不会产生新的提交记录</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h2 id="git-merge-upstream"><a href="#git-merge-upstream" class="headerlink" title="git merge upstream"></a>git merge upstream</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git remote add upstream https://github.com/OpenAPITools/openapi-generator</span><br><span class="line"></span><br><span class="line">git fetch upstream</span><br><span class="line">git checkout master</span><br><span class="line">git merge upstream/master</span><br><span class="line"></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="git-branch-merge"><a href="#git-branch-merge" class="headerlink" title="git branch merge"></a>git branch merge</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">git branch -a  #先查看下当前的本地和远程分支</span><br><span class="line"></span><br><span class="line">git checkout -b my_dev origin/dev  #或者是切换到本地的my_dev分支，假如已经存在的话，即git checkout my_dev </span><br><span class="line"></span><br><span class="line">git pull #将本地分支my_dev对应的远程分支dev拉下来</span><br><span class="line"></span><br><span class="line">git checkout master #切换到master分支</span><br><span class="line"></span><br><span class="line">git pull #确保master分支也是最新的</span><br><span class="line"></span><br><span class="line">git merge my_dev #执行合并的关键代码，此时执行结果时将本地的my_dev合并到本地master分支</span><br><span class="line"></span><br><span class="line">git push origin master #将合并的本地master分支推送到远程master</span><br></pre></td></tr></table></figure><h2 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h2><h3 id="删除本地分支"><a href="#删除本地分支" class="headerlink" title="删除本地分支"></a>删除本地分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d &lt;BranchName&gt;</span><br></pre></td></tr></table></figure><h3 id="删除远程分支"><a href="#删除远程分支" class="headerlink" title="删除远程分支"></a>删除远程分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin --delete &lt;BranchName&gt;</span><br></pre></td></tr></table></figure><h3 id="查看本地分支的追踪情况"><a href="#查看本地分支的追踪情况" class="headerlink" title="查看本地分支的追踪情况"></a>查看本地分支的追踪情况</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote show origin</span><br></pre></td></tr></table></figure><h3 id="删除已经被远程删除的分支"><a href="#删除已经被远程删除的分支" class="headerlink" title="删除已经被远程删除的分支"></a>删除已经被远程删除的分支</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure><h2 id="拉取远程存在，但是本地没有的分支"><a href="#拉取远程存在，但是本地没有的分支" class="headerlink" title="拉取远程存在，但是本地没有的分支"></a>拉取远程存在，但是本地没有的分支</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line"></span><br><span class="line">git checkout -b abranch origin/abranch</span><br></pre></td></tr></table></figure><h2 id="代码归滚"><a href="#代码归滚" class="headerlink" title="代码归滚"></a>代码归滚</h2><h3 id="方式一，使用revert"><a href="#方式一，使用revert" class="headerlink" title="方式一，使用revert"></a>方式一，使用revert</h3><p>会产生新的提交记录</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure><h3 id="方式二，使用reset"><a href="#方式二，使用reset" class="headerlink" title="方式二，使用reset"></a>方式二，使用reset</h3><p>不会产生新的提交记录</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">git push origin master -f</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -501,9 +530,9 @@
       
         <tags>
             
-            <tag> k8s </tag>
-            
             <tag> kubernetes </tag>
+            
+            <tag> k8s </tag>
             
         </tags>
       
@@ -607,9 +636,9 @@
       
         <tags>
             
-            <tag> k8s </tag>
-            
             <tag> kubernetes </tag>
+            
+            <tag> k8s </tag>
             
         </tags>
       
