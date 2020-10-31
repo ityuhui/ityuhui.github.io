@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="Hui Yu">
 <meta property="og:description" content="git merge upstream12345678git remote add upstream https://github.com/OpenAPITools/openapi-generatorgit fetch upstreamgit checkout mastergit merge upstream/mastergit push origin master">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-10-01T12:14:29.979Z">
+<meta property="og:updated_time" content="2020-10-31T11:52:14.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git merge 操作">
 <meta name="twitter:description" content="git merge upstream12345678git remote add upstream https://github.com/OpenAPITools/openapi-generatorgit fetch upstreamgit checkout mastergit merge upstream/mastergit push origin master">
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-01 20:14:29" itemprop="dateModified" datetime="2020-10-01T20:14:29+08:00">2020-10-01</time>
+                <time title="修改时间：2020-10-31 19:52:14" itemprop="dateModified" datetime="2020-10-31T19:52:14+08:00">2020-10-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -234,7 +234,15 @@
 
 <h2 id="拉取远程存在，但是本地没有的分支"><a href="#拉取远程存在，但是本地没有的分支" class="headerlink" title="拉取远程存在，但是本地没有的分支"></a>拉取远程存在，但是本地没有的分支</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br><span class="line"></span><br><span class="line">git checkout -b abranch origin/abranch</span><br></pre></td></tr></table></figure>
 
-<h2 id="代码归滚"><a href="#代码归滚" class="headerlink" title="代码归滚"></a>代码归滚</h2><h3 id="方式一，使用revert"><a href="#方式一，使用revert" class="headerlink" title="方式一，使用revert"></a>方式一，使用revert</h3><p>会产生新的提交记录</p>
+<h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>解决冲突有两种方法，merge和rebase</p>
+<h3 id="rebase"><a href="#rebase" class="headerlink" title="rebase"></a>rebase</h3><p>在开发分支上，执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase master</span><br></pre></td></tr></table></figure>
+
+<p>解决冲突<br>执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git rebase --continue</span><br><span class="line">git commit</span><br></pre></td></tr></table></figure>
+
+<h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p>我自己只用rebase</p>
+<h2 id="代码回滚"><a href="#代码回滚" class="headerlink" title="代码回滚"></a>代码回滚</h2><h3 id="方式一，使用revert"><a href="#方式一，使用revert" class="headerlink" title="方式一，使用revert"></a>方式一，使用revert</h3><p>会产生新的提交记录</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git revert HEAD</span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
 
 <h3 id="方式二，使用reset"><a href="#方式二，使用reset" class="headerlink" title="方式二，使用reset"></a>方式二，使用reset</h3><p>不会产生新的提交记录</p>
@@ -323,7 +331,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-merge-upstream"><span class="nav-number">1.</span> <span class="nav-text">git merge upstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-branch-merge"><span class="nav-number">2.</span> <span class="nav-text">git branch merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除分支"><span class="nav-number">3.</span> <span class="nav-text">删除分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除本地分支"><span class="nav-number">3.1.</span> <span class="nav-text">删除本地分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除远程分支"><span class="nav-number">3.2.</span> <span class="nav-text">删除远程分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看本地分支的追踪情况"><span class="nav-number">3.3.</span> <span class="nav-text">查看本地分支的追踪情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除已经被远程删除的分支"><span class="nav-number">3.4.</span> <span class="nav-text">删除已经被远程删除的分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉取远程存在，但是本地没有的分支"><span class="nav-number">4.</span> <span class="nav-text">拉取远程存在，但是本地没有的分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码归滚"><span class="nav-number">5.</span> <span class="nav-text">代码归滚</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方式一，使用revert"><span class="nav-number">5.1.</span> <span class="nav-text">方式一，使用revert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式二，使用reset"><span class="nav-number">5.2.</span> <span class="nav-text">方式二，使用reset</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-merge-upstream"><span class="nav-number">1.</span> <span class="nav-text">git merge upstream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-branch-merge"><span class="nav-number">2.</span> <span class="nav-text">git branch merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除分支"><span class="nav-number">3.</span> <span class="nav-text">删除分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除本地分支"><span class="nav-number">3.1.</span> <span class="nav-text">删除本地分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除远程分支"><span class="nav-number">3.2.</span> <span class="nav-text">删除远程分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看本地分支的追踪情况"><span class="nav-number">3.3.</span> <span class="nav-text">查看本地分支的追踪情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除已经被远程删除的分支"><span class="nav-number">3.4.</span> <span class="nav-text">删除已经被远程删除的分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拉取远程存在，但是本地没有的分支"><span class="nav-number">4.</span> <span class="nav-text">拉取远程存在，但是本地没有的分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决冲突"><span class="nav-number">5.</span> <span class="nav-text">解决冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rebase"><span class="nav-number">5.1.</span> <span class="nav-text">rebase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#merge"><span class="nav-number">5.2.</span> <span class="nav-text">merge</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码回滚"><span class="nav-number">6.</span> <span class="nav-text">代码回滚</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方式一，使用revert"><span class="nav-number">6.1.</span> <span class="nav-text">方式一，使用revert</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方式二，使用reset"><span class="nav-number">6.2.</span> <span class="nav-text">方式二，使用reset</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
