@@ -8,7 +8,7 @@
       <link href="/2020/11/13/k3s-experiment/"/>
       <url>/2020/11/13/k3s-experiment/</url>
       
-        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>k3s是rancher公司发布的kubernetes分发版，用于物联网、边缘计算，所以对kubernetes进行了很多剪裁。</p><h2 id="导入镜像"><a href="#导入镜像" class="headerlink" title="导入镜像"></a>导入镜像</h2><p>在具有docker的机器上</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker save -o busybox.tar busyboxaaa</span><br><span class="line">scp busybox.tar ubuntu@k3s_machine:~/</span><br></pre></td></tr></table></figure><p>在k3s_machine上</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctr image import busybox.tar</span><br></pre></td></tr></table></figure>]]></content>
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>k3s是rancher公司发布的kubernetes分发版，用于物联网、边缘计算，所以对kubernetes进行了很多剪裁。</p><a id="more"></a><h2 id="导入镜像"><a href="#导入镜像" class="headerlink" title="导入镜像"></a>导入镜像</h2><p>在具有docker的机器上</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker save -o busybox.tar busyboxaaa</span><br><span class="line">scp busybox.tar ubuntu@k3s_machine:~/</span><br></pre></td></tr></table></figure><p>在k3s_machine上</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctr image import busybox.tar</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
@@ -611,9 +611,9 @@
       
         <tags>
             
-            <tag> kubernetes </tag>
-            
             <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
             
         </tags>
       
@@ -717,9 +717,9 @@
       
         <tags>
             
-            <tag> kubernetes </tag>
-            
             <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
             
         </tags>
       
