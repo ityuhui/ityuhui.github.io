@@ -159,6 +159,83 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/11/16/libcurl-usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/16/libcurl-usage/" class="post-title-link" itemprop="url">libcurl使用中的一些总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-16 21:15:07 / 修改时间：21:27:42" itemprop="dateCreated datePublished" datetime="2020-11-16T21:15:07+08:00">2020-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络编程/" itemprop="url" rel="index"><span itemprop="name">网络编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-终止一个永远连接的watch线程"><a href="#1-终止一个永远连接的watch线程" class="headerlink" title="1. 终止一个永远连接的watch线程"></a>1. 终止一个永远连接的watch线程</h2><p>不要试图使用pthread_cancel()，会发生资源泄露 </p>
+<p>正确的方法是，使用一个加锁的变量，一个线程设置变量为“退出”，另一个Watch线程检查这个变量，然后在本线程内终止curl_easy_perfrom()</p>
+<h2 id="2-如何终止curl-easy-perform"><a href="#2-如何终止curl-easy-perform" class="headerlink" title="2. 如何终止curl_easy_perform()"></a>2. 如何终止curl_easy_perform()</h2><p>有两种方法：</p>
+<h4 id="第一种-progress-function"><a href="#第一种-progress-function" class="headerlink" title="第一种 progress function"></a>第一种 progress function</h4><p>progress function 如果返回不为0，传输会终止。</p>
+<p><a href="https://curl.se/mail/lib-2007-09/0097.html" target="_blank" rel="noopener">参考1</a></p>
+<h4 id="第二种-重新设置超时"><a href="#第二种-重新设置超时" class="headerlink" title="第二种 重新设置超时"></a>第二种 重新设置超时</h4><p>首先保存curl_handler</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl_easy_setopt(curl_handler, CURLOPT_TIMEOUT_MS, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>然后传输就会终止。</p>
+<p><a href="https://stackoverflow.com/questions/28767613/cancel-curl-easy-perform-while-it-is-trying-to-connect" target="_blank" rel="noopener">参考</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/11/13/k3s-experiment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -874,81 +951,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/21/Spark-Introduction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hui Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hui Yu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/21/Spark-Introduction/" class="post-title-link" itemprop="url">Introduction to Apache Spark</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-21 10:59:22 / 修改时间：11:01:42" itemprop="dateCreated datePublished" datetime="2020-06-21T10:59:22+08:00">2020-06-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>Apache spark is a batch computing framework. It is used to replace MapReduce in Hadoop. It can be deployed on Apache Yarn or Mesos, Kubernetes.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/21/Spark-Introduction/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1020,7 +1022,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="1 IntroductionApache spark is a batch computing framework. It is used to replace MapReduce in Hadoop. It can be deployed on Apache Yarn or Mesos, Kubernetes.">
-<meta name="keywords" content="Spark">
+  <meta name="description" content="1. 终止一个永远连接的watch线程不要试图使用pthread_cancel()，会发生资源泄露  正确的方法是，使用一个加锁的变量，一个线程设置变量为“退出”，另一个Watch线程检查这个变量，然后在本线程内终止curl_easy_perfrom() 2. 如何终止curl_easy_perform()有两种方法： 第一种 progress functionprogress function">
+<meta name="keywords" content="libcurl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Introduction to Apache Spark">
-<meta property="og:url" content="ityuhui.github.io/2020/06/21/Spark-Introduction/index.html">
+<meta property="og:title" content="libcurl使用中的一些总结">
+<meta property="og:url" content="ityuhui.github.io/2020/11/16/libcurl-usage/index.html">
 <meta property="og:site_name" content="Hui Yu">
-<meta property="og:description" content="1 IntroductionApache spark is a batch computing framework. It is used to replace MapReduce in Hadoop. It can be deployed on Apache Yarn or Mesos, Kubernetes.">
+<meta property="og:description" content="1. 终止一个永远连接的watch线程不要试图使用pthread_cancel()，会发生资源泄露  正确的方法是，使用一个加锁的变量，一个线程设置变量为“退出”，另一个Watch线程检查这个变量，然后在本线程内终止curl_easy_perfrom() 2. 如何终止curl_easy_perform()有两种方法： 第一种 progress functionprogress function">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-21T03:01:42.194Z">
+<meta property="og:updated_time" content="2020-11-16T13:27:42.594Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Introduction to Apache Spark">
-<meta name="twitter:description" content="1 IntroductionApache spark is a batch computing framework. It is used to replace MapReduce in Hadoop. It can be deployed on Apache Yarn or Mesos, Kubernetes.">
+<meta name="twitter:title" content="libcurl使用中的一些总结">
+<meta name="twitter:description" content="1. 终止一个永远连接的watch线程不要试图使用pthread_cancel()，会发生资源泄露  正确的方法是，使用一个加锁的变量，一个线程设置变量为“退出”，另一个Watch线程检查这个变量，然后在本线程内终止curl_easy_perfrom() 2. 如何终止curl_easy_perform()有两种方法： 第一种 progress functionprogress function">
 
-<link rel="canonical" href="ityuhui.github.io/2020/06/21/Spark-Introduction/">
+<link rel="canonical" href="ityuhui.github.io/2020/11/16/libcurl-usage/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>Introduction to Apache Spark | Hui Yu</title>
+  <title>libcurl使用中的一些总结 | Hui Yu</title>
   
 
 
@@ -165,7 +165,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/21/Spark-Introduction/">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/11/16/libcurl-usage/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Introduction to Apache Spark
+          libcurl使用中的一些总结
         </h1>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-06-21 10:59:22 / 修改时间：11:01:42" itemprop="dateCreated datePublished" datetime="2020-06-21T10:59:22+08:00">2020-06-21</time>
+              <time title="创建时间：2020-11-16 21:15:07 / 修改时间：21:27:42" itemprop="dateCreated datePublished" datetime="2020-11-16T21:15:07+08:00">2020-11-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -197,7 +197,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
+                  <a href="/categories/网络编程/" itemprop="url" rel="index"><span itemprop="name">网络编程</span></a>
                 </span>
             </span>
 
@@ -212,23 +212,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>Apache spark is a batch computing framework. It is used to replace MapReduce in Hadoop. It can be deployed on Apache Yarn or Mesos, Kubernetes.</p>
-<a id="more"></a>
+        <h2 id="1-终止一个永远连接的watch线程"><a href="#1-终止一个永远连接的watch线程" class="headerlink" title="1. 终止一个永远连接的watch线程"></a>1. 终止一个永远连接的watch线程</h2><p>不要试图使用pthread_cancel()，会发生资源泄露 </p>
+<p>正确的方法是，使用一个加锁的变量，一个线程设置变量为“退出”，另一个Watch线程检查这个变量，然后在本线程内终止curl_easy_perfrom()</p>
+<h2 id="2-如何终止curl-easy-perform"><a href="#2-如何终止curl-easy-perform" class="headerlink" title="2. 如何终止curl_easy_perform()"></a>2. 如何终止curl_easy_perform()</h2><p>有两种方法：</p>
+<h4 id="第一种-progress-function"><a href="#第一种-progress-function" class="headerlink" title="第一种 progress function"></a>第一种 progress function</h4><p>progress function 如果返回不为0，传输会终止。</p>
+<p><a href="https://curl.se/mail/lib-2007-09/0097.html" target="_blank" rel="noopener">参考1</a></p>
+<h4 id="第二种-重新设置超时"><a href="#第二种-重新设置超时" class="headerlink" title="第二种 重新设置超时"></a>第二种 重新设置超时</h4><p>首先保存curl_handler</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl_easy_setopt(curl_handler, CURLOPT_TIMEOUT_MS, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
 
-<h2 id="1-1-Compare"><a href="#1-1-Compare" class="headerlink" title="1.1 Compare"></a>1.1 Compare</h2><h3 id="1-1-1-Flink"><a href="#1-1-1-Flink" class="headerlink" title="1.1.1 Flink"></a>1.1.1 Flink</h3><p>Flink is a stream computing framework. It is used for millisecond-level computing</p>
-<h2 id="2-Use-Case"><a href="#2-Use-Case" class="headerlink" title="2 Use Case"></a>2 Use Case</h2><h3 id="2-1-Interactive-anylysis-with-the-Spark-shell"><a href="#2-1-Interactive-anylysis-with-the-Spark-shell" class="headerlink" title="2.1 Interactive anylysis with the Spark shell"></a>2.1 Interactive anylysis with the Spark shell</h3><h3 id="2-2-Self-contain-applications-written-with-Spark-API"><a href="#2-2-Self-contain-applications-written-with-Spark-API" class="headerlink" title="2.2 Self-contain applications written with Spark API"></a>2.2 Self-contain applications written with Spark API</h3><h2 id="3-Programming-Guides"><a href="#3-Programming-Guides" class="headerlink" title="3 Programming Guides"></a>3 Programming Guides</h2><h3 id="3-1-RDD"><a href="#3-1-RDD" class="headerlink" title="3.1 RDD"></a>3.1 RDD</h3><p>Core and old API</p>
-<h3 id="3-2-Spark-SQL-Datasets-DataFrames"><a href="#3-2-Spark-SQL-Datasets-DataFrames" class="headerlink" title="3.2 Spark SQL, Datasets, DataFrames"></a>3.2 Spark SQL, Datasets, DataFrames</h3><h4 id="Term"><a href="#Term" class="headerlink" title="Term."></a>Term.</h4><ul>
-<li>Dataset is the new interface added in Spark1.6</li>
-<li>DataFrame is a Dataset organized into named columns. It is equivalent to a table in a relational database.</li>
-</ul>
-<h4 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h4><ol>
-<li>Create SparkSession</li>
-<li>Create DataFrames</li>
-</ol>
-<h3 id="3-3-Structured-Streaming"><a href="#3-3-Structured-Streaming" class="headerlink" title="3.3 Structured Streaming"></a>3.3 Structured Streaming</h3><p>Using Datasets and DataFrame, newer API than DStreams</p>
-<h3 id="3-4-Spark-Streaming-using-DStreams"><a href="#3-4-Spark-Streaming-using-DStreams" class="headerlink" title="3.4 Spark Streaming using DStreams"></a>3.4 Spark Streaming using DStreams</h3><p>Using DStreams, old stream API</p>
-<h3 id="3-5-MLlib"><a href="#3-5-MLlib" class="headerlink" title="3.5 MLlib"></a>3.5 MLlib</h3><p>maching learning algorithms</p>
-<h3 id="3-6-GraphX"><a href="#3-6-GraphX" class="headerlink" title="3.6 GraphX"></a>3.6 GraphX</h3><p>graphs computing</p>
+<p>然后传输就会终止。</p>
+<p><a href="https://stackoverflow.com/questions/28767613/cancel-curl-easy-perform-while-it-is-trying-to-connect" target="_blank" rel="noopener">参考</a></p>
 
     </div>
 
@@ -238,7 +231,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Spark/" rel="tag"># Spark</a>
+              <a href="/tags/libcurl/" rel="tag"># libcurl</a>
           </div>
 
         
@@ -247,13 +240,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/06/20/DRF/" rel="prev" title="Dominant Resource Fairness算法">
-      <i class="fa fa-chevron-left"></i> Dominant Resource Fairness算法
+    <a href="/2020/11/13/k3s-experiment/" rel="prev" title="K3S 实验总结">
+      <i class="fa fa-chevron-left"></i> K3S 实验总结
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/06/22/python-virtualenv-requirements-pytest-jupyter/" rel="next" title="Python virtualenv requirements pytest jupyter">
-      Python virtualenv requirements pytest jupyter <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -312,7 +302,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Compare"><span class="nav-number">2.</span> <span class="nav-text">1.1 Compare</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-Flink"><span class="nav-number">2.1.</span> <span class="nav-text">1.1.1 Flink</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Use-Case"><span class="nav-number">3.</span> <span class="nav-text">2 Use Case</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Interactive-anylysis-with-the-Spark-shell"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Interactive anylysis with the Spark shell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Self-contain-applications-written-with-Spark-API"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 Self-contain applications written with Spark API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Programming-Guides"><span class="nav-number">4.</span> <span class="nav-text">3 Programming Guides</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-RDD"><span class="nav-number">4.1.</span> <span class="nav-text">3.1 RDD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Spark-SQL-Datasets-DataFrames"><span class="nav-number">4.2.</span> <span class="nav-text">3.2 Spark SQL, Datasets, DataFrames</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Term"><span class="nav-number">4.2.1.</span> <span class="nav-text">Term.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Getting-Started"><span class="nav-number">4.2.2.</span> <span class="nav-text">Getting Started</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-Structured-Streaming"><span class="nav-number">4.3.</span> <span class="nav-text">3.3 Structured Streaming</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-Spark-Streaming-using-DStreams"><span class="nav-number">4.4.</span> <span class="nav-text">3.4 Spark Streaming using DStreams</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-MLlib"><span class="nav-number">4.5.</span> <span class="nav-text">3.5 MLlib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-GraphX"><span class="nav-number">4.6.</span> <span class="nav-text">3.6 GraphX</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-终止一个永远连接的watch线程"><span class="nav-number">1.</span> <span class="nav-text">1. 终止一个永远连接的watch线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-如何终止curl-easy-perform"><span class="nav-number">2.</span> <span class="nav-text">2. 如何终止curl_easy_perform()</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一种-progress-function"><span class="nav-number">2.0.1.</span> <span class="nav-text">第一种 progress function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二种-重新设置超时"><span class="nav-number">2.0.2.</span> <span class="nav-text">第二种 重新设置超时</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
