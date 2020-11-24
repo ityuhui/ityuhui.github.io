@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Jaeger</title>
+      <link href="/2020/11/23/jaeger-summary/"/>
+      <url>/2020/11/23/jaeger-summary/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Jaeger是一个分布式追踪系统，用于追踪调用链。</p><h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><p>Jaeger client: 应用程序里插入Jaeger库提供的函数，就成为了Jaeger client。当调用库函数的时候，向Jaeger agent发送信息。</p><p>Jaeger agent: 将收到的信息转发给Jaeger collector或者Jaeger backend</p><p>Jaeger collector: 将收到的信息转发给Jaeger backend</p><p>Jaeger backend: 将收到的信息汇总保存</p><p>Jaeger UI: 展示汇总追踪信息</p><a id="more"></a>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jaeger </tag>
+            
+            <tag> 分布式追踪 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>libcurl使用中的一些总结</title>
       <link href="/2020/11/16/libcurl-usage/"/>
       <url>/2020/11/16/libcurl-usage/</url>
@@ -404,9 +431,9 @@
       
         <tags>
             
-            <tag> C++ </tag>
-            
             <tag> C-plus-plus </tag>
+            
+            <tag> C++ </tag>
             
             <tag> Modern C++ </tag>
             
@@ -522,9 +549,9 @@
             
             <tag> distributed computing </tag>
             
-            <tag> Microsoft </tag>
-            
             <tag> HPC </tag>
+            
+            <tag> Microsoft </tag>
             
         </tags>
       
@@ -636,9 +663,9 @@
       
         <tags>
             
-            <tag> k8s </tag>
-            
             <tag> kubernetes </tag>
+            
+            <tag> k8s </tag>
             
         </tags>
       
@@ -742,9 +769,9 @@
       
         <tags>
             
-            <tag> k8s </tag>
-            
             <tag> kubernetes </tag>
+            
+            <tag> k8s </tag>
             
         </tags>
       
@@ -823,9 +850,9 @@
       
         <tags>
             
-            <tag> C++ </tag>
-            
             <tag> C-plus-plus </tag>
+            
+            <tag> C++ </tag>
             
             <tag> libcurl </tag>
             
