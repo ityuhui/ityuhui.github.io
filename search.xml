@@ -4,11 +4,42 @@
   
     
     <entry>
+      <title>Spark on Kubernetes Operator</title>
+      <link href="/2020/11/29/spark-operator-summary/"/>
+      <url>/2020/11/29/spark-operator-summary/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Spark on k8s operator由GCP出品，用于将Apache Spark部署在kubernetes集群上并使用operator的方式来管理spark应用程序。</p><a id="more"></a><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>用于可能出现的兼容性的问题，推荐在较新的kubernetes版本上部署。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
+            
+            <tag> operator </tag>
+            
+            <tag> spark </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Jaeger</title>
       <link href="/2020/11/23/jaeger-summary/"/>
       <url>/2020/11/23/jaeger-summary/</url>
       
-        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Jaeger是一个分布式追踪系统，用于追踪调用链。</p><h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><p>Jaeger client: 应用程序里插入Jaeger库提供的函数，就成为了Jaeger client。当调用库函数的时候，向Jaeger agent发送信息。</p><p>Jaeger agent: 将收到的信息转发给Jaeger collector或者Jaeger backend</p><p>Jaeger collector: 将收到的信息转发给Jaeger backend</p><p>Jaeger backend: 将收到的信息汇总保存</p><p>Jaeger UI: 展示汇总追踪信息</p><a id="more"></a>]]></content>
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Jaeger是一个分布式追踪系统，用于追踪调用链。</p><a id="more"></a><h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><p>Jaeger client: 应用程序里插入Jaeger库提供的函数，就成为了Jaeger client。当调用库函数的时候，向Jaeger agent发送信息。</p><p>Jaeger agent: 将收到的信息转发给Jaeger collector或者Jaeger backend</p><p>Jaeger collector: 将收到的信息转发给Jaeger backend</p><p>Jaeger backend: 将收到的信息汇总保存</p><p>Jaeger UI: 展示汇总追踪信息</p><p>All in one: 将上面除了Jaeger client之外的所有组件都放在一个应用程序里，用于开发和测试。</p><h2 id="使用All-in-one快速开始"><a href="#使用All-in-one快速开始" class="headerlink" title="使用All in one快速开始"></a>使用All in one快速开始</h2><ol><li>启动all in one</li></ol><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jaeger-all-in-one --collector.zipkin.http-port=9411</span><br></pre></td></tr></table></figure><ol start="2"><li>访问<code>http://localhost:16686</code>即可看到Jaeger GUI</li></ol><h2 id="库"><a href="#库" class="headerlink" title="库"></a>库</h2><p>Jeager提供了用于各种编程语言的库</p><p>例如<br><a href="https://github.com/jaegertracing/jaeger-client-python" target="_blank" rel="noopener">Python client</a></p>]]></content>
       
       
       <categories>
@@ -549,9 +580,9 @@
             
             <tag> distributed computing </tag>
             
-            <tag> HPC </tag>
-            
             <tag> Microsoft </tag>
+            
+            <tag> HPC </tag>
             
         </tags>
       
@@ -663,9 +694,9 @@
       
         <tags>
             
-            <tag> kubernetes </tag>
-            
             <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
             
         </tags>
       
@@ -769,9 +800,9 @@
       
         <tags>
             
-            <tag> kubernetes </tag>
-            
             <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
             
         </tags>
       
