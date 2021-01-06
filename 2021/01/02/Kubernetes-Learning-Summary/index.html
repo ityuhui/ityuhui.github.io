@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="介绍Kubernates 是 云计算基础架构，docker是其最基本的运行元素，是一个与EGO高度类似的系统，可以实现：  自动扩容 失败容器的重新启动  对外服务地址不变">
+<meta name="keywords" content="k8s,kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kubernetes 学习笔记">
+<meta property="og:url" content="ityuhui.github.io/2021/01/02/Kubernetes-Learning-Summary/index.html">
+<meta property="og:site_name" content="Hui Yu">
+<meta property="og:description" content="介绍Kubernates 是 云计算基础架构，docker是其最基本的运行元素，是一个与EGO高度类似的系统，可以实现：  自动扩容 失败容器的重新启动  对外服务地址不变">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-01-02T08:08:38.494Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kubernetes 学习笔记">
+<meta name="twitter:description" content="介绍Kubernates 是 云计算基础架构，docker是其最基本的运行元素，是一个与EGO高度类似的系统，可以实现：  自动扩容 失败容器的重新启动  对外服务地址不变">
+
+<link rel="canonical" href="ityuhui.github.io/2021/01/02/Kubernetes-Learning-Summary/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Kubernetes 学习笔记 | Hui Yu</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hui Yu</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2021/01/02/Kubernetes-Learning-Summary/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kubernetes 学习笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-02 16:05:52 / 修改时间：16:08:38" itemprop="dateCreated datePublished" datetime="2021-01-02T16:05:52+08:00">2021-01-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index"><span itemprop="name">kubernetes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Kubernates 是 云计算基础架构，docker是其最基本的运行元素，是一个与EGO高度类似的系统，可以实现：</p>
+<ul>
+<li>自动扩容</li>
+<li>失败容器的重新启动 </li>
+<li>对外服务地址不变</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="使用kubeadmin安装"><a href="#使用kubeadmin安装" class="headerlink" title="使用kubeadmin安装"></a>使用kubeadmin安装</h3><ul>
+<li>参考官网的文章<ul>
+<li><a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/" target="_blank" rel="noopener">Install the kubeadm setup tool</a></li>
+<li><a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/" target="_blank" rel="noopener">Creating a single control-plane cluster with kubeadm</a></li>
+</ul>
+</li>
+<li>由于一些系统进程所在的docker镜像被GFW阻隔，所以必须使用技术手段访问</li>
+<li>需要配置docker pull代理</li>
+<li>需要对Google的docker image托管网站k8s.gcr.io在外网的机器上做nslookup，把查到的地址写到本地的/etc/hosts文件里</li>
+</ul>
+<h4 id="添加compute-node"><a href="#添加compute-node" class="headerlink" title="添加compute node"></a>添加compute node</h4><ul>
+<li>在compute node上和master上的/etc/hosts里，添加好记录使其可以互相访问</li>
+<li>compute node需要安装好kubeadmin工具</li>
+<li>安装好master之后，会出现一个用于添加compute node的命令，在compute node上执行这个命令就可以了。但是命令里的Token在24小时之后会过期，所以需要重新获得token, 参考上面的Creating a single control-plane cluster with kubeadm</li>
+</ul>
+<h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><h3 id="得到yaml定义文件的解释"><a href="#得到yaml定义文件的解释" class="headerlink" title="得到yaml定义文件的解释"></a>得到yaml定义文件的解释</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl explain pod.spec</span><br></pre></td></tr></table></figure>
+
+<h3 id="pod"><a href="#pod" class="headerlink" title="pod"></a>pod</h3><h4 id="为什么Kubernetes要以pod为基本单元"><a href="#为什么Kubernetes要以pod为基本单元" class="headerlink" title="为什么Kubernetes要以pod为基本单元"></a>为什么Kubernetes要以pod为基本单元</h4><p>container的推荐用法是：只运行一个进程和它的子进程<br>一个业务需要多个相互联系的进程，也就有了多个container, 用pod（本意是豌豆荚）来组织在一起。</p>
+<h4 id="pod修改了docker默认配置"><a href="#pod修改了docker默认配置" class="headerlink" title="pod修改了docker默认配置"></a>pod修改了docker默认配置</h4><ul>
+<li>使得在一个pod里的所有container都共享同一个Network和UTS namespace(Linux)</li>
+<li>所有的container都有一样的hostname和网络接口（一样的IP地址和相同的port空间）</li>
+<li>但是文件系统不是共享的，必须通过kubernetes提供的volumn来实现</li>
+</ul>
+<h4 id="在pod里执行命令"><a href="#在pod里执行命令" class="headerlink" title="在pod里执行命令"></a>在pod里执行命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl exec downward env</span><br></pre></td></tr></table></figure>
+
+<h4 id="获得pod-log"><a href="#获得pod-log" class="headerlink" title="获得pod log"></a>获得pod log</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs $&#123;pod_name&#125;</span><br><span class="line">kubectl logs $&#123;pod_name&#125; -c $&#123;container_name&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="访问-pod"><a href="#访问-pod" class="headerlink" title="访问 pod"></a>访问 pod</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl port-forward kubia-manual 8888:8080</span><br><span class="line">... Forwarding from 127.0.0.1:8888 -&gt; 8080</span><br><span class="line">... Forwarding from [::1]:8888 -&gt; 8080</span><br></pre></td></tr></table></figure>
+
+<h4 id="给node加上label-限制pod调度"><a href="#给node加上label-限制pod调度" class="headerlink" title="给node加上label 限制pod调度"></a>给node加上label 限制pod调度</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: kubia-gpu</span><br><span class="line">spec:  </span><br><span class="line">  nodeSelector:               </span><br><span class="line">    gpu: &quot;true&quot;               </span><br><span class="line">  containers:  </span><br><span class="line">    - image: luksa/kubia</span><br><span class="line">      name: kubia</span><br></pre></td></tr></table></figure>
+
+<h4 id="pod-分组"><a href="#pod-分组" class="headerlink" title="pod 分组"></a>pod 分组</h4><h5 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h5><h5 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h5><h4 id="获得pod的动态信息"><a href="#获得pod的动态信息" class="headerlink" title="获得pod的动态信息"></a>获得pod的动态信息</h4><p>DOWNWARD API</p>
+<h4 id="向pod传入配置"><a href="#向pod传入配置" class="headerlink" title="向pod传入配置"></a>向pod传入配置</h4><ul>
+<li>ConfigMap</li>
+<li>Secret</li>
+</ul>
+<h3 id="Volumes"><a href="#Volumes" class="headerlink" title="Volumes"></a>Volumes</h3><p>Volumn不是顶级的资源，而是pod的一部分，生命周期和pod一致。</p>
+<h4 id="emptyDir"><a href="#emptyDir" class="headerlink" title="emptyDir"></a>emptyDir</h4><p>pod启动的时候是空目录，pod结束的时候就会被删除，用于pod内各个container共享文件</p>
+<ul>
+<li>使用内存(tmpfs)<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">volumes:</span>  </span><br><span class="line"><span class="attr">  - name:</span> <span class="string">html</span>    </span><br><span class="line"><span class="attr">    emptyDir:</span>      </span><br><span class="line"><span class="attr">      medium:</span> <span class="string">Memory</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="hostPath"><a href="#hostPath" class="headerlink" title="hostPath"></a>hostPath</h4><h4 id="local"><a href="#local" class="headerlink" title="local"></a>local</h4><h4 id="gitRepo"><a href="#gitRepo" class="headerlink" title="gitRepo"></a>gitRepo</h4><h4 id="nfs"><a href="#nfs" class="headerlink" title="nfs"></a>nfs</h4><h4 id="gcePersistentDisk"><a href="#gcePersistentDisk" class="headerlink" title="gcePersistentDisk"></a>gcePersistentDisk</h4><h4 id="cinder-cephfs…"><a href="#cinder-cephfs…" class="headerlink" title="cinder, cephfs…"></a>cinder, cephfs…</h4><h4 id="configMap-secret-downwardAPI"><a href="#configMap-secret-downwardAPI" class="headerlink" title="configMap, secret, downwardAPI"></a>configMap, secret, downwardAPI</h4><h4 id="PVC"><a href="#PVC" class="headerlink" title="PVC"></a>PVC</h4><h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><p>其实是网络代理，用于外部访问内部，内部访问外部，内部互访</p>
+<h2 id="Port-forward"><a href="#Port-forward" class="headerlink" title="Port forward"></a>Port forward</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward fortune 8080:80</span><br></pre></td></tr></table></figure>
+
+<p>可以用于快速的暴露内部端口，产品级使用要使用Service</p>
+<h3 id="支持短任务Job"><a href="#支持短任务Job" class="headerlink" title="支持短任务Job"></a>支持短任务Job</h3><h4 id="Job"><a href="#Job" class="headerlink" title="Job"></a>Job</h4><p>短任务</p>
+<h4 id="CronJob"><a href="#CronJob" class="headerlink" title="CronJob"></a>CronJob</h4><p>定期任务</p>
+<h3 id="访问Pod"><a href="#访问Pod" class="headerlink" title="访问Pod:"></a>访问Pod:</h3><pre><code>{pod-ip}.{namespace}.pod.cluster.local //例如某pod的ip为  1.2.3.4,在命名空间default与DNS名称cluster.local将有一个域名：1-2-3-4.default.pod.cluster.local。
+
+{hostname}.{subdomain}.{namespace}.svc.cluster.local
+subdomain是在创建pod设定的属性,和hostname必须一起设置，同时必须设置headless service ( name == pod subdomain )
+
+访问StatefulSet:
+{pod-name}.{service-name}.{namespace}.svc.cluster.local
+可以进入到pod中查看/etc/hosts
+
+访问Service:
+{service-name}.{namespace}.svc.cluster.local</code></pre><h3 id="批量删除"><a href="#批量删除" class="headerlink" title="批量删除"></a>批量删除</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods | grep pod-ego-activity | awk <span class="string">'&#123;print $1&#125;'</span> | xargs kubectl delete pod</span><br><span class="line"></span><br><span class="line">kubectl get activity | grep activity | awk <span class="string">'&#123;print $1&#125;'</span> | xargs kubectl delete activity</span><br></pre></td></tr></table></figure>
+
+<h3 id="kuberadmin生成的证书有效期是1年，到期前必须更新"><a href="#kuberadmin生成的证书有效期是1年，到期前必须更新" class="headerlink" title="kuberadmin生成的证书有效期是1年，到期前必须更新"></a>kuberadmin生成的证书有效期是1年，到期前必须更新</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubeadm alpha certs check-expiration</span><br><span class="line"></span><br><span class="line">kubeadm alpha certs renew all</span><br><span class="line">cp /etc/kubernetes/admin.conf ~/.kube/config</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看kubelet的错误"><a href="#查看kubelet的错误" class="headerlink" title="查看kubelet的错误"></a>查看kubelet的错误</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -xefu kubelet</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改deployment里的image"><a href="#更改deployment里的image" class="headerlink" title="更改deployment里的image"></a>更改deployment里的image</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl patch deployment sparkoperator-1606724880 --patch '&#123;"spec": &#123;"template": &#123;"spec": &#123;"containers": [&#123;"name": "sparkoperator","image":"yh-spark-operator:v201201.1"&#125;]&#125;&#125;&#125;&#125;' -n "spark-operator"</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/31/Ubuntu-Usage-Summary/" rel="prev" title="Ubuntu 使用总结">
+      <i class="fa fa-chevron-left"></i> Ubuntu 使用总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用kubeadmin安装"><span class="nav-number">2.1.</span> <span class="nav-text">使用kubeadmin安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#添加compute-node"><span class="nav-number">2.1.1.</span> <span class="nav-text">添加compute node</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#笔记"><span class="nav-number">3.</span> <span class="nav-text">笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#得到yaml定义文件的解释"><span class="nav-number">3.1.</span> <span class="nav-text">得到yaml定义文件的解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pod"><span class="nav-number">3.2.</span> <span class="nav-text">pod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么Kubernetes要以pod为基本单元"><span class="nav-number">3.2.1.</span> <span class="nav-text">为什么Kubernetes要以pod为基本单元</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pod修改了docker默认配置"><span class="nav-number">3.2.2.</span> <span class="nav-text">pod修改了docker默认配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在pod里执行命令"><span class="nav-number">3.2.3.</span> <span class="nav-text">在pod里执行命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获得pod-log"><span class="nav-number">3.2.4.</span> <span class="nav-text">获得pod log</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问-pod"><span class="nav-number">3.2.5.</span> <span class="nav-text">访问 pod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#给node加上label-限制pod调度"><span class="nav-number">3.2.6.</span> <span class="nav-text">给node加上label 限制pod调度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pod-分组"><span class="nav-number">3.2.7.</span> <span class="nav-text">pod 分组</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#tag"><span class="nav-number">3.2.7.1.</span> <span class="nav-text">tag</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#namespace"><span class="nav-number">3.2.7.2.</span> <span class="nav-text">namespace</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获得pod的动态信息"><span class="nav-number">3.2.8.</span> <span class="nav-text">获得pod的动态信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#向pod传入配置"><span class="nav-number">3.2.9.</span> <span class="nav-text">向pod传入配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Volumes"><span class="nav-number">3.3.</span> <span class="nav-text">Volumes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#emptyDir"><span class="nav-number">3.3.1.</span> <span class="nav-text">emptyDir</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hostPath"><span class="nav-number">3.3.2.</span> <span class="nav-text">hostPath</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#local"><span class="nav-number">3.3.3.</span> <span class="nav-text">local</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gitRepo"><span class="nav-number">3.3.4.</span> <span class="nav-text">gitRepo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nfs"><span class="nav-number">3.3.5.</span> <span class="nav-text">nfs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gcePersistentDisk"><span class="nav-number">3.3.6.</span> <span class="nav-text">gcePersistentDisk</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cinder-cephfs…"><span class="nav-number">3.3.7.</span> <span class="nav-text">cinder, cephfs…</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#configMap-secret-downwardAPI"><span class="nav-number">3.3.8.</span> <span class="nav-text">configMap, secret, downwardAPI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PVC"><span class="nav-number">3.3.9.</span> <span class="nav-text">PVC</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-number">4.</span> <span class="nav-text">Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Port-forward"><span class="nav-number">5.</span> <span class="nav-text">Port forward</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持短任务Job"><span class="nav-number">5.1.</span> <span class="nav-text">支持短任务Job</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Job"><span class="nav-number">5.1.1.</span> <span class="nav-text">Job</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CronJob"><span class="nav-number">5.1.2.</span> <span class="nav-text">CronJob</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问Pod"><span class="nav-number">5.2.</span> <span class="nav-text">访问Pod:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量删除"><span class="nav-number">5.3.</span> <span class="nav-text">批量删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kuberadmin生成的证书有效期是1年，到期前必须更新"><span class="nav-number">5.4.</span> <span class="nav-text">kuberadmin生成的证书有效期是1年，到期前必须更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看kubelet的错误"><span class="nav-number">5.5.</span> <span class="nav-text">查看kubelet的错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更改deployment里的image"><span class="nav-number">5.6.</span> <span class="nav-text">更改deployment里的image</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hui Yu"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Hui Yu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">83</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ityuhui" title="GitHub → https://github.com/ityuhui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
