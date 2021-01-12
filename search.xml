@@ -4,6 +4,60 @@
   
     
     <entry>
+      <title>以太坊编程系列 一</title>
+      <link href="/2021/01/11/Ethereum-Programming-1/"/>
+      <url>/2021/01/11/Ethereum-Programming-1/</url>
+      
+        <content type="html"><![CDATA[<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>使用web3.js, infura, Gerli进行以太坊编程</p><a id="more"></a><h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>web3.js是一个javascript库，用于和以太坊节点通信（通过JSON-RPC）。<br>web3.js需要连接一个以太坊节点，如果在本地运行一个以太坊节点，该节点会将全部的以太坊区块链下载下来，消耗较多的计算和存储资源，如果仅仅出于开发和测试的目的，不想部署本地的以太坊节点，则可以到infura.io上申请一个远程的节点。infura.io提供以太坊节点服务，无需本地搭建节点，就可以连接到以太坊网络上，包括正式的Mainnet以及Görli, Ropsten等测试网络上。<br>Görli是一个使用权威证明（proof-of-authority）达成共识的以太坊测试网络。</p><h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><h3 id="到infura-io上注册并创建project"><a href="#到infura-io上注册并创建project" class="headerlink" title="到infura.io上注册并创建project"></a>到infura.io上注册并创建project</h3><h3 id="安装web3-js"><a href="#安装web3-js" class="headerlink" title="安装web3.js"></a>安装web3.js</h3><h3 id="获取一些测试币"><a href="#获取一些测试币" class="headerlink" title="获取一些测试币"></a>获取一些测试币</h3>]]></content>
+      
+      
+      <categories>
+          
+          <category> 区块链和以太坊 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> block chain </tag>
+            
+            <tag> ethereum </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Typescript总结</title>
+      <link href="/2021/01/10/Typescript-Summary/"/>
+      <url>/2021/01/10/Typescript-Summary/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Typescript 是微软开发的一款编程语言，是 Javascript 语言的超集，它可以编译成纯 Javascript 语言。</p><a id="more"></a><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc *.ts</span><br></pre></td></tr></table></figure><h2 id="执行"><a href="#执行" class="headerlink" title="执行"></a>执行</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node *.js</span><br></pre></td></tr></table></figure><h2 id="语法总结"><a href="#语法总结" class="headerlink" title="语法总结"></a>语法总结</h2><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><ul><li>any </li><li>number</li><li>string </li><li>boolean</li><li>数组</li><li>元组</li><li>枚举</li><li>void</li><li>null</li><li>undefined</li><li>never</li></ul><h3 id="变量声明"><a href="#变量声明" class="headerlink" title="变量声明"></a>变量声明</h3><p>var [变量名] : [类型];</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.runoob.com/typescript/ts-tutorial.html" target="_blank" rel="noopener">https://www.runoob.com/typescript/ts-tutorial.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端开发 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> typescript </tag>
+            
+            <tag> javascript </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Kubernetes 学习笔记</title>
       <link href="/2021/01/02/Kubernetes-Learning-Summary/"/>
       <url>/2021/01/02/Kubernetes-Learning-Summary/</url>
@@ -285,7 +339,7 @@
       
       <categories>
           
-          <category> 区块链 </category>
+          <category> 区块链和以太坊 </category>
           
       </categories>
       
@@ -541,9 +595,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> Modern C++ </tag>
             
@@ -818,7 +872,7 @@
       
       <categories>
           
-          <category> 区块链 </category>
+          <category> 区块链和以太坊 </category>
           
       </categories>
       
@@ -845,7 +899,7 @@
       
       <categories>
           
-          <category> 区块链 </category>
+          <category> 区块链和以太坊 </category>
           
       </categories>
       
@@ -960,9 +1014,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> libcurl </tag>
             
