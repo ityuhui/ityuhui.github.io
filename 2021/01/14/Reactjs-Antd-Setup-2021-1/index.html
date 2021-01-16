@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="AbstractThis article records my setps to setup development environment for Typescript/Reactjs/Antd in Jan 2021. Version   Software Version    typescript 4.1.3   reactjs 17.0.1   antd 4.10.2">
-<meta name="keywords" content="react,antd,typescript">
+  <meta name="description" content="AbstractThis article records my steps about development environment setup for Typescript,Reactjs,Antd in Jan 2021.">
+<meta name="keywords" content="typescript,react,antd">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Typescrit&#x2F;Reactjs&#x2F;Antd Development Environment Setup (Jan 2021)">
 <meta property="og:url" content="ityuhui.github.io/2021/01/14/Reactjs-Antd-Setup-2021-1/index.html">
 <meta property="og:site_name" content="Hui Yu">
-<meta property="og:description" content="AbstractThis article records my setps to setup development environment for Typescript/Reactjs/Antd in Jan 2021. Version   Software Version    typescript 4.1.3   reactjs 17.0.1   antd 4.10.2">
+<meta property="og:description" content="AbstractThis article records my steps about development environment setup for Typescript,Reactjs,Antd in Jan 2021.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-01-14T03:25:28.790Z">
+<meta property="og:updated_time" content="2021-01-14T03:41:53.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Typescrit&#x2F;Reactjs&#x2F;Antd Development Environment Setup (Jan 2021)">
-<meta name="twitter:description" content="AbstractThis article records my setps to setup development environment for Typescript/Reactjs/Antd in Jan 2021. Version   Software Version    typescript 4.1.3   reactjs 17.0.1   antd 4.10.2">
+<meta name="twitter:description" content="AbstractThis article records my steps about development environment setup for Typescript,Reactjs,Antd in Jan 2021.">
 
 <link rel="canonical" href="ityuhui.github.io/2021/01/14/Reactjs-Antd-Setup-2021-1/">
 
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-01-14 11:05:05 / 修改时间：11:25:28" itemprop="dateCreated datePublished" datetime="2021-01-14T11:05:05+08:00">2021-01-14</time>
+              <time title="创建时间：2021-01-14 11:05:05 / 修改时间：11:41:53" itemprop="dateCreated datePublished" datetime="2021-01-14T11:05:05+08:00">2021-01-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,7 +212,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>This article records my setps to setup development environment for Typescript/Reactjs/Antd in Jan 2021.</p>
+        <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>This article records my steps about development environment setup for Typescript,Reactjs,Antd in Jan 2021.</p>
+<a id="more"></a>
+
 <h2 id="Version"><a href="#Version" class="headerlink" title="Version"></a>Version</h2><table>
 <thead>
 <tr>
@@ -233,21 +235,22 @@
 <td>4.10.2</td>
 </tr>
 </tbody></table>
-<a id="more"></a>
-
 <h2 id="Step"><a href="#Step" class="headerlink" title="Step"></a>Step</h2><h3 id="1-Install-typescript"><a href="#1-Install-typescript" class="headerlink" title="1 Install typescript"></a>1 Install typescript</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-Create-reactjs-app"><a href="#2-Create-reactjs-app" class="headerlink" title="2 Create reactjs app"></a>2 Create reactjs app</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-react-app my-app --template typescript</span><br></pre></td></tr></table></figure>
+<h3 id="2-Create-reactjs-app-using-typescript"><a href="#2-Create-reactjs-app-using-typescript" class="headerlink" title="2 Create reactjs app using typescript"></a>2 Create reactjs app using typescript</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-react-app my-app --template typescript</span><br></pre></td></tr></table></figure>
 
 <h3 id="3-Install-antd-in-development-directory"><a href="#3-Install-antd-in-development-directory" class="headerlink" title="3 Install antd in development directory"></a>3 Install antd in development directory</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd my-app</span><br><span class="line">npm install antd --save</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-Import-antd"><a href="#4-Import-antd" class="headerlink" title="4 Import antd"></a>4 Import antd</h3><h4 id="4-1-Update-src-App-tsx"><a href="#4-1-Update-src-App-tsx" class="headerlink" title="4.1 Update src/App.tsx"></a>4.1 Update src/App.tsx</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="4-Import-antd-to-project"><a href="#4-Import-antd-to-project" class="headerlink" title="4 Import antd to project"></a>4 Import antd to project</h3><h4 id="4-1-Update-src-App-tsx"><a href="#4-1-Update-src-App-tsx" class="headerlink" title="4.1 Update src/App.tsx"></a>4.1 Update <code>src/App.tsx</code></h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Button &#125; <span class="keyword">from</span> <span class="string">'antd'</span>;</span><br></pre></td></tr></table></figure>
 
-<h4 id="4-2-Update-src-App-css"><a href="#4-2-Update-src-App-css" class="headerlink" title="4.2 Update src/App.css"></a>4.2 Update src/App.css</h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">'~antd/dist/antd.css'</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-Update-src-App-css"><a href="#4-2-Update-src-App-css" class="headerlink" title="4.2 Update src/App.css"></a>4.2 Update <code>src/App.css</code></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">import</span> <span class="string">'~antd/dist/antd.css'</span>;</span><br></pre></td></tr></table></figure>
 
 <h3 id="5-Run-and-Build"><a href="#5-Run-and-Build" class="headerlink" title="5 Run and Build"></a>5 Run and Build</h3><h4 id="5-1-Run-for-development"><a href="#5-1-Run-for-development" class="headerlink" title="5.1 Run for development"></a>5.1 Run for development</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
 
-<h4 id="5-2-Build-for-deployment"><a href="#5-2-Build-for-deployment" class="headerlink" title="5.2 Build for deployment"></a>5.2 Build for deployment</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br><span class="line">npm install -g serve #only execute once</span><br><span class="line">serve -i build</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-Build-for-deployment"><a href="#5-2-Build-for-deployment" class="headerlink" title="5.2 Build for deployment"></a>5.2 Build for deployment</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<p>Try with build</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g serve</span><br><span class="line">serve -s build</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -258,9 +261,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/typescript/" rel="tag"># typescript</a>
               <a href="/tags/react/" rel="tag"># react</a>
               <a href="/tags/antd/" rel="tag"># antd</a>
-              <a href="/tags/typescript/" rel="tag"># typescript</a>
           </div>
 
         
@@ -331,7 +334,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Version"><span class="nav-number">2.</span> <span class="nav-text">Version</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step"><span class="nav-number">3.</span> <span class="nav-text">Step</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Install-typescript"><span class="nav-number">3.1.</span> <span class="nav-text">1 Install typescript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Create-reactjs-app"><span class="nav-number">3.2.</span> <span class="nav-text">2 Create reactjs app</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Install-antd-in-development-directory"><span class="nav-number">3.3.</span> <span class="nav-text">3 Install antd in development directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Import-antd"><span class="nav-number">3.4.</span> <span class="nav-text">4 Import antd</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Update-src-App-tsx"><span class="nav-number">3.4.1.</span> <span class="nav-text">4.1 Update src/App.tsx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-Update-src-App-css"><span class="nav-number">3.4.2.</span> <span class="nav-text">4.2 Update src/App.css</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Run-and-Build"><span class="nav-number">3.5.</span> <span class="nav-text">5 Run and Build</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-Run-for-development"><span class="nav-number">3.5.1.</span> <span class="nav-text">5.1 Run for development</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-Build-for-deployment"><span class="nav-number">3.5.2.</span> <span class="nav-text">5.2 Build for deployment</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Version"><span class="nav-number">2.</span> <span class="nav-text">Version</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step"><span class="nav-number">3.</span> <span class="nav-text">Step</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Install-typescript"><span class="nav-number">3.1.</span> <span class="nav-text">1 Install typescript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Create-reactjs-app-using-typescript"><span class="nav-number">3.2.</span> <span class="nav-text">2 Create reactjs app using typescript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Install-antd-in-development-directory"><span class="nav-number">3.3.</span> <span class="nav-text">3 Install antd in development directory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Import-antd-to-project"><span class="nav-number">3.4.</span> <span class="nav-text">4 Import antd to project</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Update-src-App-tsx"><span class="nav-number">3.4.1.</span> <span class="nav-text">4.1 Update src/App.tsx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-Update-src-App-css"><span class="nav-number">3.4.2.</span> <span class="nav-text">4.2 Update src/App.css</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Run-and-Build"><span class="nav-number">3.5.</span> <span class="nav-text">5 Run and Build</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-Run-for-development"><span class="nav-number">3.5.1.</span> <span class="nav-text">5.1 Run for development</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-Build-for-deployment"><span class="nav-number">3.5.2.</span> <span class="nav-text">5.2 Build for deployment</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
