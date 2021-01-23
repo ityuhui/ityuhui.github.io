@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Container Terminology Summary</title>
+      <link href="/2021/01/23/Container-Terminology-Summary/"/>
+      <url>/2021/01/23/Container-Terminology-Summary/</url>
+      
+        <content type="html"><![CDATA[<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>There are many terminologies in the domain of container.</p><a id="more"></a><h2 id="2-Terminology"><a href="#2-Terminology" class="headerlink" title="2 Terminology"></a>2 Terminology</h2><h3 id="Open-Container-Initiative-OCI"><a href="#Open-Container-Initiative-OCI" class="headerlink" title="Open Container Initiative (OCI)"></a>Open Container Initiative (OCI)</h3><p>The Open Container Initiative is an open governance structure for the express purpose of creating open industry standards around container formats and runtimes.</p><h3 id="Container-Runtime-Interface-CRI"><a href="#Container-Runtime-Interface-CRI" class="headerlink" title="Container Runtime Interface (CRI)"></a>Container Runtime Interface (CRI)</h3><p>A plugin interface which enables kubelet to use a wide variety of container runtimes.</p><h3 id="docker-moby"><a href="#docker-moby" class="headerlink" title="docker/moby"></a>docker/moby</h3><p>A collaborative project for the container ecosystem to assemble container-based systems.</p><h3 id="podman"><a href="#podman" class="headerlink" title="podman"></a>podman</h3><p>Another implementation of container manager, the same as docker.</p><h3 id="containerd"><a href="#containerd" class="headerlink" title="containerd"></a>containerd</h3><p>An open and reliable container runtime.</p><h3 id="cri-o"><a href="#cri-o" class="headerlink" title="cri-o"></a>cri-o</h3><p>Open Container Initiative-based implementation of Kubernetes Container Runtime Interface, the same with containerd, but only used for Kubernetes.</p><h3 id="runc"><a href="#runc" class="headerlink" title="runc"></a>runc</h3><p>CLI tool for spawning and running containers according to the OCI specification</p><h3 id="crun"><a href="#crun" class="headerlink" title="crun"></a>crun</h3><p>A fast and lightweight fully featured OCI runtime and C library for running containers, the same with runc.</p><h3 id="buildah"><a href="#buildah" class="headerlink" title="buildah"></a>buildah</h3><p>A tool that facilitates building OCI images</p><h3 id="skopeo"><a href="#skopeo" class="headerlink" title="skopeo"></a>skopeo</h3><p>Work with remote images registries - retrieving information, images, signing content</p><h2 id="3-Mainstream-scenarios-in-Kubernetes"><a href="#3-Mainstream-scenarios-in-Kubernetes" class="headerlink" title="3 Mainstream scenarios in Kubernetes"></a>3 Mainstream scenarios in Kubernetes</h2><h3 id="3-1"><a href="#3-1" class="headerlink" title="3.1"></a>3.1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubelet  &lt;--&gt; containerd (with cri-containerd) &lt;--&gt; runc</span><br></pre></td></tr></table></figure><h3 id="3-2"><a href="#3-2" class="headerlink" title="3.2"></a>3.2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubelet  &lt;--&gt; ori-o &lt;--&gt; runc</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> container </tag>
+            
+            <tag> docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Quick Links for My Interest</title>
       <link href="/2021/01/16/Quick-Links-for-My-Interest/"/>
       <url>/2021/01/16/Quick-Links-for-My-Interest/</url>
@@ -45,11 +72,11 @@
       
         <tags>
             
-            <tag> typescript </tag>
-            
             <tag> react </tag>
             
             <tag> antd </tag>
+            
+            <tag> typescript </tag>
             
         </tags>
       
