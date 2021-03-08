@@ -8,7 +8,7 @@
       <link href="/2021/03/08/nextjs-introduction/"/>
       <url>/2021/03/08/nextjs-introduction/</url>
       
-        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Nextjs 是一个reactjs库，将reactjs开发时的一些基本工作进行了封装，是目前最流行的开发reactjs的库之一。</p><a id="more"></a><h2 id="特点和功能"><a href="#特点和功能" class="headerlink" title="特点和功能"></a>特点和功能</h2><ul><li><p>文件系统路由</p><p><code>pages</code>目录里的每一个组件都自动成为一个路由</p></li><li><p>内置图片优化</p></li><li><p>代码自动切分</p><p>  代码自动切分和懒加载</p></li><li><p>内置CSS支持</p></li><li><p>预渲染页面</p><ul><li>静态渲染</li><li>服务端渲染(SSR)</li></ul></li></ul>]]></content>
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Nextjs 是一个reactjs库，将reactjs开发时的一些基本工作进行了封装，是目前最流行的开发reactjs的库之一。</p><a id="more"></a><h2 id="特点和功能"><a href="#特点和功能" class="headerlink" title="特点和功能"></a>特点和功能</h2><ul><li><p>文件系统路由</p><p><code>pages</code>目录里的每一个组件都自动成为一个路由</p></li><li><p>内置图片优化</p></li><li><p>代码自动切分</p><p>  代码自动切分和懒加载</p></li><li><p>内置CSS支持</p></li><li><p>预渲染页面</p><ul><li>静态渲染</li><li>服务端渲染(SSR)</li></ul></li></ul><h2 id="Sample"><a href="#Sample" class="headerlink" title="Sample"></a>Sample</h2><p><a href="https://github.com/ityuhui/nextjs-blog" target="_blank" rel="noopener">nextjs-blog</a></p>]]></content>
       
       
       <categories>
@@ -126,11 +126,11 @@
       
         <tags>
             
-            <tag> typescript </tag>
-            
             <tag> react </tag>
             
             <tag> antd </tag>
+            
+            <tag> typescript </tag>
             
         </tags>
       
