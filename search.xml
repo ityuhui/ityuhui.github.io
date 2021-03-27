@@ -730,9 +730,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> Modern C++ </tag>
             
@@ -1106,6 +1106,33 @@
     
     
     <entry>
+      <title>主流的AI框架和软件包</title>
+      <link href="/2019/08/12/ai-framework-list/"/>
+      <url>/2019/08/12/ai-framework-list/</url>
+      
+        <content type="html"><![CDATA[<p>2019年8月12日</p><h2 id="scikit-learn"><a href="#scikit-learn" class="headerlink" title="scikit-learn"></a>scikit-learn</h2><p>机器学习库，不使用深度学习的时候使用</p><h2 id="tensorflow"><a href="#tensorflow" class="headerlink" title="tensorflow"></a>tensorflow</h2><p>谷歌开发的深度学习软件包</p><h2 id="Keras"><a href="#Keras" class="headerlink" title="Keras"></a>Keras</h2><p>一个高层的深度学习框架，调用tensorflow/CNTK/Theano</p><h2 id="PyTorch"><a href="#PyTorch" class="headerlink" title="PyTorch"></a>PyTorch</h2><p>Facebook开发的深度学习软件包，与Torch的区别是，PyTorch使用Python编写，Torch使用lua编写，下层都是C/C++</p><h2 id="MXNet"><a href="#MXNet" class="headerlink" title="MXNet"></a>MXNet</h2><p>Apache 深度学习软件包</p><h2 id="CNTK"><a href="#CNTK" class="headerlink" title="CNTK"></a>CNTK</h2><p>微软开发的深度学习软件包</p><h2 id="Caffe2"><a href="#Caffe2" class="headerlink" title="Caffe2"></a>Caffe2</h2><p>已经并入 PyTorch</p><h2 id="Caffe"><a href="#Caffe" class="headerlink" title="Caffe"></a>Caffe</h2><p>jia yangqing开发的深度学习软件包</p><h2 id="Theano"><a href="#Theano" class="headerlink" title="Theano"></a>Theano</h2><p>已经停止开发</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ai </tag>
+            
+            <tag> 机器学习框架 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>使用 Visual Studio 2015 编写Windows平台下的OpenGL程序</title>
       <link href="/2016/03/01/using-vs2015-and-glut-to-develop-opengl-program-on-Windows/"/>
       <url>/2016/03/01/using-vs2015-and-glut-to-develop-opengl-program-on-Windows/</url>
@@ -1149,9 +1176,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> libcurl </tag>
             
