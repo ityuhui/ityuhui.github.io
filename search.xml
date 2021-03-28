@@ -494,6 +494,33 @@
     
     
     <entry>
+      <title>PyTorch笔记</title>
+      <link href="/2020/09/03/pytorch-notes/"/>
+      <url>/2020/09/03/pytorch-notes/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>PyTorch是Facebook开发的深度学习库，是谷歌Tensorflow的竞争对手，由于其API对新用户比较友好，所以在学术界非常流行。</p><p>下面介绍一下如何在Windows 10系统上安装PyTorch，以及如何使用。</p><p>本文只介绍pip安装PyTorch的方法。</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol start="0"><li><p><a href="https://pytorch.org/tutorials/beginner/blitz/tensor_tutorial.html#sphx-glr-beginner-blitz-tensor-tutorial-py" target="_blank" rel="noopener">PyTorch官方网站参考</a></p></li><li><p>到Python官方网站下载Python3的安装包并在本地安装。</p></li><li><p>使用pip安装numpy</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install numpy</span><br></pre></td></tr></table></figure></li><li><p>使用pip安装PyTorch</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install torch==1.2.0+cpu torchvision==0.4.0+cpu -f https://download.pytorch.org/whl/torch_stable.html</span><br></pre></td></tr></table></figure></li></ol><h2 id="安装好之后的验证"><a href="#安装好之后的验证" class="headerlink" title="安装好之后的验证"></a>安装好之后的验证</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line">from __future__ import print_function</span><br><span class="line">import torch</span><br><span class="line">x = torch.rand(5, 3)</span><br><span class="line">print(x)</span><br></pre></td></tr></table></figure><h2 id="笔记"><a href="#笔记" class="headerlink" title="笔记"></a>笔记</h2><h3 id="什么是“张量”"><a href="#什么是“张量”" class="headerlink" title="什么是“张量”"></a>什么是“张量”</h3><p>张量就是多维数组</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> AI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ai </tag>
+            
+            <tag> pytorch </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Kubernetes OIDC 鉴权</title>
       <link href="/2020/08/06/kubernetes-oidc/"/>
       <url>/2020/08/06/kubernetes-oidc/</url>
