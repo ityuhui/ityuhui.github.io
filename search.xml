@@ -805,6 +805,33 @@
     
     
     <entry>
+      <title>常用SQL语句</title>
+      <link href="/2020/05/31/simple-sql/"/>
+      <url>/2020/05/31/simple-sql/</url>
+      
+        <content type="html"><![CDATA[<h3 id="常用的SQL语句"><a href="#常用的SQL语句" class="headerlink" title="常用的SQL语句"></a>常用的SQL语句</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">TRUNCATE</span> <span class="keyword">TABLE</span> 表名 <span class="comment">#清空表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> job_finish_info;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> lsb_events_exechostlist;</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> job_id, event_type <span class="keyword">from</span> lsb_events;</span><br><span class="line"></span><br><span class="line">mysql <span class="keyword">show</span> <span class="keyword">columns</span> <span class="keyword">from</span> 表名;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>,....)</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name (列<span class="number">1</span>, 列<span class="number">2</span>,...) <span class="keyword">VALUES</span> (值<span class="number">1</span>, 值<span class="number">2</span>,....)</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> database </tag>
+            
+            <tag> sql </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>如何写专利</title>
       <link href="/2020/05/08/how-to-write-patent/"/>
       <url>/2020/05/08/how-to-write-patent/</url>
