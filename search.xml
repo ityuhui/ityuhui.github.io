@@ -5,10 +5,35 @@
     
     <entry>
       <title>每周技术报告（2021年4月18日）</title>
-      <link href="/2021/04/11/tech-notes-20210418/"/>
-      <url>/2021/04/11/tech-notes-20210418/</url>
+      <link href="/2021/04/18/tech-notes-20210418/"/>
+      <url>/2021/04/18/tech-notes-20210418/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p>Kubernetes的三个新版本于2021年4月15日发布：</p><p>Kubernetes v1.20.6 （Golang version 1.15.10）</p><p>Kubernetes v1.19.10 （Golang version 1.15.10）</p><p>Kubernetes v1.18.18 （Golang version 1.13.15）</p><p><a href="https://sysdig.com/blog/unveil-processes-falco-cloud/" target="_blank" rel="noopener">在云原生环境里，使用Falco来识别隐藏的恶意进程</a></p><p><a href="https://cast.ai/blog/guide-to-kubernetes-autoscaling-for-cloud-cost-optimization" target="_blank" rel="noopener">使用Kubernetes的自动缩放特性来优化上云费用</a></p><p><a href="https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/" target="_blank" rel="noopener">简化Kubernetes多集群</a></p><p><a href="https://zhuanlan.zhihu.com/p/361750240" target="_blank" rel="noopener">深入揭秘 epoll 是如何实现 IO 多路复用的</a></p><p><a href="https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md" target="_blank" rel="noopener">什么是容器运行时接口CRI</a></p><p>电子书<a href="http://webdam.inria.fr/Alice/" target="_blank" rel="noopener">《数据库基础》</a></p><hr><p>另外是之前已经发布过的会议通知：</p><p>KubeCon + CloudNativeCon Europe 2021 将于2021年5月4日至7日在线上举行，<a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/register" target="_blank" rel="noopener">注册地址</a></p><p>Google I/O 2021大会将于2021年5月18日至20日在线上举行，<a href="https://events.google.com/io/" target="_blank" rel="noopener">注册地址</a></p><hr><p>最后，欢迎访问我的<a href="https://yuhuixa.com/" target="_blank" rel="noopener">技术博客</a></p><p>以及关注我的微信公众号：分布式计算小记</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 每周技术报告 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> weekly </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>每周技术报告（2021年4月11日）</title>
+      <link href="/2021/04/11/tech-report-20210411/"/>
+      <url>/2021/04/11/tech-report-20210411/</url>
+      
+        <content type="html"><![CDATA[<p>Kubernetes <a href="https://kubernetes.io/blog/2021/04/08/kubernetes-1-21-release-announcement/" target="_blank" rel="noopener">1.21.0</a> 于2021年4月8日正式发布。</p><p><a href="https://www.infoq.cn/article/dlr7vvRosiiNjPrwxGC8" target="_blank" rel="noopener">Mesos已死，容器永生</a></p><p>开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。</p><p><a href="https://sookocheff.com/post/kubernetes/understanding-kubernetes-networking-model/" target="_blank" rel="noopener">理解Kubernetes网络模型</a></p><p>KubeCon + CloudNativeCon Europe 2021 将于2021年5月4日至7日在线上举行，<a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/register" target="_blank" rel="noopener">注册地址</a></p><p>由ISOCPP举办的2021年C++年度<a href="https://isocpp.org/blog/2021/04/2021-annual-cpp-developer-survey-lite" target="_blank" rel="noopener">调查</a>开始了.</p><p><a href="https://github.com/SuperPaintman/the-evolution-of-a-go-programmer" target="_blank" rel="noopener">一个Golang程序员的进化史</a></p><p>Google I/O 2021大会将于2021年5月18日至20日在线上举行，<a href="https://events.google.com/io/" target="_blank" rel="noopener">注册地址</a></p><p>最后，欢迎访问我的<a href="https://yuhuixa.com/" target="_blank" rel="noopener">技术博客</a></p><p>以及关注我的微信公众号：分布式计算小记</p>]]></content>
       
       
       <categories>
@@ -782,9 +807,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> Modern C++ </tag>
             
@@ -1255,9 +1280,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> libcurl </tag>
             

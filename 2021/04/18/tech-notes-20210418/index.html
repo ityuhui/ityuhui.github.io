@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hui Yu">
-<meta property="og:url" content="ityuhui.github.io/archives/2021/04/index.html">
+  <meta name="description" content="Kubernetes的三个新版本于2021年4月15日发布： Kubernetes v1.20.6 （Golang version 1.15.10） Kubernetes v1.19.10 （Golang version 1.15.10） Kubernetes v1.18.18 （Golang version 1.13.15） 在云原生环境里，使用Falco来识别隐藏的恶意进程 使用Kuberne">
+<meta name="keywords" content="weekly">
+<meta property="og:type" content="article">
+<meta property="og:title" content="每周技术报告（2021年4月18日）">
+<meta property="og:url" content="ityuhui.github.io/2021/04/18/tech-notes-20210418/index.html">
 <meta property="og:site_name" content="Hui Yu">
+<meta property="og:description" content="Kubernetes的三个新版本于2021年4月15日发布： Kubernetes v1.20.6 （Golang version 1.15.10） Kubernetes v1.19.10 （Golang version 1.15.10） Kubernetes v1.18.18 （Golang version 1.13.15） 在云原生环境里，使用Falco来识别隐藏的恶意进程 使用Kuberne">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2021-04-28T11:09:23.389Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hui Yu">
+<meta name="twitter:title" content="每周技术报告（2021年4月18日）">
+<meta name="twitter:description" content="Kubernetes的三个新版本于2021年4月15日发布： Kubernetes v1.20.6 （Golang version 1.15.10） Kubernetes v1.19.10 （Golang version 1.15.10） Kubernetes v1.18.18 （Golang version 1.13.15） 在云原生环境里，使用Falco来识别隐藏的恶意进程 使用Kuberne">
 
-<link rel="canonical" href="ityuhui.github.io/archives/2021/04/">
+<link rel="canonical" href="ityuhui.github.io/2021/04/18/tech-notes-20210418/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | Hui Yu</title>
+  <title>每周技术报告（2021年4月18日） | Hui Yu</title>
   
 
 
@@ -153,71 +158,111 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">不错! 目前共计 65 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2021/04/18/tech-notes-20210418/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          每周技术报告（2021年4月18日）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-04-18 20:02:41" itemprop="dateCreated datePublished" datetime="2021-04-18T20:02:41+08:00">2021-04-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-04-28 19:09:23" itemprop="dateModified" datetime="2021-04-28T19:09:23+08:00">2021-04-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/每周技术报告/" itemprop="url" rel="index"><span itemprop="name">每周技术报告</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2021</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-04-18T20:02:41+08:00"
-              content="2021-04-18">
-          04-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/18/tech-notes-20210418/" itemprop="url">
-            <span itemprop="name">每周技术报告（2021年4月18日）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2021-04-11T18:57:56+08:00"
-              content="2021-04-11">
-          04-11
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2021/04/11/tech-report-20210411/" itemprop="url">
-            <span itemprop="name">每周技术报告（2021年4月11日）</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <p>Kubernetes的三个新版本于2021年4月15日发布：</p>
+<p>Kubernetes v1.20.6 （Golang version 1.15.10）</p>
+<p>Kubernetes v1.19.10 （Golang version 1.15.10）</p>
+<p>Kubernetes v1.18.18 （Golang version 1.13.15）</p>
+<p><a href="https://sysdig.com/blog/unveil-processes-falco-cloud/" target="_blank" rel="noopener">在云原生环境里，使用Falco来识别隐藏的恶意进程</a></p>
+<p><a href="https://cast.ai/blog/guide-to-kubernetes-autoscaling-for-cloud-cost-optimization" target="_blank" rel="noopener">使用Kubernetes的自动缩放特性来优化上云费用</a></p>
+<p><a href="https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/" target="_blank" rel="noopener">简化Kubernetes多集群</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/361750240" target="_blank" rel="noopener">深入揭秘 epoll 是如何实现 IO 多路复用的</a></p>
+<p><a href="https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md" target="_blank" rel="noopener">什么是容器运行时接口CRI</a></p>
+<p>电子书<a href="http://webdam.inria.fr/Alice/" target="_blank" rel="noopener">《数据库基础》</a></p>
+<hr>
+<p>另外是之前已经发布过的会议通知：</p>
+<p>KubeCon + CloudNativeCon Europe 2021 将于2021年5月4日至7日在线上举行，<a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/register" target="_blank" rel="noopener">注册地址</a></p>
+<p>Google I/O 2021大会将于2021年5月18日至20日在线上举行，<a href="https://events.google.com/io/" target="_blank" rel="noopener">注册地址</a></p>
+<hr>
+<p>最后，欢迎访问我的<a href="https://yuhuixa.com/" target="_blank" rel="noopener">技术博客</a></p>
+<p>以及关注我的微信公众号：分布式计算小记</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/weekly/" rel="tag"># weekly</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/11/tech-report-20210411/" rel="prev" title="每周技术报告（2021年4月11日）">
+      <i class="fa fa-chevron-left"></i> 每周技术报告（2021年4月11日）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
