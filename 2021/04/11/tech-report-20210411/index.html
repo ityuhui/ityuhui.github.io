@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Kubernetes 1.21.0 于2021年4月8日正式发布。 Mesos已死，容器永生 开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。 理解Kubernetes网络模型 KubeCon + CloudNativeCon Europe 2021 将于2021年5月4日至7日在线上举行，注册地址 由ISOCPP举办的202">
+  <meta name="description" content="Kubernetes 1.21.0 于2021年4月8日正式发布。 Mesos已死，容器永生编者按：开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。 理解Kubernetes网络模型">
 <meta name="keywords" content="weekly">
 <meta property="og:type" content="article">
 <meta property="og:title" content="每周技术报告（2021年4月11日）">
 <meta property="og:url" content="ityuhui.github.io/2021/04/11/tech-report-20210411/index.html">
 <meta property="og:site_name" content="Hui Yu">
-<meta property="og:description" content="Kubernetes 1.21.0 于2021年4月8日正式发布。 Mesos已死，容器永生 开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。 理解Kubernetes网络模型 KubeCon + CloudNativeCon Europe 2021 将于2021年5月4日至7日在线上举行，注册地址 由ISOCPP举办的202">
+<meta property="og:description" content="Kubernetes 1.21.0 于2021年4月8日正式发布。 Mesos已死，容器永生编者按：开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。 理解Kubernetes网络模型">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-04-28T11:09:30.807Z">
+<meta property="og:updated_time" content="2021-04-28T11:12:48.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="每周技术报告（2021年4月11日）">
-<meta name="twitter:description" content="Kubernetes 1.21.0 于2021年4月8日正式发布。 Mesos已死，容器永生 开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。 理解Kubernetes网络模型 KubeCon + CloudNativeCon Europe 2021 将于2021年5月4日至7日在线上举行，注册地址 由ISOCPP举办的202">
+<meta name="twitter:description" content="Kubernetes 1.21.0 于2021年4月8日正式发布。 Mesos已死，容器永生编者按：开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。 理解Kubernetes网络模型">
 
 <link rel="canonical" href="ityuhui.github.io/2021/04/11/tech-report-20210411/">
 
@@ -195,7 +195,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-04-28 19:09:30" itemprop="dateModified" datetime="2021-04-28T19:09:30+08:00">2021-04-28</time>
+                <time title="修改时间：2021-04-28 19:12:48" itemprop="dateModified" datetime="2021-04-28T19:12:48+08:00">2021-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,9 +219,10 @@
 
       
         <p>Kubernetes <a href="https://kubernetes.io/blog/2021/04/08/kubernetes-1-21-release-announcement/" target="_blank" rel="noopener">1.21.0</a> 于2021年4月8日正式发布。</p>
-<p><a href="https://www.infoq.cn/article/dlr7vvRosiiNjPrwxGC8" target="_blank" rel="noopener">Mesos已死，容器永生</a></p>
-<p>开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。</p>
+<p><a href="https://www.infoq.cn/article/dlr7vvRosiiNjPrwxGC8" target="_blank" rel="noopener">Mesos已死，容器永生</a><br>编者按：开发新的大型的复杂的网络基础架构系统，最好不要再使用C++语言了，这个领域已经是并且数年之内也是Golang的主导领域。</p>
 <p><a href="https://sookocheff.com/post/kubernetes/understanding-kubernetes-networking-model/" target="_blank" rel="noopener">理解Kubernetes网络模型</a></p>
+<a id="more"></a>
+
 <p>KubeCon + CloudNativeCon Europe 2021 将于2021年5月4日至7日在线上举行，<a href="https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/register" target="_blank" rel="noopener">注册地址</a></p>
 <p>由ISOCPP举办的2021年C++年度<a href="https://isocpp.org/blog/2021/04/2021-annual-cpp-developer-survey-lite" target="_blank" rel="noopener">调查</a>开始了.</p>
 <p><a href="https://github.com/SuperPaintman/the-evolution-of-a-go-programmer" target="_blank" rel="noopener">一个Golang程序员的进化史</a></p>
