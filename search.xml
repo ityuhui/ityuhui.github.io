@@ -135,11 +135,11 @@
     
     
     <entry>
-      <title>Quick Links for My Interest</title>
+      <title>实用链接和书签</title>
       <link href="/2021/01/16/Quick-Links-for-My-Interest/"/>
       <url>/2021/01/16/Quick-Links-for-My-Interest/</url>
       
-        <content type="html"><![CDATA[<h2 id="My-working"><a href="#My-working" class="headerlink" title="My working"></a>My working</h2><p><a href="https://yuhuixa.com/" target="_blank" rel="noopener">blog</a></p><p><a href="https://github.com/kubernetes-client/c" target="_blank" rel="noopener">kubernetes c client</a></p><p><a href="https://github.com/OpenAPITools/openapi-generator" target="_blank" rel="noopener">openapi-generator</a></p><a id="more"></a><h2 id="Kubernetes-and-CNCF"><a href="#Kubernetes-and-CNCF" class="headerlink" title="Kubernetes and CNCF"></a>Kubernetes and CNCF</h2><p><a href="https://www.cncf.io/" target="_blank" rel="noopener">cncf</a></p><p><a href="https://github.com/kubernetes/kubernetes" target="_blank" rel="noopener">kubernetes</a></p><p><a href="https://github.com/kubernetes" target="_blank" rel="noopener">kubernetes org</a></p><p><a href="https://github.com/kubernetes-sigs" target="_blank" rel="noopener">kubernetes-sigs org</a></p><p><a href="https://github.com/kubernetes-sigs/metrics-server" target="_blank" rel="noopener">kubernetes-sigs/metrics-server</a></p><p><a href="https://github.com/cncf/landscape" target="_blank" rel="noopener">cncf/landscape</a></p><p><a href="https://github.com/prometheus/prometheus" target="_blank" rel="noopener">prometheus</a></p><p><a href="https://github.com/virtual-kubelet/virtual-kubelet" target="_blank" rel="noopener">virtual-kubelet</a></p><p><a href="https://github.com/miekg/vks" target="_blank" rel="noopener">vks</a></p><p><a href="https://helm.sh/zh/docs/intro/quickstart/" target="_blank" rel="noopener">Helm</a></p><p><a href="https://istio.io/latest/docs/setup/getting-started/" target="_blank" rel="noopener">Istio</a></p><p><a href="https://github.com/jaegertracing/jaeger" target="_blank" rel="noopener">Jaeger</a></p><p><a href="https://cloudevents.io/" target="_blank" rel="noopener">CloudEvents</a></p><h2 id="Ethereum"><a href="#Ethereum" class="headerlink" title="Ethereum"></a>Ethereum</h2><p><a href="https://ethereum.org/en/developers/" target="_blank" rel="noopener">Ethereum Developer</a></p><p><a href="https://www.trufflesuite.com/docs/truffle/quickstart" target="_blank" rel="noopener">Truffle Quick Start</a></p><p><a href="https://goerli.net/" target="_blank" rel="noopener">Görli Testnet</a></p><h2 id="Full-Stack-Development"><a href="#Full-Stack-Development" class="headerlink" title="Full Stack Development"></a>Full Stack Development</h2><p><a href="https://docs.nestjs.com/" target="_blank" rel="noopener">nestjs</a></p><p>electron</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="Kubernetes-and-CNCF"><a href="#Kubernetes-and-CNCF" class="headerlink" title="Kubernetes and CNCF"></a>Kubernetes and CNCF</h2><ul><li><p><a href="https://github.com/kubernetes-client/c" target="_blank" rel="noopener">kubernetes c client</a></p></li><li><p><a href="https://github.com/OpenAPITools/openapi-generator" target="_blank" rel="noopener">openapi-generator</a></p></li><li><p><a href="https://kubernetes.io/docs/concepts/extend-kubernetes/" target="_blank" rel="noopener">扩展 Kubernetes</a>：不同的扩展Kubernetes的方法</p></li><li><p><a href="https://www.cncf.io/" target="_blank" rel="noopener">CNCF 基金会</a></p></li></ul><a id="more"></a><ul><li><p><a href="https://github.com/kubernetes/kubernetes" target="_blank" rel="noopener">kubernetes</a></p></li><li><p><a href="https://github.com/kubernetes" target="_blank" rel="noopener">kubernetes org</a></p></li><li><p><a href="https://github.com/kubernetes-sigs" target="_blank" rel="noopener">kubernetes-sigs org</a></p></li><li><p><a href="https://github.com/kubernetes-sigs/metrics-server" target="_blank" rel="noopener">kubernetes-sigs/metrics-server</a></p></li><li><p><a href="https://github.com/cncf/landscape" target="_blank" rel="noopener">CNCF主要项目展示图</a></p></li><li><p><a href="https://github.com/prometheus/prometheus" target="_blank" rel="noopener">Prometheus</a>: 监控工具</p></li><li><p><a href="https://github.com/virtual-kubelet/virtual-kubelet" target="_blank" rel="noopener">virtual-kubelet</a>： 让kubelet工作在没有docker环境的节点上</p></li><li><p><a href="https://github.com/miekg/vks" target="_blank" rel="noopener">vks</a></p></li><li><p><a href="https://helm.sh/zh/docs/intro/quickstart/" target="_blank" rel="noopener">Helm</a></p></li><li><p><a href="https://istio.io/latest/docs/setup/getting-started/" target="_blank" rel="noopener">Istio</a>：服务网格</p></li><li><p><a href="https://github.com/jaegertracing/jaeger" target="_blank" rel="noopener">Jaeger</a>：遥感数据收集</p></li><li><p><a href="https://cloudevents.io/" target="_blank" rel="noopener">CloudEvents</a>：公有云平台事件规范</p></li></ul><h2 id="Ethereum"><a href="#Ethereum" class="headerlink" title="Ethereum"></a>Ethereum</h2><ul><li><p><a href="https://ethereum.org/en/developers/" target="_blank" rel="noopener">Ethereum 开发者工具</a></p></li><li><p><a href="https://www.trufflesuite.com/docs/truffle/quickstart" target="_blank" rel="noopener">Truffle Quick Start</a>：主流的以太坊开发工具</p></li><li><p><a href="https://goerli.net/" target="_blank" rel="noopener">Görli Testnet</a>：以太坊测试网</p></li></ul><h2 id="Full-Stack-Development"><a href="#Full-Stack-Development" class="headerlink" title="Full Stack Development"></a>Full Stack Development</h2><ul><li><p><a href="https://docs.nestjs.com/" target="_blank" rel="noopener">nestjs</a>：一种Typescript开发的服务端NodeJS框架</p></li><li><p>electron</p></li></ul>]]></content>
       
       
       <categories>
@@ -807,9 +807,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> Modern C++ </tag>
             
@@ -1280,9 +1280,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> libcurl </tag>
             
