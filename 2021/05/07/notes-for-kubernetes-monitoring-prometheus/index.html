@@ -30,7 +30,12 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-2-Prometheus-metrics-endpoint.png">
 <meta property="og:image" content="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-4-Architecture-Overview.png">
-<meta property="og:updated_time" content="2021-05-07T13:11:01.380Z">
+<meta property="og:image" content="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-5-Traefik-metrics.png">
+<meta property="og:image" content="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-6-Prometheus-query-example.png">
+<meta property="og:image" content="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-7-Prometheus-Exporter.png">
+<meta property="og:image" content="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-9-Prometheus-Redis-metrics-example.png">
+<meta property="og:image" content="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-10-Prometheus-node-metrics-example.png">
+<meta property="og:updated_time" content="2021-05-08T02:36:11.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《使用Prometheus监控Kubernetes终极指导》阅读笔记">
 <meta name="twitter:description" content="介绍本文是我在阅读 sysdig 官网上的文章 Kubernetes monitoring with Prometheus, the ultimate guide 时所作的笔记。 原文主要内容 Prometheus 核心概念 与其他监控方案的比较 如何安装 监控 Kubernetes Service Prometheus exporters   监控 Kubernetes 集群 Kubernete">
@@ -190,10 +195,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-05-07 20:13:01 / 修改时间：21:11:01" itemprop="dateCreated datePublished" datetime="2021-05-07T20:13:01+08:00">2021-05-07</time>
+              <time title="创建时间：2021-05-07 20:13:01" itemprop="dateCreated datePublished" datetime="2021-05-07T20:13:01+08:00">2021-05-07</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-05-08 10:36:11" itemprop="dateModified" datetime="2021-05-08T10:36:11+08:00">2021-05-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -304,7 +315,84 @@
 </ul>
 <p>一种更高级的部署方式是使用 <a href="https://github.com/prometheus-operator/prometheus-operator" target="_blank" rel="noopener">Prometheus operator</a></p>
 <hr>
-<h3 id="如何使用-Prometheus-监控-Kubernetes-service"><a href="#如何使用-Prometheus-监控-Kubernetes-service" class="headerlink" title="如何使用 Prometheus 监控 Kubernetes service"></a>如何使用 Prometheus 监控 Kubernetes service</h3><p>未完待续</p>
+<h3 id="如何使用-Prometheus-监控-Kubernetes-service"><a href="#如何使用-Prometheus-监控-Kubernetes-service" class="headerlink" title="如何使用 Prometheus 监控 Kubernetes service"></a>如何使用 Prometheus 监控 Kubernetes service</h3><p>下面的Traefik可以用Ingress-Ingix替代。</p>
+<p>Traefik是一个与微服务和Kubernetes紧密集成的反向代理，作为Ingress控制器，是你的微服务和互联网之间的桥梁。</p>
+<p>简单的安装Traefik</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">helm repo add stable https://kubernetes-charts.storage.googleapis.com/</span><br><span class="line">helm install traefik stable/traefik --set metrics.prometheus.enabled=true</span><br></pre></td></tr></table></figure>
+
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get svc</span><br><span class="line">k get svc</span><br><span class="line">NAME         TYPE            CLUSTER-IP       EXTERNAL-IP                                                               PORT(S)                     AGE</span><br><span class="line">kubernetes  ClusterIP        100.64.0.1       &lt;none&gt;                                                                    443/TCP                     99d</span><br><span class="line">traefik    LoadBalancer      100.65.9.227 xxx.eu-west-1.elb.amazonaws.com   443:32164/TCP,80:31829/TCP  72m</span><br><span class="line">traefik-prometheus ClusterIP 100.66.30.208    &lt;none&gt;                                                                    9100/TCP                    72m</span><br></pre></td></tr></table></figure>
+
+<p>Traefik 已经内置了 Prometheus 的指标：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl 100.66.30.208:9100/metrics</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> HELP go_gc_duration_seconds A summary of the GC invocation durations.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TYPE go_gc_duration_seconds summary</span></span><br><span class="line">go_gc_duration_seconds&#123;quantile="0"&#125; 2.4895e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile="0.25"&#125; 4.4988e-05</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>现在我们为 <code>prometheus.yml</code> 增加新的目标，首先看一下目前的配置：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get cm prometheus-server -o yaml</span><br></pre></td></tr></table></figure>
+
+<p>从结果中可以看到，Prometheus 其实也监控自己：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- job_name:</span> <span class="string">'prometheus'</span></span><br><span class="line">  <span class="comment"># metrics_path defaults to '/metrics'</span></span><br><span class="line">  <span class="comment"># scheme defaults to 'http'.</span></span><br><span class="line"><span class="attr">  static_configs:</span></span><br><span class="line"><span class="attr">  - targets:</span> <span class="string">['localhost:9090']</span></span><br></pre></td></tr></table></figure>
+
+<p>我们增加一个静态的端点：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl edit cm prometheus-server</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- job_name:</span> <span class="string">'traefik'</span></span><br><span class="line"><span class="attr">  static_configs:</span></span><br><span class="line"><span class="attr">  - targets:</span> <span class="string">['traefik-prometheus:9100]</span></span><br></pre></td></tr></table></figure>
+
+<p>如果服务不在同一个命名空间里，需要使用FQDN (例如：<code>traefik-prometheus.[namespace].svc.cluster.local</code>)</p>
+<p>一些配置：</p>
+<ul>
+<li><code>basic_auth</code> 和 <code>bearer_token</code>：用于鉴权</li>
+<li><code>kubernetes_sd_configs</code> 或 <code>consul_sd_configs</code> : 服务发现</li>
+<li><code>scrape_interval</code>, <code>scrape_limit</code>, <code>scrape_timeout</code></li>
+</ul>
+<p>现在访问 Promoeheus 服务器的 <code>/targets</code>， 可以看到 Traefix 的端点:</p>
+<p><img src="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-5-Traefik-metrics.png" alt="picture"></p>
+<p>还可以定位一些 traefix 的指标：</p>
+<p><img src="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-6-Prometheus-query-example.png" alt="picture"></p>
+<p>除了使用静态目标外，还可以服务发现：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">annotations:</span></span><br><span class="line">  <span class="string">prometheus.io/port:</span> <span class="number">9216</span></span><br><span class="line">  <span class="string">prometheus.io/scrape:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="如何使用-Prometheus-exporters-监控-Kubernetes-里的服务"><a href="#如何使用-Prometheus-exporters-监控-Kubernetes-里的服务" class="headerlink" title="如何使用 Prometheus exporters 监控 Kubernetes 里的服务"></a>如何使用 Prometheus exporters 监控 Kubernetes 里的服务</h3><p>虽然一些程序提供了 Prometheus 指标，但是还有很多程序并不提供。这个时候我们需要使用 Prometheus exporters 来做一个“翻译”或者说“适配”。</p>
+<p><img src="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-7-Prometheus-Exporter.png" alt="picture"></p>
+<p>这些 exporters 可以和主应用程序位于同一个pod里（以 sidecar 容器的形式），或者位于另外的 pod 里，甚至在不同的基础架构上。</p>
+<p>exporters 将主程序的服务指标转换成 Prometheus 指标，并暴露出去，所以你只需要从 exporter 那里拉取数据就可以了。</p>
+<h4 id="使用-PromCat："><a href="#使用-PromCat：" class="headerlink" title="使用 PromCat："></a>使用 PromCat：</h4><p>由于互联网上存在着大量的 Prometheus exporters， Sysdig公司提供了一个网站 PromCat.io，方便大家来查找。</p>
+<h4 id="动手实验：使用-Prometheus-监控-Kubernetes-集群里的-Redis-服务"><a href="#动手实验：使用-Prometheus-监控-Kubernetes-集群里的-Redis-服务" class="headerlink" title="动手实验：使用 Prometheus 监控 Kubernetes 集群里的 Redis 服务"></a>动手实验：使用 Prometheus 监控 Kubernetes 集群里的 Redis 服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> kubectl get pod redis-546f6c4c9c-lmf6z</span></span><br><span class="line">NAME                     READY     STATUS    RESTARTS   AGE</span><br><span class="line">redis-546f6c4c9c-lmf6z   2/2       Running   0          2m</span><br></pre></td></tr></table></figure>
+
+<p>安装:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> Clone the repo <span class="keyword">if</span> you don<span class="string">'t have it already</span></span></span><br><span class="line">git clone git@github.com:mateobur/prometheus-monitoring-guide.git</span><br><span class="line">kubectl create -f prometheus-monitoring-guide/redis_prometheus_exporter.yaml</span><br></pre></td></tr></table></figure>
+
+<p>配置 exporter:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">- job_name:</span> <span class="string">'redis'</span></span><br><span class="line"><span class="attr">  static_configs:</span></span><br><span class="line"><span class="attr">    - targets:</span> <span class="string">['redis:9121']</span></span><br></pre></td></tr></table></figure>
+
+<p>这样就得到了Redis的指标：<br><img src="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-9-Prometheus-Redis-metrics-example.png" alt="picture"></p>
+<hr>
+<h3 id="使用-Prometheus-和-kube-state-metrics-监控-Kubernetes-集群"><a href="#使用-Prometheus-和-kube-state-metrics-监控-Kubernetes-集群" class="headerlink" title="使用 Prometheus 和 kube-state-metrics 监控 Kubernetes 集群"></a>使用 Prometheus 和 kube-state-metrics 监控 Kubernetes 集群</h3><p>除了监控集群里的服务之外，你还可以监控 Kubernetes 集群本身：</p>
+<ul>
+<li>主机：CPU，内存，磁盘，等等</li>
+<li>调度流程级别的指标：Deployment 状态, resource 请求, 调度和 api server 延迟, 等等。</li>
+<li>kube-system内部组件：调度器、控制管理器，DNS服务器等的指标</li>
+</ul>
+<h4 id="Prometheus-用到的-Kubernetes-监控组件："><a href="#Prometheus-用到的-Kubernetes-监控组件：" class="headerlink" title="Prometheus 用到的 Kubernetes 监控组件："></a>Prometheus 用到的 Kubernetes 监控组件：</h4><ul>
+<li>cAdvisor: 是一个开源的容器资源使用和性能分析的代理，运行在Kubelet里面，所以可以对外提供节点和Docker的指标。</li>
+<li>Kube-state-metrics：监听Kubernetes API服务器，将对象（如deployments, nodes, pods）的状态转换成指标并对外提供。</li>
+<li>Metrics-server：是一个集群级别的资源使用数据的聚合器。只保留最新的数据，并不负责长期存储。</li>
+</ul>
+<p>因此：</p>
+<ul>
+<li>Kube-state-metrics 聚焦于调度流程级别的指标，如 deployment, pod, replica 等等的状态。</li>
+<li>Metrics-server 聚焦于实现  resource metrics API ：CPU，文件描述符，内存，请求演出等等。</li>
+</ul>
+<h4 id="使用-Prometheus-监控-Kubernetes-节点："><a href="#使用-Prometheus-监控-Kubernetes-节点：" class="headerlink" title="使用 Prometheus 监控 Kubernetes 节点："></a>使用 Prometheus 监控 Kubernetes 节点：</h4><p>node-exporter 是 Prometheus 官方提供的监控节点的工具。</p>
+<p>使用 Helm 安装:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> add repo only needed <span class="keyword">if</span> it wasn<span class="string">'t done before</span></span></span><br><span class="line">helm repo add prometheus-community https://prometheus-community.github.io/helm-charts</span><br><span class="line"><span class="meta">#</span><span class="bash"> Helm 3</span></span><br><span class="line">helm install [RELEASE_NAME] prometheus-community/prometheus-node-exporter</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                                     AGE</span><br><span class="line">node-exporter-prometheus-node-exporter   ClusterIP   10.101.57.207    &lt;none&gt;        9100/TCP                                    17m</span><br></pre></td></tr></table></figure>
+
+<p>如果使用 Helm 安装 Prometheus ，则不需要做任何配置，立刻开始收集和显示节点的指标：</p>
+<p><img src="https://478h5m1yrfsa3bbe262u7muv-wpengine.netdna-ssl.com/wp-content/uploads/Blog-Kubernetes-Monitoring-with-Prometheus-10-Prometheus-node-metrics-example.png" alt="picture"></p>
+<p>未完待续</p>
 
     </div>
 
@@ -327,7 +415,10 @@
     <a href="/2021/04/18/tech-notes-20210418/" rel="prev" title="每周技术报告（2021年4月18日）">
       <i class="fa fa-chevron-left"></i> 每周技术报告（2021年4月18日）
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/05/09/tech-notes-20210509/" rel="next" title="分布式与云原生周报（2021年5月9日）">
+      分布式与云原生周报（2021年5月9日） <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -386,7 +477,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文主要内容"><span class="nav-number">2.</span> <span class="nav-text">原文主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文的一些要点"><span class="nav-number">3.</span> <span class="nav-text">原文的一些要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要使用-Prometheus-对-Kubernetes-进行监控："><span class="nav-number">3.1.</span> <span class="nav-text">为什么要使用 Prometheus 对 Kubernetes 进行监控：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么是-Prometheus"><span class="nav-number">3.2.</span> <span class="nav-text">为什么是 Prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控-containers-：可见性"><span class="nav-number">3.3.</span> <span class="nav-text">监控 containers ：可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态监控：不停的改变和校验-infrastructure"><span class="nav-number">3.4.</span> <span class="nav-text">动态监控：不停的改变和校验 infrastructure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构预览"><span class="nav-number">3.5.</span> <span class="nav-text">架构预览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Prometheus-服务器需要尽可能多的自动发现目标："><span class="nav-number">3.5.1.</span> <span class="nav-text">1. Prometheus 服务器需要尽可能多的自动发现目标：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Kubernetes-services-nodes-and-orchestration-status："><span class="nav-number">3.5.2.</span> <span class="nav-text">2. Kubernetes services, nodes, and orchestration status：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Prometheus-可以使用-PromQL-来配置激发告警的规则"><span class="nav-number">3.5.3.</span> <span class="nav-text">3. Prometheus 可以使用 PromQL 来配置激发告警的规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-AlertManager-组件配置接收者和网关来发送告警通知"><span class="nav-number">3.5.4.</span> <span class="nav-text">4. AlertManager 组件配置接收者和网关来发送告警通知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Grafana-从-Prometheus-服务器拉取数据来显示"><span class="nav-number">3.5.5.</span> <span class="nav-text">5. Grafana 从 Prometheus 服务器拉取数据来显示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何安装-Prometheus"><span class="nav-number">3.6.</span> <span class="nav-text">如何安装 Prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用-Prometheus-监控-Kubernetes-service"><span class="nav-number">3.7.</span> <span class="nav-text">如何使用 Prometheus 监控 Kubernetes service</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文主要内容"><span class="nav-number">2.</span> <span class="nav-text">原文主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原文的一些要点"><span class="nav-number">3.</span> <span class="nav-text">原文的一些要点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要使用-Prometheus-对-Kubernetes-进行监控："><span class="nav-number">3.1.</span> <span class="nav-text">为什么要使用 Prometheus 对 Kubernetes 进行监控：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么是-Prometheus"><span class="nav-number">3.2.</span> <span class="nav-text">为什么是 Prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控-containers-：可见性"><span class="nav-number">3.3.</span> <span class="nav-text">监控 containers ：可见性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态监控：不停的改变和校验-infrastructure"><span class="nav-number">3.4.</span> <span class="nav-text">动态监控：不停的改变和校验 infrastructure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构预览"><span class="nav-number">3.5.</span> <span class="nav-text">架构预览</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Prometheus-服务器需要尽可能多的自动发现目标："><span class="nav-number">3.5.1.</span> <span class="nav-text">1. Prometheus 服务器需要尽可能多的自动发现目标：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Kubernetes-services-nodes-and-orchestration-status："><span class="nav-number">3.5.2.</span> <span class="nav-text">2. Kubernetes services, nodes, and orchestration status：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Prometheus-可以使用-PromQL-来配置激发告警的规则"><span class="nav-number">3.5.3.</span> <span class="nav-text">3. Prometheus 可以使用 PromQL 来配置激发告警的规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-AlertManager-组件配置接收者和网关来发送告警通知"><span class="nav-number">3.5.4.</span> <span class="nav-text">4. AlertManager 组件配置接收者和网关来发送告警通知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Grafana-从-Prometheus-服务器拉取数据来显示"><span class="nav-number">3.5.5.</span> <span class="nav-text">5. Grafana 从 Prometheus 服务器拉取数据来显示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何安装-Prometheus"><span class="nav-number">3.6.</span> <span class="nav-text">如何安装 Prometheus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用-Prometheus-监控-Kubernetes-service"><span class="nav-number">3.7.</span> <span class="nav-text">如何使用 Prometheus 监控 Kubernetes service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用-Prometheus-exporters-监控-Kubernetes-里的服务"><span class="nav-number">3.8.</span> <span class="nav-text">如何使用 Prometheus exporters 监控 Kubernetes 里的服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-PromCat："><span class="nav-number">3.8.1.</span> <span class="nav-text">使用 PromCat：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动手实验：使用-Prometheus-监控-Kubernetes-集群里的-Redis-服务"><span class="nav-number">3.8.2.</span> <span class="nav-text">动手实验：使用 Prometheus 监控 Kubernetes 集群里的 Redis 服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用-Prometheus-和-kube-state-metrics-监控-Kubernetes-集群"><span class="nav-number">3.9.</span> <span class="nav-text">使用 Prometheus 和 kube-state-metrics 监控 Kubernetes 集群</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Prometheus-用到的-Kubernetes-监控组件："><span class="nav-number">3.9.1.</span> <span class="nav-text">Prometheus 用到的 Kubernetes 监控组件：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Prometheus-监控-Kubernetes-节点："><span class="nav-number">3.9.2.</span> <span class="nav-text">使用 Prometheus 监控 Kubernetes 节点：</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -402,14 +493,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-count">67</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
