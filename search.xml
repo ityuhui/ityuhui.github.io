@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>对于数据库的个人总结</title>
+      <link href="/2021/06/02/my-database-summary/"/>
+      <url>/2021/06/02/my-database-summary/</url>
+      
+        <content type="html"><![CDATA[<p>数据库的底层是存储引擎</p><p>数据库的索引方式主要有</p><ul><li>hash</li><li>btree</li><li>LSM tree</li></ul><p>SQL语句与关系代数表达式是等价的，用bison来parse</p><p>Sqlite是可以参考源代码的SQL数据库实现</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> database </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>分布式与云原生周报（2021年5月9日）</title>
       <link href="/2021/05/09/tech-notes-20210509/"/>
       <url>/2021/05/09/tech-notes-20210509/</url>
