@@ -159,6 +159,110 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/20/DRF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/06/20/DRF/" class="post-title-link" itemprop="url">Dominant Resource Fairness算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-20 21:36:36" itemprop="dateCreated datePublished" datetime="2020-06-20T21:36:36+08:00">2020-06-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-06-30 21:09:52" itemprop="dateModified" datetime="2020-06-30T21:09:52+08:00">2020-06-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1. 介绍"></a>1. 介绍</h2><p>DRF算法是用于资源调度的算法，被yarn和mesos的调度器所采用。</p>
+<h2 id="2-动机"><a href="#2-动机" class="headerlink" title="2. 动机"></a>2. 动机</h2><p>基于slot的算法，不是没有用尽资源，就是过度使用资源。</p>
+<h2 id="3-分配的属性"><a href="#3-分配的属性" class="headerlink" title="3. 分配的属性"></a>3. 分配的属性</h2><p>为了可以评估一个算法是否公平，论文提出了四个属性，以此来指导算法的开发。</p>
+<h3 id="Sharing-incentive"><a href="#Sharing-incentive" class="headerlink" title="Sharing incentive"></a>Sharing incentive</h3><p>每一个用户应该更好的分享集群里的资源，而不是排他性使用他所有的那一部分。假设一个集群里有相同的机器和n个用户，每个用户都不可能在一个1/n资源分区里分配更多的任务。</p>
+<h3 id="Strategy-proofness"><a href="#Strategy-proofness" class="headerlink" title="Strategy-proofness"></a>Strategy-proofness</h3><p>用户不可能通过撒谎的方式，获得更多的资源。</p>
+<h3 id="Envy-freeness"><a href="#Envy-freeness" class="headerlink" title="Envy-freeness"></a>Envy-freeness</h3><p>一个用户不能获的另外一个用户的分配资源。</p>
+<h3 id="Pareto-efficiency"><a href="#Pareto-efficiency" class="headerlink" title="Pareto efficiency"></a>Pareto efficiency</h3><p>如果一个用户没有降低他的分配，那么其他用户不可能提高分配。</p>
+<h2 id="4-DRF算法"><a href="#4-DRF算法" class="headerlink" title="4. DRF算法"></a>4. DRF算法</h2><p>DRF算法满足前一章所提出的四个属性。对于每一个用户，DRF计算出给该用户分配的每一个资源的份额。一个用户的所有的资源份额中，数量最大的，被称之为该用户的“主导份额”，该资源被称之该用户的“主导资源”。不同的用户可能有不同的主导资源。</p>
+<h3 id="4-1-例子"><a href="#4-1-例子" class="headerlink" title="4.1 例子"></a>4.1 例子</h3><p>假设一个系统，有9 CPU，18GB 内存。两个用户，A运行任务（1 CPU，4 GB），B运行任务(3 CPU, 1 GB)。</p>
+<p>用户A的每个task消耗1/9的总CPU，2/9的总内存，所以A的主导资源是内存。</p>
+<p>用户B的每个task消耗1/3的总CPU，1/18的总内存，所以B的主导资源是CPU。</p>
+<p>DRF算法会让所有用户的主导份额保持相等：<br>A执行3个Task, 共消耗（3 CPU， 12 GB）<br>B执行2个Task，共消耗（6 CPU， 2 GB）<br>在这个分配下，每个用户都获得了相等的主导份额：<br>A得到了2/3的总内存，B得到了2/3的总CPU</p>
+<p>这一分配可以使用数学计算来表达，设x是A的task数，y是B的task数，那么，A收到（x CPU,4x GB）, B得到（3y CPU , y GB）, 总的资源分配是（x+3y CPU, 4x+y GB）, 让A的主导份额 4x/18 等于B的主导份额 3y/9, 那么，DRF的计算如下：</p>
+<p>max(x,y)<br>需要满足：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x + <span class="number">3</span>y &lt;= <span class="number">9</span></span><br><span class="line"><span class="number">4</span>x + y &lt;= <span class="number">18</span></span><br><span class="line"><span class="number">2</span>x / <span class="number">9</span> = y / <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>解答这个问题可得</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x = <span class="number">3</span></span><br><span class="line">y = <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>因此,A得到（3 CPU，12 GB），B得到（6 CPU，2 GB）</p>
+<p>注意，DRF并不需要让用户的主导份额总是相等。当一个用户的总需求已经得到满足，该用户就不会在需要新的task，因此超过的资源会被其他用户分配，就像max-min fairness一样，除此之外，如果一个资源已经耗尽，不需要该资源的用户可以继续得到更高份额的其他资源。</p>
+<h3 id="4-2-DRF-调度算法"><a href="#4-2-DRF-调度算法" class="headerlink" title="4.2 DRF 调度算法"></a>4.2 DRF 调度算法</h3><p>4.1说的是最终的分配结果，并没有给出具体的每一步的算法，下面来详细说明算法：</p>
+<p>在每一步，DRF挑出主导份额最小的用户，（刚开始都是0，所以随便选一个），如果有足够的资源可以启动一个task,那么就分配资源给该用户，启动Task, 直到系统里没有资源可用。</p>
+<p>假设第一步挑出了B，那么B的份额变成了（3/9， 1/18），B的主导份额是1/3，这个时候A的主导份额是0，开始调度A。</p>
+<p>A得到（1/9，4/18），A的主导份额变成了2/9，还是比B的主导份额小，所以接下来还是调度A。</p>
+<p>A变成（2/9，8/18），A的主导份额变成了4/9，大于B的主导份额1/3，所以接下来调度B。</p>
+<p>一直到最后，A和B的主导份额都变成了2/3，这个时候集群里的CPU分配完了，调度无法继续，调度结束。</p>
+<p>在这个例子里，分配停止是因为资源用光了。但是，一般情况下，当某个资源用光了以后，分配可能还会继续，因为有些task根本不需要这种被用光的资源。</p>
+<p>上述算法可以使用二叉堆来存储每一个用户的主导份额，每一次对n的用户的调度的时间复杂度是O(log n)</p>
+<h3 id="4-3-加权的DRF"><a href="#4-3-加权的DRF" class="headerlink" title="4.3 加权的DRF"></a>4.3 加权的DRF</h3><p>在实际应用中，很多时候用户得到的资源并不应该是相等的，例如，执行重要的任务的用户应该得到更多的资源。因此，我们提出了加权DRF。</p>
+<p>在这一算法里，每一个用户i都被关联一个加权向量Wi = (wi1,…,wim), wij代表用户i对于资源j的权重，这个时候，用户i的主导份额变成 maxj{ uij / wij}, uij是用户i</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/20/raft-introduction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -868,87 +972,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/04/08/Process-Resource-Limis-Windows/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hui Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hui Yu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/04/08/Process-Resource-Limis-Windows/" class="post-title-link" itemprop="url">Windows平台下进程的资源限制(Job Object)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-04-08 19:58:56" itemprop="dateCreated datePublished" datetime="2020-04-08T19:58:56+08:00">2020-04-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-06-13 20:48:12" itemprop="dateModified" datetime="2020-06-13T20:48:12+08:00">2020-06-13</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Windows编程/" itemprop="url" rel="index"><span itemprop="name">Windows编程</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>与Linux平台上的cgroups类似， Windows平台上也有限制进程资源使用的机制，叫做Job Object，这篇文章是我对微软官方文档的中文翻译，然后加上我自己写的示例代码，代码和官方文档的链接都在文末。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/08/Process-Resource-Limis-Windows/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1020,7 +1043,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">68</span>
+          <span class="site-state-item-count">69</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

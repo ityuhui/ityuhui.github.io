@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>etcd 实验</title>
+      <link href="/2021/06/22/etcd-experiment/"/>
+      <url>/2021/06/22/etcd-experiment/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Download-and-Installation"><a href="#Download-and-Installation" class="headerlink" title="Download and Installation"></a>Download and Installation</h2><p>从官方网站下载pre build package</p><p>解开压缩包</p><h2 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">./etcd</span><br><span class="line"></span><br><span class="line">ETCDCTL_API=3 ./etcdctl put mykey "this is awesome"</span><br><span class="line"></span><br><span class="line">ETCDCTL_API=3 ./etcdctl get mykey</span><br></pre></td></tr></table></figure><a id="more"></a><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>默认的端口:</p><ul><li><p>2379 For client request</p></li><li><p>2380 For peer communicate</p></li></ul><h2 id="组建多机cluster"><a href="#组建多机cluster" class="headerlink" title="组建多机cluster"></a>组建多机cluster</h2><h3 id="需要解决的主要问题是机器发现（Discovery）"><a href="#需要解决的主要问题是机器发现（Discovery）" class="headerlink" title="需要解决的主要问题是机器发现（Discovery）"></a>需要解决的主要问题是机器发现（Discovery）</h3><h4 id="Static"><a href="#Static" class="headerlink" title="Static"></a>Static</h4><p>在启动参数里指定所有的机器</p><p>For example:<br>cluster name:<br>etcd_cluster_1</p><p>nodes:<br>yhxa5 9.111.255.120<br>yhvm1 9.111.255.51</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./etcd --name yhxa5 --initial-advertise-peer-urls http://9.111.255.120:2380 --listen-peer-urls http://9.111.255.120:2380 --listen-client-urls http://9.111.255.120:2379,http://127.0.0.1:2379 --advertise-client-urls http://9.111.255.120:2379 --initial-cluster-token etcd-cluster-1 --initial-cluster yhxa5=http://9.111.255.120:2380,yhvm1=http://9.111.255.51:2380 --initial-cluster-state new</span><br><span class="line"></span><br><span class="line">./etcd --name yhvm1 --initial-advertise-peer-urls http://9.111.255.51:2380 --listen-peer-urls http://9.111.255.51:2380 --listen-client-urls http://9.111.255.51:2379,http://127.0.0.1:2379 --advertise-client-urls http://9.111.255.51:2379 --initial-cluster-token etcd-cluster-1 --initial-cluster yhxa5=http://9.111.255.120:2380,yhvm1=http://9.111.255.51:2380 --initial-cluster-state new</span><br></pre></td></tr></table></figure><h4 id="etcd-Discovery"><a href="#etcd-Discovery" class="headerlink" title="etcd Discovery"></a>etcd Discovery</h4><h4 id="DNS-Discovery"><a href="#DNS-Discovery" class="headerlink" title="DNS Discovery"></a>DNS Discovery</h4>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> database </tag>
+            
+            <tag> etcd </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>对于数据库的个人总结</title>
       <link href="/2021/06/02/my-database-summary/"/>
       <url>/2021/06/02/my-database-summary/</url>
@@ -550,11 +577,11 @@
             
             <tag> database </tag>
             
+            <tag> etcd </tag>
+            
             <tag> mongodb </tag>
             
             <tag> redis </tag>
-            
-            <tag> etcd </tag>
             
         </tags>
       
@@ -884,9 +911,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> Modern C++ </tag>
             
@@ -1357,9 +1384,9 @@
       
         <tags>
             
-            <tag> C-plus-plus </tag>
-            
             <tag> C++ </tag>
+            
+            <tag> C-plus-plus </tag>
             
             <tag> libcurl </tag>
             
