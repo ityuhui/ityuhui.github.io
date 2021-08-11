@@ -875,7 +875,7 @@
       
       <categories>
           
-          <category> Web开发 </category>
+          <category> 前端开发 Frontend Development </category>
           
       </categories>
       
@@ -904,14 +904,14 @@
       
       <categories>
           
-          <category> C++ </category>
+          <category> C和CPP </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> C++ </tag>
+            <tag> CPP </tag>
             
             <tag> Modern C++ </tag>
             
@@ -1188,7 +1188,7 @@
       
       <categories>
           
-          <category> C语言 </category>
+          <category> C和CPP </category>
           
       </categories>
       
@@ -1294,7 +1294,7 @@
       
       <categories>
           
-          <category> C语言 </category>
+          <category> C和CPP </category>
           
       </categories>
       
@@ -1382,7 +1382,7 @@
       
         <tags>
             
-            <tag> C++ </tag>
+            <tag> CPP </tag>
             
             <tag> libcurl </tag>
             
@@ -1402,7 +1402,7 @@
       
       <categories>
           
-          <category> C++ </category>
+          <category> C和CPP </category>
           
       </categories>
       
@@ -1807,7 +1807,7 @@
       
       <categories>
           
-          <category> C语言 </category>
+          <category> C和CPP </category>
           
       </categories>
       
