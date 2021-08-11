@@ -4,6 +4,62 @@
   
     
     <entry>
+      <title>设计模式</title>
+      <link href="/2021/08/11/design-patterns-summary/"/>
+      <url>/2021/08/11/design-patterns-summary/</url>
+      
+        <content type="html"><![CDATA[<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p>将操作设计成派生类，不同的操作之间可以更替。</p><h3 id="命令模式"><a href="#命令模式" class="headerlink" title="命令模式"></a>命令模式</h3><p>将命令设计成对象，将命令的接收者设计成对象的成员。</p><h3 id="装饰器模式"><a href="#装饰器模式" class="headerlink" title="装饰器模式"></a>装饰器模式</h3><p>层层包含，每层都有同一个基类</p><h3 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h3><p>有两个不兼容的类或接口A和B，适配器类实现或继承其中一个类A，然后将类B作为自己的成员，从而实现将B适配成A</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件开发通用知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 设计模式 </tag>
+            
+            <tag> Design Patterns </tag>
+            
+            <tag> 软件工程 </tag>
+            
+            <tag> Software Engineering </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>C++ 易错提醒</title>
+      <link href="/2021/08/11/c-plus-plus-tips/"/>
+      <url>/2021/08/11/c-plus-plus-tips/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>不要返回局部对象的引用</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="function"><span class="built_in">string</span> &amp; <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">string</span> temp = <span class="string">"hello"</span>;</span><br><span class="line">    <span class="keyword">return</span> temp; <span class="comment">// Wrong！</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li><p>可以返回类对象成员的引用，因为在对象存续期间，该成员也是存在的。</p></li><li><p>引用其实是指针的语法糖</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> C和CPP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> CPP </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>etcd 实验</title>
       <link href="/2021/06/22/etcd-experiment/"/>
       <url>/2021/06/22/etcd-experiment/</url>
@@ -599,7 +655,7 @@
       
       <categories>
           
-          <category> 软件开发的基础知识 </category>
+          <category> 软件开发通用知识 </category>
           
       </categories>
       
@@ -1493,7 +1549,7 @@
       
       <categories>
           
-          <category> 软件开发的基础知识 </category>
+          <category> 软件开发通用知识 </category>
           
       </categories>
       
@@ -1861,7 +1917,7 @@
       
       <categories>
           
-          <category> 软件开发的基础知识 </category>
+          <category> 软件开发通用知识 </category>
           
       </categories>
       

@@ -159,6 +159,157 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/11/16/libcurl-usage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/16/libcurl-usage/" class="post-title-link" itemprop="url">libcurl使用中的一些总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-16 21:15:07 / 修改时间：21:31:29" itemprop="dateCreated datePublished" datetime="2020-11-16T21:15:07+08:00">2020-11-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/网络编程/" itemprop="url" rel="index"><span itemprop="name">网络编程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-终止一个永远连接的watch线程"><a href="#1-终止一个永远连接的watch线程" class="headerlink" title="1. 终止一个永远连接的watch线程"></a>1. 终止一个永远连接的watch线程</h2><p>不要试图使用pthread_cancel()，会发生资源泄露。</p>
+<p>正确的方法是，使用一个加锁的变量，一个线程设置变量为“退出”，另一个Watch线程检查这个变量，然后在本线程内终止curl_easy_perfrom()</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/16/libcurl-usage/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/11/13/k3s-experiment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hui Yu">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/13/k3s-experiment/" class="post-title-link" itemprop="url">K3S 实验总结</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-13 22:21:15 / 修改时间：22:32:02" itemprop="dateCreated datePublished" datetime="2020-11-13T22:21:15+08:00">2020-11-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index"><span itemprop="name">kubernetes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>k3s是rancher公司发布的kubernetes分发版，用于物联网、边缘计算，所以对kubernetes进行了很多剪裁。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/11/13/k3s-experiment/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/10/06/reactjs-learning-notes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -356,17 +507,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-01 20:16:17 / 修改时间：20:21:31" itemprop="dateCreated datePublished" datetime="2020-10-01T20:16:17+08:00">2020-10-01</time>
+              <time title="创建时间：2020-10-01 20:16:17" itemprop="dateCreated datePublished" datetime="2020-10-01T20:16:17+08:00">2020-10-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-11 21:52:51" itemprop="dateModified" datetime="2021-08-11T21:52:51+08:00">2021-08-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/软件开发的基础知识/" itemprop="url" rel="index"><span itemprop="name">软件开发的基础知识</span></a>
+                  <a href="/categories/软件开发通用知识/" itemprop="url" rel="index"><span itemprop="name">软件开发通用知识</span></a>
                 </span>
             </span>
 
@@ -821,161 +978,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/22/python-virtualenv-requirements-pytest-jupyter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hui Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hui Yu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/22/python-virtualenv-requirements-pytest-jupyter/" class="post-title-link" itemprop="url">Python virtualenv requirements pytest jupyter</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-22 21:50:50 / 修改时间：21:52:42" itemprop="dateCreated datePublished" datetime="2020-06-22T21:50:50+08:00">2020-06-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Python-虚拟环境"><a href="#Python-虚拟环境" class="headerlink" title="Python 虚拟环境"></a>Python 虚拟环境</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>Python虚拟环境可以搭建一个当前工作的包依赖系统，所有的依赖包都下载到当前目录下，不会对系统的Python环境造成影响。</p>
-<p>虚拟环境指的是多个依赖包环境共存，并不是多个python共存。所有的虚拟环境都使用一个python。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/22/python-virtualenv-requirements-pytest-jupyter/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="ityuhui.github.io/2020/06/21/Spark-Introduction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Hui Yu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hui Yu">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/21/Spark-Introduction/" class="post-title-link" itemprop="url">Introduction to Apache Spark</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-06-21 10:59:22 / 修改时间：11:01:42" itemprop="dateCreated datePublished" datetime="2020-06-21T10:59:22+08:00">2020-06-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/大数据和分布式计算/" itemprop="url" rel="index"><span itemprop="name">大数据和分布式计算</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1 Introduction"></a>1 Introduction</h2><p>Apache spark is a batch computing framework. It is used to replace MapReduce in Hadoop. It can be deployed on Apache Yarn or Mesos, Kubernetes.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/21/Spark-Introduction/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1043,7 +1049,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">69</span>
+          <span class="site-state-item-count">71</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1056,7 +1062,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
