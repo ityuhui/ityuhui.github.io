@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>2021年系统顶会论文</title>
+      <link href="/2021/08/16/2021-paper-summary/"/>
+      <url>/2021/08/16/2021-paper-summary/</url>
+      
+        <content type="html"><![CDATA[<h2 id="OSDI-2021"><a href="#OSDI-2021" class="headerlink" title="OSDI 2021"></a>OSDI 2021</h2><p>Ref: <a href="https://www.usenix.org/conference/osdi21/technical-sessions" target="_blank" rel="noopener">https://www.usenix.org/conference/osdi21/technical-sessions</a></p><p>最佳论文3篇：</p><ul><li><p><a href="https://www.usenix.org/conference/osdi21/presentation/qiao" target="_blank" rel="noopener">Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning</a></p></li><li><p><a href="https://www.usenix.org/conference/osdi21/presentation/kumar" target="_blank" rel="noopener">MAGE: Nearly Zero-Cost Virtual Memory for Secure Computation</a></p></li><li><p><a href="https://www.usenix.org/conference/osdi21/presentation/yao" target="_blank" rel="noopener">DistAI: Data-Driven Automated Invariant Learning for Distributed Protocols</a></p></li></ul><h2 id="SOSP-2021"><a href="#SOSP-2021" class="headerlink" title="SOSP 2021"></a>SOSP 2021</h2><ul><li>还未开始</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 会议论文列表 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> osdi </tag>
+            
+            <tag> paper </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>设计模式</title>
       <link href="/2021/08/11/design-patterns-summary/"/>
       <url>/2021/08/11/design-patterns-summary/</url>
