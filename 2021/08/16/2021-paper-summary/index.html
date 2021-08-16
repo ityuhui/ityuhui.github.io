@@ -20,18 +20,18 @@
     var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="OSDI 2021Ref: https://www.usenix.org/conference/osdi21/technical-sessions 最佳论文3篇：  Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning  MAGE: Nearly Zero-Cost Virtual Memory for">
-<meta name="keywords" content="osdi,paper">
+  <meta name="description" content="OSDI 2021最佳论文：  Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning  MAGE: Nearly Zero-Cost Virtual Memory for Secure Computation  DistAI: Data-Driven Automated Invariant Learni">
+<meta name="keywords" content="osdi,paper,sosp,sigcomm,atc,fast,nsdi,eurosys,podc">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2021年系统顶会论文">
+<meta property="og:title" content="2021年部分系统和网络顶会论文">
 <meta property="og:url" content="ityuhui.github.io/2021/08/16/2021-paper-summary/index.html">
 <meta property="og:site_name" content="Hui Yu">
-<meta property="og:description" content="OSDI 2021Ref: https://www.usenix.org/conference/osdi21/technical-sessions 最佳论文3篇：  Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning  MAGE: Nearly Zero-Cost Virtual Memory for">
+<meta property="og:description" content="OSDI 2021最佳论文：  Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning  MAGE: Nearly Zero-Cost Virtual Memory for Secure Computation  DistAI: Data-Driven Automated Invariant Learni">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2021-08-16T11:55:31.772Z">
+<meta property="og:updated_time" content="2021-08-16T12:29:30.794Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2021年系统顶会论文">
-<meta name="twitter:description" content="OSDI 2021Ref: https://www.usenix.org/conference/osdi21/technical-sessions 最佳论文3篇：  Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning  MAGE: Nearly Zero-Cost Virtual Memory for">
+<meta name="twitter:title" content="2021年部分系统和网络顶会论文">
+<meta name="twitter:description" content="OSDI 2021最佳论文：  Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning  MAGE: Nearly Zero-Cost Virtual Memory for Secure Computation  DistAI: Data-Driven Automated Invariant Learni">
 
 <link rel="canonical" href="ityuhui.github.io/2021/08/16/2021-paper-summary/">
 
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>2021年系统顶会论文 | Hui Yu</title>
+  <title>2021年部分系统和网络顶会论文 | Hui Yu</title>
   
 
 
@@ -178,7 +178,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          2021年系统顶会论文
+          2021年部分系统和网络顶会论文
         </h1>
 
         <div class="post-meta">
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-08-16 17:43:18 / 修改时间：19:55:31" itemprop="dateCreated datePublished" datetime="2021-08-16T17:43:18+08:00">2021-08-16</time>
+              <time title="创建时间：2021-08-16 17:43:18 / 修改时间：20:29:30" itemprop="dateCreated datePublished" datetime="2021-08-16T17:43:18+08:00">2021-08-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,8 +212,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="OSDI-2021"><a href="#OSDI-2021" class="headerlink" title="OSDI 2021"></a>OSDI 2021</h2><p>Ref: <a href="https://www.usenix.org/conference/osdi21/technical-sessions" target="_blank" rel="noopener">https://www.usenix.org/conference/osdi21/technical-sessions</a></p>
-<p>最佳论文3篇：</p>
+        <h2 id="OSDI-2021"><a href="#OSDI-2021" class="headerlink" title="OSDI 2021"></a><a href="https://www.usenix.org/conference/osdi21/technical-sessions" target="_blank" rel="noopener">OSDI 2021</a></h2><p>最佳论文：</p>
 <ul>
 <li><p><a href="https://www.usenix.org/conference/osdi21/presentation/qiao" target="_blank" rel="noopener">Pollux: Co-adaptive Cluster Scheduling for Goodput-Optimized Deep Learning</a></p>
 </li>
@@ -223,8 +222,30 @@
 </li>
 </ul>
 <h2 id="SOSP-2021"><a href="#SOSP-2021" class="headerlink" title="SOSP 2021"></a>SOSP 2021</h2><ul>
-<li>还未开始</li>
+<li>10月25日开始</li>
 </ul>
+<h2 id="SIGCOMM-2021"><a href="#SIGCOMM-2021" class="headerlink" title="SIGCOMM 2021"></a><a href="https://conferences.sigcomm.org/sigcomm/2021/program.html" target="_blank" rel="noopener">SIGCOMM 2021</a></h2><ul>
+<li>8月24日开始</li>
+</ul>
+<h2 id="NSDI-2021"><a href="#NSDI-2021" class="headerlink" title="NSDI 2021"></a><a href="https://www.usenix.org/conference/nsdi21/technical-sessions" target="_blank" rel="noopener">NSDI 2021</a></h2><p>最佳论文：</p>
+<ul>
+<li>ATP: In-network Aggregation for Multi-tenant Learning</li>
+</ul>
+<h2 id="ATC-2021"><a href="#ATC-2021" class="headerlink" title="ATC 2021"></a><a href="https://www.usenix.org/conference/atc21/technical-sessions" target="_blank" rel="noopener">ATC 2021</a></h2><p>最佳论文：</p>
+<ul>
+<li>Argus: Debugging Performance Issues in Modern Desktop Applications with Annotated Causal Tracing</li>
+<li>INFaaS: Automated Model-less Inference Serving</li>
+<li>Scaling Large Production Clusters with Partitioned Synchronization</li>
+</ul>
+<h2 id="FAST-2021"><a href="#FAST-2021" class="headerlink" title="FAST 2021"></a><a href="https://www.usenix.org/conference/fast21/technical-sessions" target="_blank" rel="noopener">FAST 2021</a></h2><p>最佳论文：</p>
+<ul>
+<li>High Velocity Kernel File Systems with Bento</li>
+</ul>
+<h2 id="EuroSys-2021"><a href="#EuroSys-2021" class="headerlink" title="EuroSys 2021"></a><a href="https://2021.eurosys.org/papers.html#papers" target="_blank" rel="noopener">EuroSys 2021</a></h2><h2 id="PODC-2021"><a href="#PODC-2021" class="headerlink" title="PODC 2021"></a><a href="https://www.podc.org/podc2021/program/" target="_blank" rel="noopener">PODC 2021</a></h2><p>最佳论文：</p>
+<ul>
+<li><a href="https://dl.acm.org/doi/10.1145/3465084.3467913" target="_blank" rel="noopener">Restorable Shortest Path Tiebreaking for Edge-Faulty Graphs</a><h3 id="Edsger-W-Dijkstra-Prize-2021"><a href="#Edsger-W-Dijkstra-Prize-2021" class="headerlink" title="Edsger W. Dijkstra Prize 2021"></a><a href="https://www.podc.org/dijkstra/" target="_blank" rel="noopener">Edsger W. Dijkstra Prize 2021</a></h3></li>
+</ul>
+<p>Paris C. Kanellakis and Scott A. Smolka for “<a href="https://www.sciencedirect.com/science/article/pii/089054019090025D" target="_blank" rel="noopener">CCS Expressions, Finite State Processes, and Three Problems of Equivalence</a>” in Information and Computation, Volume 86, Issue 1, pages 43–68, 1990.</p>
 
     </div>
 
@@ -236,6 +257,13 @@
           <div class="post-tags">
               <a href="/tags/osdi/" rel="tag"># osdi</a>
               <a href="/tags/paper/" rel="tag"># paper</a>
+              <a href="/tags/sosp/" rel="tag"># sosp</a>
+              <a href="/tags/sigcomm/" rel="tag"># sigcomm</a>
+              <a href="/tags/atc/" rel="tag"># atc</a>
+              <a href="/tags/fast/" rel="tag"># fast</a>
+              <a href="/tags/nsdi/" rel="tag"># nsdi</a>
+              <a href="/tags/eurosys/" rel="tag"># eurosys</a>
+              <a href="/tags/podc/" rel="tag"># podc</a>
           </div>
 
         
@@ -306,7 +334,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSDI-2021"><span class="nav-number">1.</span> <span class="nav-text">OSDI 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOSP-2021"><span class="nav-number">2.</span> <span class="nav-text">SOSP 2021</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OSDI-2021"><span class="nav-number">1.</span> <span class="nav-text">OSDI 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SOSP-2021"><span class="nav-number">2.</span> <span class="nav-text">SOSP 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SIGCOMM-2021"><span class="nav-number">3.</span> <span class="nav-text">SIGCOMM 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSDI-2021"><span class="nav-number">4.</span> <span class="nav-text">NSDI 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ATC-2021"><span class="nav-number">5.</span> <span class="nav-text">ATC 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAST-2021"><span class="nav-number">6.</span> <span class="nav-text">FAST 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EuroSys-2021"><span class="nav-number">7.</span> <span class="nav-text">EuroSys 2021</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PODC-2021"><span class="nav-number">8.</span> <span class="nav-text">PODC 2021</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Edsger-W-Dijkstra-Prize-2021"><span class="nav-number">8.1.</span> <span class="nav-text">Edsger W. Dijkstra Prize 2021</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -335,7 +363,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">104</span>
+        <span class="site-state-item-count">111</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
