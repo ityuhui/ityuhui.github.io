@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Dominant Resource Fairness（DRF）算法中文翻译</title>
+      <link href="/2021/08/20/drf-chinese-version/"/>
+      <url>/2021/08/20/drf-chinese-version/</url>
+      
+        <content type="html"><![CDATA[<p>DRF 算法是多资源集群里对资源进行公平分配的算法，可以参阅我之前写的一篇文章<a href="https://yuhuixa.com/2020/06/20/DRF/">《Dominant Resource Fairness算法》</a>对其有一个大概的了解。</p><p>同时，我也对论文原文进行了<a href="https://github.com/ityuhui/drf-zh_cn/blob/main/drf-zh_cn.md">翻译</a>，欢迎阅读并提出修改意见（PR）。由于论文里有较多公式，因此在支持公式的Markdown阅读器里阅读体验会更好。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 大数据和分布式计算 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> paper </tag>
+            
+            <tag> 资源调度 </tag>
+            
+            <tag> DRF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2021年部分系统和网络顶会论文列表</title>
       <link href="/2021/08/16/2021-paper-summary/"/>
       <url>/2021/08/16/2021-paper-summary/</url>
