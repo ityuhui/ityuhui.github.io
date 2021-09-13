@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>netstat --timer命令的输出的意义</title>
+      <link href="/2021/09/13/netstat-timer/"/>
+      <url>/2021/09/13/netstat-timer/</url>
+      
+        <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>可以使用<code>netstat -o</code>或者<code>netstat --timer</code>来查看socket的keepalive</p><p>TCP keepalive 是 TCP协议提供的连接保活机制。有三个参数：</p><ul><li>/proc/sys/net/ipv4/tcp_keepalive_time<br>默认: 7200 秒</li><li>/proc/sys/net/ipv4/tcp_keepalive_probes<br>默认: 9</li><li>/proc/sys/net/ipv4/tcp_keepalive_intvl<br>默认: 75 秒</li></ul><span id="more"></span><h2 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> netstat -tpnoe | grep pro1</span></span><br><span class="line">tcp        0      0 Local:39413     Foreign:50508     ESTABLISHED 0          44513298   1510/pro1             keepalive (151.09/0/0)</span><br></pre></td></tr></table></figure><h2 id="keepalive-151-09-0-0"><a href="#keepalive-151-09-0-0" class="headerlink" title="keepalive (151.09/0/0)"></a>keepalive (151.09/0/0)</h2><p>&lt;第一部分&gt; &lt;第二部分&gt;</p><h2 id="第一部分的取值"><a href="#第一部分的取值" class="headerlink" title="第一部分的取值:"></a>第一部分的取值:</h2><ul><li>keepalive：当该socket的keepalive计数器被打开。这个时候连接上没有应用程序的数据传输，只有TCP协议自己的保活消息。</li><li>on：当该socket的retransmission计数器被打开。这个使用，应用程序在连接上尝试传输数据。</li><li>probe: 零窗口探测计时器（连接计时器）</li><li>off：以上计数器都没有被打开</li></ul><h2 id="第二部分有三个子部分"><a href="#第二部分有三个子部分" class="headerlink" title="第二部分有三个子部分:"></a>第二部分有三个子部分:</h2><p>(151.09/0/0) -&gt; (a/b/c)</p><h3 id="当第一部分-keepalive"><a href="#当第一部分-keepalive" class="headerlink" title="当第一部分 = keepalive"></a>当第一部分 = keepalive</h3><ul><li>a<ul><li>当连接正常时，a=tcp_keepalive_time倒计时</li><li>当tcp_keepalive_time倒计时为0并且连接不通时，a=tcp_keepalive_intvl倒计时</li></ul></li><li>b=没有用处</li><li>c=已经测探侧次数计数器，对应于tcp_keepalive_probes</li></ul><h3 id="当第一部分-on"><a href="#当第一部分-on" class="headerlink" title="当第一部分 = on"></a>当第一部分 = on</h3><ul><li>a=retransmission倒计时</li><li>b=retransmissions计数器</li><li>c=没有用处</li></ul><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://superuser.com/questions/240456/how-to-interpret-the-output-of-netstat-o-netstat-timers">https://superuser.com/questions/240456/how-to-interpret-the-output-of-netstat-o-netstat-timers</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> netstat </tag>
+            
+            <tag> keepalive </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Dominant Resource Fairness（DRF）算法论文的中文翻译</title>
       <link href="/2021/08/20/drf-chinese-version/"/>
       <url>/2021/08/20/drf-chinese-version/</url>
