@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ityuhui.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="调度框架原文：https:&#x2F;&#x2F;github.com&#x2F;kubernetes&#x2F;enhancements&#x2F;tree&#x2F;master&#x2F;keps&#x2F;sig-scheduling&#x2F;624-scheduling-framework 总结本文档描述了 Kubernetes 调度框架。它是向已经存在的 Kubernetes 调度器添加的一组新的插件API。插件被编译进调度器，这些API在保持核心调度器简单且便于维护的同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scheduling Framework 翻译">
+<meta property="og:url" content="https://ityuhui.github.io/2022/03/06/Scheduling-Framework-in-Chinese/index.html">
+<meta property="og:site_name" content="D &amp; CN">
+<meta property="og:description" content="调度框架原文：https:&#x2F;&#x2F;github.com&#x2F;kubernetes&#x2F;enhancements&#x2F;tree&#x2F;master&#x2F;keps&#x2F;sig-scheduling&#x2F;624-scheduling-framework 总结本文档描述了 Kubernetes 调度框架。它是向已经存在的 Kubernetes 调度器添加的一组新的插件API。插件被编译进调度器，这些API在保持核心调度器简单且便于维护的同">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/kubernetes/enhancements/blob/master/keps/sig-scheduling/624-scheduling-framework/scheduling-framework-extensions.png">
+<meta property="og:image" content="https://github.com/kubernetes/enhancements/blob/master/keps/sig-scheduling/624-scheduling-framework/scheduling-framework-threads.png">
+<meta property="article:published_time" content="2022-03-06T12:58:10.000Z">
+<meta property="article:modified_time" content="2022-03-06T12:59:17.159Z">
+<meta property="article:author" content="Hui Yu">
+<meta property="article:tag" content="k8s">
+<meta property="article:tag" content="kubernetes">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/kubernetes/enhancements/blob/master/keps/sig-scheduling/624-scheduling-framework/scheduling-framework-extensions.png">
+
+<link rel="canonical" href="https://ityuhui.github.io/2022/03/06/Scheduling-Framework-in-Chinese/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Scheduling Framework 翻译 | D & CN</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">D & CN</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ityuhui.github.io/2022/03/06/Scheduling-Framework-in-Chinese/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="D & CN">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Scheduling Framework 翻译
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-06 20:58:10 / 修改时间：20:59:17" itemprop="dateCreated datePublished" datetime="2022-03-06T20:58:10+08:00">2022-03-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kubernetes/" itemprop="url" rel="index"><span itemprop="name">kubernetes</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="调度框架"><a href="#调度框架" class="headerlink" title="调度框架"></a>调度框架</h1><p>原文：<a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework">https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework</a></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文档描述了 Kubernetes 调度框架。它是向已经存在的 Kubernetes 调度器添加的一组新的插件API。插件被编译进调度器，这些API在保持核心调度器简单且便于维护的同时，将额外的调度功能实现为插件。</p>
+<h2 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h2><p>Kubernetes 调度器不停的增加新特性，使得代码越来越多、逻辑越来越复杂。当前 Kubernetes 调度器提供了 webhook 来扩展，但是它有几个缺点：</p>
+<ol>
+<li><p>扩展点的数量是有限的：”Filter”扩展在默认的预选函数后执行，”Prioritize”扩展在默认的优选函数后执行。”Preempt”扩展在默认的抢占机制后运行。扩展的”Bind”谓词被用于绑定到一个Pod。只有一个扩展可以成为一个绑定扩展，扩展执行绑定代替了调度器。扩展不能再其它的点上执行，例如，它们不能在预选函数之前被调用。</p>
+</li>
+<li><p>每一个扩展器的调用都会涉及对JSON的打包和解包，因此对于webhook的调用比原生函数要慢。</p>
+</li>
+<li><p>当调度器已经放弃对一个pod的调度，这个事件是很难通知给一个扩展的。例如，如果一个扩展管理着集群的资源，当调度器请求扩展来为一个被调度的pod创建一个资源的实例时，调度器发生了错误，决定放弃调度，调度器则很难与扩展通讯来撤销资源的分配。</p>
+</li>
+<li><p>以为当前的扩展都运行为一个独立的进程，它们不能使用调度器的缓存。它们必须要么从API Server处构建自己的缓存，要么只处理它们从默认调度器收到的信息。</p>
+</li>
+</ol>
+<p>上述限制将妨碍创建高性能和多样的调度器特性。我们想要由一个足够快的扩展机制来将已有的特性转换为插件，例如预选和优选函数。这些插件将被编译到调度器内。除此之外，定制调度器的作者可以使用未修改的调度器代码和他们自己的插件来编译一个定制调度器。</p>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
+<li><p>使调度器的扩展性更强。</p>
+</li>
+<li><p>通过将一些特性转移到插件里，从而使得调度器核心更加的简单。</p>
+</li>
+<li><p>在框架里提供扩展点。</p>
+</li>
+<li><p>提供一个接收插件执行结果，并基于该结果继续或放弃的机制。</p>
+</li>
+<li><p>提供一个错误处理和与插件通讯的机制。</p>
+</li>
+</ul>
+<h2 id="不是目标"><a href="#不是目标" class="headerlink" title="不是目标"></a>不是目标</h2><ul>
+<li><p>解决调度器的所有限制。虽然我们努力确保新框架在未来允许我们处理已知的限制。</p>
+</li>
+<li><p>提供插件的实现细节和回调函数，以及它们所有的参数和返回值。</p>
+</li>
+</ul>
+<h2 id="提案"><a href="#提案" class="headerlink" title="提案"></a>提案</h2><p>调度框架定义了新的扩展点和Kubernetes调度器内供插件使用的Go API。插件编译进调度器编译内。调度器的ComponentConfig将允许激活，禁用和重新排序插件。定制调度器可以在自身代码树之外写它们的插件，并编译进定制调度器。</p>
+<h3 id="调度周期和绑定周期"><a href="#调度周期和绑定周期" class="headerlink" title="调度周期和绑定周期"></a>调度周期和绑定周期</h3><p>每一次对一个pod的调度都被分成两个阶段，调度周期和绑定周期。调度周期为pod选择一个节点，绑定周期将决定应用到集群上。调度周期和绑定周期一起被成文一个“调度上下文”。调度周期是串行执行的，绑定周期有可能并行执行。</p>
+<p>如果pod被认为不可调度或者发生了内部错误，调度周期或绑定周期可以被中止。pod将回到队列里重新重试调度。如果一个绑定周期被中止，将会启动Reserve插件的Unreserve方法。</p>
+<h3 id="扩展点"><a href="#扩展点" class="headerlink" title="扩展点"></a>扩展点</h3><p>下图展示了pod的调度上下文和调度框架暴露出来的扩展点。在该图里，”Filter”与”预选”等价，”Scoring”就是优选函数。插件被注册在一个或多个扩展点供调用。我们将根据调用的顺序来描述每一个扩展点。</p>
+<p>一个插件可以注册在多个扩展点上来执行许多复杂或者有状态的任务。</p>
+<p><img src="https://github.com/kubernetes/enhancements/blob/master/keps/sig-scheduling/624-scheduling-framework/scheduling-framework-extensions.png" alt="pict"></p>
+<h4 id="Queue-sort"><a href="#Queue-sort" class="headerlink" title="Queue sort"></a>Queue sort</h4><p>这些插件用于给在调度队列里的pod排序。一个queue sort插件必须提供一个 <code>less(pod1, pod2)</code> 函数。同一时间里只有一个queue sort插件可以被激活。</p>
+<h4 id="PreFilter"><a href="#PreFilter" class="headerlink" title="PreFilter"></a>PreFilter</h4><p>这些插件用于预处理pod的信息，或者检查集群是否满足pod的某个特定条件。一个pre-filter插件必须实现一个 <code>PreFilter</code> 函数。如果 <code>PreFilter</code> 返回一个失败，调度周期将中止。注意 <code>PreFilter</code> 在每次调度周期只能被调用一次。</p>
+<p>A Pre-filter plugin can implement the optional PreFilterExtensions interface which define AddPod and RemovePod methods to incrementally modify its pre-processed info. The framework guarantees that those functions will only be called after PreFilter, possibly on a cloned CycleState, and may call those functions more than once before calling Filter on a specific node.</p>
+<p>一个 Pre-filter 插件可以选择实现 <code>PreFilterExtensions</code> 接口，该接口定义了 <code>AddPod</code> 和 <code>RemovePod</code> 方法，增量的修改它的预处理过的信息。框架保证这些函数只在 <code>PreFilter</code> 之后调用，可能在一个复制的 CycleState 上。在一个特定的节点上，在 Filter 调用之前可能多次调用这些函数。</p>
+<h4 id="Filter"><a href="#Filter" class="headerlink" title="Filter"></a>Filter</h4><p>这些插件用于过滤掉那些不能运行pod的节点。对于每一个节点，调度器将按照配置的顺序，调用 filter 插件。当任意一个filter插件将节点标记为不可用，剩余的插件就不会在该节点上被调用。节点的评估可能是并行的，因此 <code>Filter</code> 在一个调度周期里，可能被多次调用。</p>
+<h4 id="PostFilter"><a href="#PostFilter" class="headerlink" title="PostFilter"></a>PostFilter</h4><p>当没有节点可以运行这个pod时，这些插件将在 Filter 阶段之后被调用。插件按照它们配置的顺序依次执行。当任一 PostFilter 插件标记该节点为“可以调度”，剩余的插件就不会再被调用。一个典型的 PostFilter 实现是抢占。它试图通过抢占其它的pod来使得某个pod可以被调度。</p>
+<h4 id="PreScore"><a href="#PreScore" class="headerlink" title="PreScore"></a>PreScore</h4><p>这是用于执行预评分工作的信息扩展点。过滤阶段得到的节点列表会被传递给插件。插件可以使用此数据来更新内部状态或生成日志/指标。</p>
+<h4 id="Scoring"><a href="#Scoring" class="headerlink" title="Scoring"></a>Scoring</h4><p>这些插件有两个阶段：</p>
+<ol>
+<li><p>第一阶段是”score”，用于将传入的节点排名。调度器将调用每一个打分插件为为每一个节点打分。</p>
+</li>
+<li><p>第二个阶段是”normalize scoring”（标准化评分），在调度器计算节点的最后排名之前修改分数。在标准化评分阶段，每一个打分插件都收到了同一个插件给出的所有的节点的分数。在每个调度周期的score阶段之后，每个插件都会执行标准化分数的操作。标准化分数是可选的，可以通过实现 ScoreExtensions 接口来提供。</p>
+</li>
+</ol>
+<p>分数插件的输出必须是 [MinNodeScore, MaxNodeScore] 范围内的整数。如果不是，则调度周期中止。这是运行插件的可选 NormalizeScore 函数后的输出。如果未提供 NormalizeScore，则 Score 的输出也必须在此范围内。在可选的 NormalizeScore 之后，调度器将根据配置的插件权重，将来自所有不同插件的节点分数进行组合。</p>
+<p>举例来说，假设一个插件 <code>BlinkingLightScorer</code> 根据节点有多少闪烁的灯来对这些节点进行排序。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*BlinkingLightScorer)</span> <span class="title">Score</span><span class="params">(state *CycleState, _ *v1.Pod, nodeName <span class="keyword">string</span>)</span> <span class="params">(<span class="keyword">int</span>, *Status)</span></span> &#123;</span><br><span class="line">   <span class="keyword">return</span> getBlinkingLightCount(nodeName)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是，闪烁的灯的最大数量可能比 <code>MaxNodeScore</code> 要小，为了修复这个问题，<code>BlinkingLightScorer</code> 插件需要实现 <code>NormalizeScore</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(*BlinkingLightScorer)</span> <span class="title">NormalizeScore</span><span class="params">(state *CycleState, _ *v1.Pod, nodeScores NodeScoreList)</span> *<span class="title">Status</span></span> &#123;</span><br><span class="line">   highest := <span class="number">0</span></span><br><span class="line">   <span class="keyword">for</span> _, nodeScore := <span class="keyword">range</span> nodeScores &#123;</span><br><span class="line">      highest = max(highest, nodeScore.Score)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">for</span> i, nodeScore := <span class="keyword">range</span> nodeScores &#123;</span><br><span class="line">      nodeScores[i].Score = nodeScore.Score*MaxNodeScore/highest</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If either Score or NormalizeScore returns an error, the scheduling cycle is aborted.</p>
+<p>如果 <code>Score</code> 或 <code>NormalizeScore</code> 返回错误，调度周期就会中止。</p>
+<h4 id="Reserve"><a href="#Reserve" class="headerlink" title="Reserve"></a>Reserve</h4><p>实现 Reserve 扩展的插件有两种方法，即 Reserve 和 Unreserve，分别支持称为 Reserve 和 Unreserve 的两个信息调度阶段。维护运行时状态的插件（又名“有状态插件”）应该使用这些阶段，以便在节点上的资源为给定 Pod 保留和取消保留时由调度程序通知。</p>
+<p>Reserve 阶段发生在调度程序实际将 Pod 绑定到其指定节点之前。它的存在是为了在调度程序等待绑定成功时防止race conditions。每个 Reserve 插件的 Reserve 方法可能成功也可能失败；如果一个 Reserve 方法调用失败，则不会执行后续插件，并且 Reserve 阶段被视为失败。如果所有插件的 Reserve 方法都成功，则认为 Reserve 阶段成功，执行剩余的调度周期和绑定周期。</p>
+<p>如果 Reserve 阶段或后续阶段失败，则触发 Unreserve 阶段。发生这种情况时，所有 Reserve 插件的 Unreserve 方法将按照 Reserve 方法调用的相反顺序执行。此阶段的存在是为了清理与保留的 Pod 关联的状态。</p>
+<p><em>注意： Reserve 插件中 Unreserve 方法的实现必须是幂等的，不能失败。</em></p>
+<h4 id="Permit"><a href="#Permit" class="headerlink" title="Permit"></a>Permit</h4><p>这些插件用于阻止或延迟一个pod的绑定。一个 permet 插件可以做以下三件事情之一：</p>
+<ol>
+<li><p>approve<br>一旦所有的 permit 插件批准了一个 pod，pod被发出用于绑定。</p>
+</li>
+<li><p>deny<br>如果任意一个 permit 插件拒绝了一个 pod, 该pod被退回到调度队列。这将激活 Reserve 插件的 Unreserve 方法。</p>
+</li>
+<li><p>wait (带有一个timeout)<br>如果一个 permit 插件返回“wait”，该pod 保持在 permit阶段，直到一个插件批准它。如果timeout到达，wait变为deny，该pod<br>If a permit plugin returns “wait”, then the pod is kept in the permit phase until a plugin approves it. If a timeout occurs, wait becomes deny and the pod is returned to the scheduling queue, triggering unreserve method in Reserve phase. 该pod被退回到调度队列，并激活 Reserve 插件的 Unreserve 方法。</p>
+</li>
+</ol>
+<p>Permit 插件作为调度周期的最后一步被执行，permi阶段的 waiting 发生在绑定周期的开始，PreBind插件执行之前。</p>
+<h4 id="Approving-a-pod-binding"><a href="#Approving-a-pod-binding" class="headerlink" title="Approving a pod binding"></a>Approving a pod binding</h4><p>虽然任何插件都可以从缓存中接收保留列表里的 Pod 并批准它们（参见 FrameworkHandle），但我们希望只有 permit 插件批准处于“waiting”状态的保留 Pod 的绑定。一旦 Pod 被批准，它就会被发送到 pre-bind 阶段。</p>
+<h4 id="PreBind"><a href="#PreBind" class="headerlink" title="PreBind"></a>PreBind</h4><p>这些插件用于在绑定 pod 之前执行所需的任何工作。例如，prebind 插件可能会提供一个网络卷并将其安装在目标节点上，然后再允许 pod 在那里运行。</p>
+<p>如果任何 PreBind 插件返回错误，则 Pod 将被拒绝并返回到调度队列。</p>
+<h4 id="Bind"><a href="#Bind" class="headerlink" title="Bind"></a>Bind</h4><p>这些插件用于将 pod 绑定到节点。在所有 PreBind 插件完成之前，不会调用 Bind 插件。每个 bind 插件都按配置的顺序调用。Bind 插件可以选择是否处理给定的 Pod。如果 bind 插件选择处理 Pod，其余的 bind 插件则会被跳过。</p>
+<h4 id="PostBind"><a href="#PostBind" class="headerlink" title="PostBind"></a>PostBind</h4><p>这是一个信息扩展点。 PostBind 插件在 pod 成功绑定后被调用。这是绑定周期的结束，可用于清理相关资源。</p>
+<h3 id="Plugin-API"><a href="#Plugin-API" class="headerlink" title="Plugin API"></a>Plugin API</h3><p>plugin API 有两个步骤。首先，插件必须注册和配置，其次，插件被絮使用扩展点接口。扩展点接口的形式如下：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Plugin <span class="keyword">interface</span> &#123;</span><br><span class="line">   Name() <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> QueueSortPlugin <span class="keyword">interface</span> &#123;</span><br><span class="line">   Plugin</span><br><span class="line">   Less(*PodInfo, *PodInfo) <span class="keyword">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> PreFilterPlugin <span class="keyword">interface</span> &#123;</span><br><span class="line">   Plugin</span><br><span class="line">   PreFilter(CycleState, *v1.Pod) *Status</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="CycleState"><a href="#CycleState" class="headerlink" title="CycleState"></a>CycleState</h4><p>大多数插件函数*调用时都会带有参数 <code>CycleState</code>，一个 <code>CycleState</code> 代表了当前的调度上下文</p>
+<p>一个 <code>CycleState</code> 将提供用于访问当前调度上下文范围内的数据的 API。由于绑定周期可能会并发的执行，插件可以使用 <code>CycleState</code> 来确保它们正在处理正确的请求。</p>
+<p>*<em>唯一的例外是 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#queue-sort">queue sort</a> 插件。</em></p>
+<p>警告: 通过 <code>CycleState</code> 得到的数据在一次调度上下文结束之后就会失效。在超过必要的时间后，插件不应当持有指向数据的引用。</p>
+<h4 id="FrameworkHandle"><a href="#FrameworkHandle" class="headerlink" title="FrameworkHandle"></a>FrameworkHandle</h4><p>与 <code>CycleState</code> 提供单一调度上下文相关的API不同，<code>FrameworkHandle</code> 提供一个插件的生命周期相关的API。插件可以获得一个客户端（<code>kubernetes.Interface</code>）和 <code>SharedInformerFactory</code>，或者从调度器的集群状态缓存中读取数据。同样也提供列表、批准或拒绝 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#permit">waiting pods</a>的 API。</p>
+<p><strong>警告</strong>: <code>FrameworkHandle</code> 提供对Kubernetes API server和调度器内部缓存的访问。但是两者不保证同步，在编写使用它们两者数据的插件时应格外小心。</p>
+<p>提供对 API 服务器的插件访问是实现有用功能所必需的，尤其是当这些功能使用调度程序通常不考虑的对象类型时。提供 <code>SharedInformerFactory</code> 允许插件安全地共享缓存。</p>
+<h4 id="Plugin-Registration"><a href="#Plugin-Registration" class="headerlink" title="Plugin Registration"></a>Plugin Registration</h4><p>每一个插件都必须定义一个构造器，并将其添加到硬编码的注册表里。关于构造器参数的更多信息，请参阅 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#optional-args">Optional Args</a></p>
+<p>举例：</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> PluginFactory = <span class="function"><span class="keyword">func</span><span class="params">(runtime.Unknown, FrameworkHandle)</span> <span class="params">(Plugin, error)</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Registry <span class="keyword">map</span>[<span class="keyword">string</span>]PluginFactory</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewRegistry</span><span class="params">()</span> <span class="title">Registry</span></span> &#123;</span><br><span class="line">   <span class="keyword">return</span> Registry&#123;</span><br><span class="line">      fooplugin.Name: fooplugin.New,</span><br><span class="line">      barplugin.Name: barplugin.New,</span><br><span class="line">      <span class="comment">// New plugins are registered here.</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也可以将插件添加到 Registry 对象并将其注入调度程序。参见 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#custom-scheduler-plugins-out-of-tree">Custom Scheduler Plugins</a>.</p>
+<h3 id="Plugin-Lifecycle"><a href="#Plugin-Lifecycle" class="headerlink" title="Plugin Lifecycle"></a>Plugin Lifecycle</h3><h4 id="Initialization"><a href="#Initialization" class="headerlink" title="Initialization"></a>Initialization</h4><p>插件初始化有两个步骤，首先 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#plugin-registration">注册插件</a>，然后，调度器根据配置，决定初始化哪一个插件。如果一个插件注册在多个扩展点上，它只初始化一次。</p>
+<p>当初始化一个插件时，<code>config args</code> 和一个 <code>FrameworkHandle</code> 会传给该插件。</p>
+<h4 id="Concurrency"><a href="#Concurrency" class="headerlink" title="Concurrency"></a>Concurrency</h4><p>插件编写者应该考虑两种类型的并发。在评估多个节点时，一个插件可能会被并发调用多次，也可能会从不同的 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#scheduling-cycle--binding-cycle">调度上下文</a>中并发调用。</p>
+<p>注意：在一个调度上下文中，每个扩展点都是串行评估的。</p>
+<p>在调度器的主线程中，一次只处理一个调度周期。在下一个调度周期开始之前，任何扩展点（包括<a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#permit">permit</a>）都将完成*。在permit扩展点之后，异步执行绑定周期。这意味着一个调用插件可以从两个不同的调度上下文同时被调用，前提是至少有一个调用是在 permit 之后的扩展点。有状态插件应该小心处理这些情况。</p>
+<p>最后，Reserve插件里的 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#reserve">Unreserve</a> 方法可以从主线程或者绑定线程中被调用，具体取决于 pod 被拒绝的方式。</p>
+<p>*<em>queue sort扩展点是一个特例。它不是调度上下文的一部分，可以为许多 pod 对同时调用。</em></p>
+<p><img src="https://github.com/kubernetes/enhancements/blob/master/keps/sig-scheduling/624-scheduling-framework/scheduling-framework-threads.png" alt="scheduling-framework-threads.png"></p>
+<h3 id="Configuring-Plugins"><a href="#Configuring-Plugins" class="headerlink" title="Configuring Plugins"></a>Configuring Plugins</h3><p>调度程序的组件配置将允许启用、禁用或以其他方式配置插件。插件配置分为两部分：</p>
+<ol>
+<li>每个扩展点的已启用插件列表（以及它们应该运行的顺序）。 如果省略这些列表之一，则将使用默认列表。</li>
+<li>每个插件的一组可选的自定义插件参数。省略插件的配置参数相当于使用该插件的默认配置。</li>
+</ol>
+<p>插件配置由扩展点组织。注册在多个扩展点的插件必须包含在每个列表里。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> KubeSchedulerConfiguration <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// ... other fields</span></span><br><span class="line">    Plugins      Plugins</span><br><span class="line">    PluginConfig []PluginConfig</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Plugins <span class="keyword">struct</span> &#123;</span><br><span class="line">    QueueSort      []Plugin</span><br><span class="line">    PreFilter      []Plugin</span><br><span class="line">    Filter         []Plugin</span><br><span class="line">    PostFilter     []Plugin</span><br><span class="line">    PreScore       []Plugin</span><br><span class="line">    Score          []Plugin</span><br><span class="line">    Reserve        []Plugin</span><br><span class="line">    Permit         []Plugin</span><br><span class="line">    PreBind        []Plugin</span><br><span class="line">    Bind           []Plugin</span><br><span class="line">    PostBind       []Plugin</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Plugin <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name   <span class="keyword">string</span></span><br><span class="line">    Weight <span class="keyword">int</span> <span class="comment">// Only valid for Score plugins</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> PluginConfig <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name <span class="keyword">string</span></span><br><span class="line">    Args runtime.Unknown</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>举例</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;plugins&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;preFilter&quot;</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PluginA&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PluginB&quot;</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PluginC&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;score&quot;</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PluginA&quot;</span>,</span><br><span class="line">        <span class="string">&quot;weight&quot;</span>: <span class="number">30</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PluginX&quot;</span>,</span><br><span class="line">        <span class="string">&quot;weight&quot;</span>: <span class="number">50</span></span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PluginY&quot;</span>,</span><br><span class="line">        <span class="string">&quot;weight&quot;</span>: <span class="number">10</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;pluginConfig&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;name&quot;</span>: <span class="string">&quot;PluginX&quot;</span>,</span><br><span class="line">      <span class="string">&quot;args&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;favorite_color&quot;</span>: <span class="string">&quot;#326CE5&quot;</span>,</span><br><span class="line">        <span class="string">&quot;favorite_number&quot;</span>: <span class="number">7</span>,</span><br><span class="line">        <span class="string">&quot;thanks_to&quot;</span>: <span class="string">&quot;thockin&quot;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="Enable-Disable"><a href="#Enable-Disable" class="headerlink" title="Enable/Disable"></a>Enable/Disable</h4><p>当指定时，特定扩展点的启用的插件列表是唯一的。如果扩展点在配置中被省略，默认插件集将用于该扩展点。</p>
+<h4 id="Change-Evaluation-Order"><a href="#Change-Evaluation-Order" class="headerlink" title="Change Evaluation Order"></a>Change Evaluation Order</h4><p>插件评估顺序由插件在配置中出现的顺序指定。注册在多个扩展点上的插件在每个扩展点可以有不同的排序。</p>
+<h4 id="Optional-Args"><a href="#Optional-Args" class="headerlink" title="Optional Args"></a>Optional Args</h4><p>插件可以从具有任意结构的配置中接收参数。由于一个插件可能出现在多个扩展点中，配置位于 <code>PluginConfig</code> 的单独列表中。</p>
+<p>举例来说，</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;ServiceAffinity&quot;</span>,</span><br><span class="line">   <span class="attr">&quot;args&quot;</span>: &#123;</span><br><span class="line">      <span class="attr">&quot;LabelName&quot;</span>: <span class="string">&quot;app&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;LabelValue&quot;</span>: <span class="string">&quot;mysql&quot;</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewServiceAffinity</span><span class="params">(args *runtime.Unknown, h FrameworkHandle)</span> <span class="params">(Plugin, error)</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> args == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, errors.Errorf(<span class="string">&quot;cannot find service affinity plugin config&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> args.ContentType != <span class="string">&quot;application/json&quot;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, errors.Errorf(<span class="string">&quot;cannot parse content type: %v&quot;</span>, args.ContentType)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> config <span class="keyword">struct</span> &#123;</span><br><span class="line">        LabelName, LabelValue <span class="keyword">string</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> err := json.Unmarshal(args.Raw, &amp;config); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, errors.Wrap(err, <span class="string">&quot;could not parse args&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Backward-Compatibility"><a href="#Backward-Compatibility" class="headerlink" title="Backward Compatibility"></a>Backward Compatibility</h4><p>当前的 <code>KubeSchedulerConfiguration</code> kind 有 <code>apiVersion: kubescheduler.config.k8s.io/v1alpha1</code>，新的配置格式要么是<code>v1alpha2</code>，要么是 <code>v1beta1</code>。当一个更新版本的调度器解析一个 <code>v1alpha1</code>，”policy”部分将用于构建一个等效的插件配置。</p>
+<p>注意：将 <code>KubeSchedulerConfiguration</code> 移至 <code>v1</code> 超出了本设计的范围，但另请参阅 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/blob/master/keps/sig-cluster-lifecycle/wgs/783-component-base/README.md">https://github.com/kubernetes/enhancements/blob/master/keps/sig-cluster-lifecycle/wgs/783-component-base/README.md</a> 和 <a target="_blank" rel="noopener" href="https://github.com/kubernetes/community/pull/3008">https://github.com/kubernetes/community/pull/3008</a></p>
+<h3 id="Interactions-with-Cluster-Autoscaler"><a href="#Interactions-with-Cluster-Autoscaler" class="headerlink" title="Interactions with Cluster Autoscaler"></a>Interactions with Cluster Autoscaler</h3><p>Cluster Autoscaler 需要被修改来运行 Filter 插件，从而替代 predicates，方法是创建一个 Framework 实例并调用 <code>RunFilterPlugins</code>。</p>
+<h2 id="Use-Cases"><a href="#Use-Cases" class="headerlink" title="Use Cases"></a>Use Cases</h2><p>下面是一些展示调度框架如何被使用的例子：</p>
+<h3 id="Coscheduling"><a href="#Coscheduling" class="headerlink" title="Coscheduling"></a>Coscheduling</h3><p>与 <a target="_blank" rel="noopener" href="https://github.com/kubernetes-sigs/kube-batch">kube-batch</a>（有时候也叫做“团体调度”） 类似的功能，实现为一个插件。对于一个批次里的pods，该插件在 permit 阶段，使用“wait”选项，累积多个pod。因为 permit 阶段在 reserve 之后，后续的pod将被调度，就好像等待的 Pod 正在使用这些资源一样。一旦批次中有足够的 pod 等待，它们都可以被批准。</p>
+<h3 id="Dynamic-Resource-Binding"><a href="#Dynamic-Resource-Binding" class="headerlink" title="Dynamic Resource Binding"></a>Dynamic Resource Binding</h3><p><a target="_blank" rel="noopener" href="https://kubernetes.io/blog/2018/10/11/topology-aware-volume-provisioning-in-kubernetes/">Topology-Aware Volume Provisioning</a>可以实现为 filter 和 pre-bind 扩展点上的插件，在 filtering 阶段，该插件确保pod被调度到提供特定的卷的区域。之后，在 pre-bind 阶段，该插件可以在调度器绑定pod之前，创建所需的卷。</p>
+<h3 id="Custom-Scheduler-Plugins-out-of-tree"><a href="#Custom-Scheduler-Plugins-out-of-tree" class="headerlink" title="Custom Scheduler Plugins (out of tree)"></a>Custom Scheduler Plugins (out of tree)</h3><p>调度框架允许人们创建定制的、高性能的调度特性，无需与调度器的代码分叉。由于插件必须被编译进调度器，所以编写一个main()包装器是必要的，以避免修改 <code>vendor/k8s.io/kubernetes</code> 中的代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    scheduler <span class="string">&quot;k8s.io/kubernetes/cmd/kube-scheduler/app&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    command := scheduler.NewSchedulerCommand(</span><br><span class="line">            scheduler.WithPlugin(<span class="string">&quot;example-plugin1&quot;</span>, ExamplePlugin1),</span><br><span class="line">            scheduler.WithPlugin(<span class="string">&quot;example-plugin2&quot;</span>, ExamplePlugin2))</span><br><span class="line">    <span class="keyword">if</span> err := command.Execute(); err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Fprintf(os.Stderr, <span class="string">&quot;%v\n&quot;</span>, err)</span><br><span class="line">        os.Exit(<span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><em>注意：上述代码只是一个例子，可能与最新的API不匹配。</em></p>
+<p>定制插件需要在调度器配置中作为正常的插件激活，参考<a target="_blank" rel="noopener" href="https://github.com/kubernetes/enhancements/tree/master/keps/sig-scheduling/624-scheduling-framework#configuring-plugins">Configuring Plugins</a>.</p>
+<h2 id="测试计划"><a href="#测试计划" class="headerlink" title="测试计划"></a>测试计划</h2><p>调度框架期待能够与现有的Kubernetes调度器向后兼容，因此，我们我们希望框架在开发以及完成后可以通过所有已存在的Kubernetes调度器测试。</p>
+<ul>
+<li><p>单元测试</p>
+<ul>
+<li>为框架开发的每个插件都必须有自己的合理覆盖率的单元测试。</li>
+</ul>
+</li>
+<li><p>集成测试</p>
+<ul>
+<li><p>当我们构建扩展点时，我们必须添加正确的集成测试以确保注册在这些扩展点上的插件都被调用，框架也正确的处理了这些插件的返回值。</p>
+</li>
+<li><p>如果一个插件新增了一个过去没有的功能，它必须完成合理覆盖率的集成测试。</p>
+</li>
+</ul>
+</li>
+<li><p>End-to-end 测试</p>
+<ul>
+<li>应该为与 Kubernetes 的外部组件交互的新调度功能和插件添加端到端测试。例如，如果插件需要与 API 服务器和 Kubelets 交互，则可能需要端到端测试。当集成测试可以提供足够的覆盖率时，不需要端到端测试。</li>
+</ul>
+</li>
+</ul>
+<h2 id="毕业标准"><a href="#毕业标准" class="headerlink" title="毕业标准"></a>毕业标准</h2><ul>
+<li><p>Alpha (1.16)</p>
+<ul>
+<li>构建扩展点<code>Reserve</code>和<code>Prebind</code>。</li>
+<li>为这些扩展点增加集成测试。</li>
+</ul>
+</li>
+<li><p>Beta (1.17)</p>
+<ul>
+<li>增加KEP里列出的所有扩展点以及对应测试。</li>
+<li>持久动态卷绑定逻辑转换为插件。</li>
+</ul>
+</li>
+<li><p>Stable (1.19)</p>
+<ul>
+<li>现有的<code>Predicate</code>和<code>Priority</code>功能和<code>抢占</code>逻辑转换为插件。</li>
+<li>在过去的三个月中，没有框架实施中的重大错误。</li>
+</ul>
+</li>
+</ul>
+<p>&lt;全文完&gt;</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/k8s/" rel="tag"># k8s</a>
+              <a href="/tags/kubernetes/" rel="tag"># kubernetes</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/09/13/netstat-timer/" rel="prev" title="netstat --timer命令的输出的意义">
+      <i class="fa fa-chevron-left"></i> netstat --timer命令的输出的意义
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">调度框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.1.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.2.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">1.3.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E6%98%AF%E7%9B%AE%E6%A0%87"><span class="nav-number">1.4.</span> <span class="nav-text">不是目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E6%A1%88"><span class="nav-number">1.5.</span> <span class="nav-text">提案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6%E5%91%A8%E6%9C%9F%E5%92%8C%E7%BB%91%E5%AE%9A%E5%91%A8%E6%9C%9F"><span class="nav-number">1.5.1.</span> <span class="nav-text">调度周期和绑定周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%82%B9"><span class="nav-number">1.5.2.</span> <span class="nav-text">扩展点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Queue-sort"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">Queue sort</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PreFilter"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">PreFilter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Filter"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">Filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostFilter"><span class="nav-number">1.5.2.4.</span> <span class="nav-text">PostFilter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PreScore"><span class="nav-number">1.5.2.5.</span> <span class="nav-text">PreScore</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scoring"><span class="nav-number">1.5.2.6.</span> <span class="nav-text">Scoring</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Reserve"><span class="nav-number">1.5.2.7.</span> <span class="nav-text">Reserve</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Permit"><span class="nav-number">1.5.2.8.</span> <span class="nav-text">Permit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Approving-a-pod-binding"><span class="nav-number">1.5.2.9.</span> <span class="nav-text">Approving a pod binding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PreBind"><span class="nav-number">1.5.2.10.</span> <span class="nav-text">PreBind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bind"><span class="nav-number">1.5.2.11.</span> <span class="nav-text">Bind</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PostBind"><span class="nav-number">1.5.2.12.</span> <span class="nav-text">PostBind</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plugin-API"><span class="nav-number">1.5.3.</span> <span class="nav-text">Plugin API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CycleState"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">CycleState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FrameworkHandle"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">FrameworkHandle</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Plugin-Registration"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">Plugin Registration</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plugin-Lifecycle"><span class="nav-number">1.5.4.</span> <span class="nav-text">Plugin Lifecycle</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Initialization"><span class="nav-number">1.5.4.1.</span> <span class="nav-text">Initialization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Concurrency"><span class="nav-number">1.5.4.2.</span> <span class="nav-text">Concurrency</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configuring-Plugins"><span class="nav-number">1.5.5.</span> <span class="nav-text">Configuring Plugins</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Enable-Disable"><span class="nav-number">1.5.5.1.</span> <span class="nav-text">Enable&#x2F;Disable</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Change-Evaluation-Order"><span class="nav-number">1.5.5.2.</span> <span class="nav-text">Change Evaluation Order</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Optional-Args"><span class="nav-number">1.5.5.3.</span> <span class="nav-text">Optional Args</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Backward-Compatibility"><span class="nav-number">1.5.5.4.</span> <span class="nav-text">Backward Compatibility</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interactions-with-Cluster-Autoscaler"><span class="nav-number">1.5.6.</span> <span class="nav-text">Interactions with Cluster Autoscaler</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-Cases"><span class="nav-number">1.6.</span> <span class="nav-text">Use Cases</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Coscheduling"><span class="nav-number">1.6.1.</span> <span class="nav-text">Coscheduling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dynamic-Resource-Binding"><span class="nav-number">1.6.2.</span> <span class="nav-text">Dynamic Resource Binding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Custom-Scheduler-Plugins-out-of-tree"><span class="nav-number">1.6.3.</span> <span class="nav-text">Custom Scheduler Plugins (out of tree)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%AE%A1%E5%88%92"><span class="nav-number">1.7.</span> <span class="nav-text">测试计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%95%E4%B8%9A%E6%A0%87%E5%87%86"><span class="nav-number">1.8.</span> <span class="nav-text">毕业标准</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hui Yu</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">73</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">113</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/ityuhui" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;ityuhui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.zhihu.com/people/yu-hui-40-99" title="zhihu → https:&#x2F;&#x2F;www.zhihu.com&#x2F;people&#x2F;yu-hui-40-99" rel="noopener" target="_blank"><i class="fab fa-zhihu fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hui Yu</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
