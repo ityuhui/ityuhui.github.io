@@ -364,6 +364,8 @@
             
             <tag> nextjs </tag>
             
+            <tag> reactjs </tag>
+            
         </tags>
       
     </entry>
@@ -446,6 +448,8 @@
             <tag> antd </tag>
             
             <tag> typescript </tag>
+            
+            <tag> reactjs </tag>
             
         </tags>
       
@@ -711,6 +715,8 @@
       
         <tags>
             
+            <tag> react </tag>
+            
             <tag> javascript </tag>
             
             <tag> reactjs </tag>
@@ -968,7 +974,7 @@
       
         <tags>
             
-            <tag> Spark </tag>
+            <tag> spark </tag>
             
         </tags>
       
