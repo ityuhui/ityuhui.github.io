@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>面向对象的 C 语言</title>
+      <link href="/2022/07/18/c-object-oriented/"/>
+      <url>/2022/07/18/c-object-oriented/</url>
+      
+        <content type="html"><![CDATA[<h2 id="模拟-C-使用的方法：虚函数表"><a href="#模拟-C-使用的方法：虚函数表" class="headerlink" title="模拟 C++ 使用的方法：虚函数表"></a>模拟 C++ 使用的方法：虚函数表</h2><p><a href="https://github.com/ityuhui/ooc/blob/main/main.c">https://github.com/ityuhui/ooc/blob/main/main.c</a></p><h2 id="Linux内核采用的方法：container-of"><a href="#Linux内核采用的方法：container-of" class="headerlink" title="Linux内核采用的方法：container_of"></a>Linux内核采用的方法：container_of</h2><p>根据 成员的首地址 得到 结构体变量的地址。</p><p>应用场景：<br>结构体（Child）通过包含结构体（Parent）的方式实现继承，当获得了结构体（Parent）的指针时，通过此函数可以得到结构体（Child）</p><p><img src="https://radek.io/assets/posts/container_of.png" alt="container_of"></p><h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">GValue</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  GType     g_type;</span><br><span class="line">  <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">    gint        v_int;</span><br><span class="line">    guint       v_uint;</span><br><span class="line">    glong       v_long;</span><br><span class="line">    gulong      v_ulong;</span><br><span class="line">    gint64      v_int64;</span><br><span class="line">    guint64     v_uint64;</span><br><span class="line">    gfloat      v_float;</span><br><span class="line">    gdouble     v_double;</span><br><span class="line">    gpointer    v_pointer;</span><br><span class="line">  &#125; data[<span class="number">2</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> C和CPP </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> c language </tag>
+            
+            <tag> 面向对象 </tag>
+            
+            <tag> object oriented </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>2022 年度举办的部分计算机顶会</title>
       <link href="/2022/06/06/top-conference-2022/"/>
       <url>/2022/06/06/top-conference-2022/</url>
@@ -2023,7 +2052,7 @@
       
         <tags>
             
-            <tag> c </tag>
+            <tag> C language </tag>
             
             <tag> 二级指针 </tag>
             
