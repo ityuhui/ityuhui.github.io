@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>《Crafting Interpreters》读书笔记</title>
+      <link href="/2022/07/31/crafting-interpreters-notes/"/>
+      <url>/2022/07/31/crafting-interpreters-notes/</url>
+      
+        <content type="html"><![CDATA[<h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>[源代码] –&gt; 词法分析 –&gt; [token串] –&gt; 编译器第一轮（语法分析） –&gt; [语法树] –&gt; 编译器第二轮（中间语言转换/翻译） –&gt; [中间语言] –&gt; 中间语言 VM 执行/解释 –&gt; [原生机器语言]</p><p>编译器第一轮和第二轮可以合并成一轮，直接输出中间语言，在现代语言实现里不常见，只用于教学。</p><p>以 VM 为分界点，前面可以看成 解释型 语言，用 VM 来解释执行，可能用到即时编译。<br>如果走完全过程，发布原生机器语言，就是 编译型 语言</p><span id="more"></span><h2 id="三种解释器-编译器"><a href="#三种解释器-编译器" class="headerlink" title="三种解释器/编译器"></a>三种解释器/编译器</h2><h3 id="walk-through"><a href="#walk-through" class="headerlink" title="walk-through"></a>walk-through</h3><p>建立出语法树，每次运行的时候遍历语法树，速度较慢</p><h3 id="解释型语言"><a href="#解释型语言" class="headerlink" title="解释型语言"></a>解释型语言</h3><p>生成中间语言</p><h3 id="编译型语言"><a href="#编译型语言" class="headerlink" title="编译型语言"></a>编译型语言</h3><p>后两者都可以实现为：</p><ol><li>先建立出语法树，</li><li>然后设计一个基于 stack 的虚拟机，</li><li>接着将语法树转换/翻译成基于 stack 的虚拟机指令（栈、二叉树结构其实是等价的）。</li></ol><h3 id="代码和数据"><a href="#代码和数据" class="headerlink" title="代码和数据"></a>代码和数据</h3><p>程序由代码和数据组成，代码被表示成语法树AST，数据需要创建出数据结构来放置，如 hash, string, stack</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 编译器和解释器 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 编译器 </tag>
+            
+            <tag> 解释器 </tag>
+            
+            <tag> compiler </tag>
+            
+            <tag> interpreter </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>软件技术大会列表</title>
       <link href="/2022/07/31/software-technology-conference-list/"/>
       <url>/2022/07/31/software-technology-conference-list/</url>
@@ -1903,7 +1934,7 @@
       
       <categories>
           
-          <category> 编译器 </category>
+          <category> 编译器和解释器 </category>
           
       </categories>
       
@@ -1911,6 +1942,12 @@
         <tags>
             
             <tag> 编译器 </tag>
+            
+            <tag> 解释器 </tag>
+            
+            <tag> compiler </tag>
+            
+            <tag> interpreter </tag>
             
         </tags>
       
