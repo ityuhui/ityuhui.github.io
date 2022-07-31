@@ -4,6 +4,43 @@
   
     
     <entry>
+      <title>软件技术大会列表</title>
+      <link href="/2022/07/31/software-technology-conference-list/"/>
+      <url>/2022/07/31/software-technology-conference-list/</url>
+      
+        <content type="html"><![CDATA[<p>除了<a href="http://ityuhui.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AD%A6%E6%9C%AF%E4%BC%9A%E8%AE%AE/">计算机学术会议</a>，对于软件开发者来说，由软件基金会或者IT厂商举办的软件技术大会也值得关注。</p><span id="more"></span><h2 id="国外"><a href="#国外" class="headerlink" title="国外"></a>国外</h2><p>通过 Youtube 观看回放</p><p>KubeCon &amp; CNCF America/Europe</p><p>Gopher Conf</p><p>Rust Conf</p><p>PyConf</p><p>Microsoft Build</p><p>Google I/O</p><p>Apple WWDC</p><p>Apache （后期添加）</p><h2 id="国内"><a href="#国内" class="headerlink" title="国内"></a>国内</h2><p>通过 bilibili 观看回放</p><p>Rust Conf China (微信公众号：rust中文社区)</p><p>KubeCon &amp; CNCF China</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 软件技术大会 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 会议 </tag>
+            
+            <tag> conference </tag>
+            
+            <tag> 技术大会 </tag>
+            
+            <tag> 技术会议 </tag>
+            
+            <tag> pyconf </tag>
+            
+            <tag> rustconf </tag>
+            
+            <tag> gopherconf </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>容器网络接口（CNI）规范</title>
       <link href="/2022/07/21/cni-spec/"/>
       <url>/2022/07/21/cni-spec/</url>
