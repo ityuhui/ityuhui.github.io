@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>mongodb 总结</title>
+      <link href="/2022/08/15/mongodb-summary/"/>
+      <url>/2022/08/15/mongodb-summary/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Downlaod-and-Install"><a href="#Downlaod-and-Install" class="headerlink" title="Downlaod and Install"></a>Downlaod and Install</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongodb-org-server_5.0.7_rc0_amd64.deb</span><br><span class="line">mongodb-org-shell_5.0.7_rc0_amd64.deb</span><br></pre></td></tr></table></figure><h2 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h2><p>Init mongodb server:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /var/lib/mongo</span><br><span class="line">sudo mkdir -p /var/<span class="built_in">log</span>/mongodb</span><br><span class="line">sudo chown `whoami` /var/lib/mongo</span><br><span class="line">sudo chown `whoami` /var/<span class="built_in">log</span>/mongodb</span><br></pre></td></tr></table></figure><p>Start mongodb server:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --bind_ip_all --dbpath /var/lib/mongo --logpath /var/<span class="built_in">log</span>/mongodb/mongod.log --fork</span><br></pre></td></tr></table></figure><p>Stop mongodb server:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; use admin</span><br><span class="line">&gt; db.shutdownServer();</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> database </tag>
+            
+            <tag> mongodb </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>《Crafting Interpreters》读书笔记</title>
       <link href="/2022/07/31/crafting-interpreters-notes/"/>
       <url>/2022/07/31/crafting-interpreters-notes/</url>
