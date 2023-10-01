@@ -4,11 +4,40 @@
   
     
     <entry>
+      <title>Kubernetes API</title>
+      <link href="/2023/10/01/kubernetes-api/"/>
+      <url>/2023/10/01/kubernetes-api/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Kubernetes-API"><a href="#Kubernetes-API" class="headerlink" title="Kubernetes API"></a>Kubernetes API</h1><h2 id="OpenAPI-Spec"><a href="#OpenAPI-Spec" class="headerlink" title="OpenAPI Spec"></a>OpenAPI Spec</h2><p>Kubernetes Open API spec 有两个版本，同时存在</p><p>2.0</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/kubernetes/kubernetes/blob/master/api/openapi-spec/swagger.json</span><br></pre></td></tr></table></figure><p>3.0</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/kubernetes/kubernetes/tree/master/api/openapi-spec</span><br></pre></td></tr></table></figure><p>目前，各个语言的客户端都用 2.0 生成。</p><p><a href="https://github.com/kubernetes/kube-openapi/">kubernetes/kube-openapi</a> 项目，扫描 kubernetes 源代码，根据 <code>// tag</code> 的指示，生成 spec 文件，我个人认为会同时生成 2.0 和 3.0 的文件。</p><span id="more"></span><h2 id="代码自动生成"><a href="#代码自动生成" class="headerlink" title="代码自动生成"></a>代码自动生成</h2><p><a href="https://github.com/kubernetes/kubernetes/tree/master/staging/src/k8s.io/apimachinery">k8s.io/apimachinery</a> 提供 go 语言的结构体 meta 定义，供 [k8s.io/api] 使用</p><p><a href="https://github.com/kubernetes/kubernetes/tree/master/staging/src/k8s.io/api">k8s.io/api</a> 是 Kubernetes API resource 的 scheme</p><p><a href="https://github.com/kubernetes/code-generator">kubernetes/code-generator</a> 根据源代码里的 golang 数据结构生成 CRD 的client，包含 CRD 的 CURD 函数，深拷贝，informer，lister</p><p><a href="https://github.com/kubernetes/kubernetes/tree/master/staging/src/k8s.io/client-go">k8s.io/client-go</a> 用于编写 Kubernetes golang 客户端，包含两种类型的 client：<br>dynamic (generic，自己输入GVK)<br>typed （GVK Scheme 已知）</p><p><a href="https://github.com/kubernetes-sigs/controller-runtime">kubernetes-sigs/controller-runtime</a> 第三个 Kubernetes golang 客户端，用于写Operator控制器，kubebuilder 和 OpenShift Operator SDK 底层使用的就是它</p><p><a href="https://github.com/kubernetes-sigs/controller-tools">kubernetes-sigs/controller-tools</a> 包含 controller-gen，生成 CRD， RBAC 等</p><h2 id="写-Operator-的三种方式"><a href="#写-Operator-的三种方式" class="headerlink" title="写 Operator 的三种方式"></a>写 Operator 的三种方式</h2><h3 id="1-sample-controller"><a href="#1-sample-controller" class="headerlink" title="1 sample-controller"></a>1 sample-controller</h3><p>使用 code-generator 和 client-go</p><h3 id="2-Kubebuilder"><a href="#2-Kubebuilder" class="headerlink" title="2 Kubebuilder"></a>2 Kubebuilder</h3><p>使用 controller-runtime 和 controller-tools</p><h3 id="3-Opeartor-SDK"><a href="#3-Opeartor-SDK" class="headerlink" title="3 Opeartor SDK"></a>3 Opeartor SDK</h3><p>使用 controller-runtime 和 controller-tools</p><h2 id="release-Operator"><a href="#release-Operator" class="headerlink" title="release Operator"></a>release Operator</h2><h3 id="Helm"><a href="#Helm" class="headerlink" title="Helm"></a>Helm</h3><p>参数化一组 yaml 文件</p><h3 id="Kustomize"><a href="#Kustomize" class="headerlink" title="Kustomize"></a>Kustomize</h3><h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><ul><li>sed, awk, jq, yq</li><li>Ansible</li><li>Ksonnet 已经废弃</li></ul><h2 id="API-Server"><a href="#API-Server" class="headerlink" title="API Server"></a>API Server</h2><p><a href="https://github.com/kubernetes/kubernetes/tree/master/staging/src/k8s.io//apiserver/pkg/registry/rest">k8s.io/apiserver/pkg/registry/rest</a> 定义了 API server 的 REST 接口</p><p><a href="https://github.com/kubernetes/kubernetes/tree/master/staging/src/k8s.io/apiserver/pkg/registry/generic">k8s.io/apiserver/pkg/registry/generic</a> 在 generic object 上实现了这个接口</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> k8s </tag>
+            
+            <tag> kubernetes </tag>
+            
+            <tag> API </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++ 容器怎么存放不同类型的值</title>
       <link href="/2023/10/01/variants-in-cpp/"/>
       <url>/2023/10/01/variants-in-cpp/</url>
       
-        <content type="html"><![CDATA[<p>最简单粗暴的方法是</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *</span><br></pre></td></tr></table></figure><span id="more"></span><p>稍微工程一点的方法是</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MyType</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="keyword">class</span> <span class="title">TypeName</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span> <span class="title">data</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>再OO一点的方法是</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IObject</span>&#123;</span>&#125;;</span><br></pre></td></tr></table></figure><p>作为通用基类。</p>]]></content>
+        <content type="html"><![CDATA[<p>最简单粗暴的方法是</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *</span><br></pre></td></tr></table></figure><p>稍微工程一点的方法是</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">MyType</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="keyword">class</span> <span class="title">TypeName</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">union</span> <span class="title">data</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>再OO一点的方法是</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IObject</span>&#123;</span>&#125;;</span><br></pre></td></tr></table></figure><p>作为通用基类。</p>]]></content>
       
       
       <categories>
