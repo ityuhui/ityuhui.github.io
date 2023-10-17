@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>配置一个新的 git 环境</title>
+      <link href="/2023/10/17/configure-a-new-git-environment/"/>
+      <url>/2023/10/17/configure-a-new-git-environment/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Configuration-for-a-new-git-environment"><a href="#Configuration-for-a-new-git-environment" class="headerlink" title="Configuration for a new git environment"></a>Configuration for a new git environment</h1><h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;John Doe&quot;</span><br></pre></td></tr></table></figure><h2 id="Email"><a href="#Email" class="headerlink" title="Email"></a>Email</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email johndoe@example.com</span><br></pre></td></tr></table></figure><h2 id="Editor"><a href="#Editor" class="headerlink" title="Editor"></a>Editor</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.editor vim</span><br></pre></td></tr></table></figure><span id="more"></span><h2 id="Disable-pager"><a href="#Disable-pager" class="headerlink" title="Disable pager"></a>Disable pager</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global pager.branch <span class="literal">false</span></span><br><span class="line">git config --global pager.log <span class="literal">false</span></span><br></pre></td></tr></table></figure><h2 id="Check-the-current-configuration"><a href="#Check-the-current-configuration" class="headerlink" title="Check the current configuration"></a>Check the current configuration</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure><h2 id="Timezone"><a href="#Timezone" class="headerlink" title="Timezone"></a>Timezone</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tzselect</span><br></pre></td></tr></table></figure><h2 id="Clone-the-repository"><a href="#Clone-the-repository" class="headerlink" title="Clone the repository"></a>Clone the repository</h2><h2 id="Add-the-remote-upstream"><a href="#Add-the-remote-upstream" class="headerlink" title="Add the remote upstream"></a>Add the remote upstream</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> git的使用 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>关于鉴权的总结</title>
       <link href="/2023/10/01/authentication-summary/"/>
       <url>/2023/10/01/authentication-summary/</url>

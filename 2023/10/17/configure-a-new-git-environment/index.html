@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"8.0.0-rc.3","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="九万里">
-<meta property="og:url" content="http://example.com/archives/2020/03/index.html">
+  <meta name="description" content="Configuration for a new git environmentUser1git config --global user.name &quot;John Doe&quot;  Email1git config --global user.email johndoe@example.com  Editor1git config --global core.editor vim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配置一个新的 git 环境">
+<meta property="og:url" content="http://example.com/2023/10/17/configure-a-new-git-environment/index.html">
 <meta property="og:site_name" content="九万里">
+<meta property="og:description" content="Configuration for a new git environmentUser1git config --global user.name &quot;John Doe&quot;  Email1git config --global user.email johndoe@example.com  Editor1git config --global core.editor vim">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-17T10:01:58.000Z">
+<meta property="article:modified_time" content="2023-10-17T10:06:08.074Z">
 <meta property="article:author" content="Hui Yu">
+<meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/archives/2020/03/">
+<link rel="canonical" href="http://example.com/2023/10/17/configure-a-new-git-environment/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | 九万里</title>
+  <title>配置一个新的 git 环境 | 九万里</title>
   
 
 
@@ -182,51 +187,102 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        
-        <span class="collection-header">很好! 目前共计 86 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/17/configure-a-new-git-environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hui Yu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="九万里">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          配置一个新的 git 环境
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-10-17 18:01:58 / 修改时间：18:06:08" itemprop="dateCreated datePublished" datetime="2023-10-17T18:01:58+08:00">2023-10-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git%E7%9A%84%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">git的使用</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
+        <h1 id="Configuration-for-a-new-git-environment"><a href="#Configuration-for-a-new-git-environment" class="headerlink" title="Configuration for a new git environment"></a>Configuration for a new git environment</h1><h2 id="User"><a href="#User" class="headerlink" title="User"></a>User</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;John Doe&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Email"><a href="#Email" class="headerlink" title="Email"></a>Email</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email johndoe@example.com</span><br></pre></td></tr></table></figure>
+
+<h2 id="Editor"><a href="#Editor" class="headerlink" title="Editor"></a>Editor</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.editor vim</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="Disable-pager"><a href="#Disable-pager" class="headerlink" title="Disable pager"></a>Disable pager</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global pager.branch <span class="literal">false</span></span><br><span class="line">git config --global pager.log <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Check-the-current-configuration"><a href="#Check-the-current-configuration" class="headerlink" title="Check the current configuration"></a>Check the current configuration</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<h2 id="Timezone"><a href="#Timezone" class="headerlink" title="Timezone"></a>Timezone</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tzselect</span><br></pre></td></tr></table></figure>
+
+<h2 id="Clone-the-repository"><a href="#Clone-the-repository" class="headerlink" title="Clone the repository"></a>Clone the repository</h2><h2 id="Add-the-remote-upstream"><a href="#Add-the-remote-upstream" class="headerlink" title="Add the remote upstream"></a>Add the remote upstream</h2>
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-30T21:52:19+08:00"
-              content="2020-03-30">
-          03-30
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2020/03/30/libyaml-introduction/" itemprop="url">
-            <span itemprop="name">使用libyaml</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/10/01/authentication-summary/" rel="prev" title="关于鉴权的总结">
+      <i class="fa fa-chevron-left"></i> 关于鉴权的总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -279,6 +335,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Configuration-for-a-new-git-environment"><span class="nav-number">1.</span> <span class="nav-text">Configuration for a new git environment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#User"><span class="nav-number">1.1.</span> <span class="nav-text">User</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Email"><span class="nav-number">1.2.</span> <span class="nav-text">Email</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Editor"><span class="nav-number">1.3.</span> <span class="nav-text">Editor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disable-pager"><span class="nav-number">1.4.</span> <span class="nav-text">Disable pager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-the-current-configuration"><span class="nav-number">1.5.</span> <span class="nav-text">Check the current configuration</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Timezone"><span class="nav-number">1.6.</span> <span class="nav-text">Timezone</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clone-the-repository"><span class="nav-number">1.7.</span> <span class="nav-text">Clone the repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-the-remote-upstream"><span class="nav-number">1.8.</span> <span class="nav-text">Add the remote upstream</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
