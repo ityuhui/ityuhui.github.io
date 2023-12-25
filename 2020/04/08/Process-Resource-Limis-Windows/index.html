@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -261,9 +261,9 @@
 <h3 id="管理Job关联的进程"><a href="#管理Job关联的进程" class="headerlink" title="管理Job关联的进程"></a>管理Job关联的进程</h3><p>当一个进程关联到一个job之后，这个进程创建的子进程默认也会被关联到这个job上。（注意：CreateProcess函数创建的子进程会被自动关联，但是Win32_Process.Create创建的则不会。）</p>
 <p>可以通过设置JOB_OBJECT_LIMIT_BREAKAWAY_OK或者JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK来修改默认行为：</p>
 <ul>
-<li><p>如果job有extended limit/JOB_OBJECT_LIMIT_BREAKAWAY_OK, 并且在创建父进程的时候指定了CREATE_BREAKAWAY_FROM_JOB，那么子进程不会被自动的关联到父进程的job object。</p>
+<li><p>如果job有extended limit&#x2F;JOB_OBJECT_LIMIT_BREAKAWAY_OK, 并且在创建父进程的时候指定了CREATE_BREAKAWAY_FROM_JOB，那么子进程不会被自动的关联到父进程的job object。</p>
 </li>
-<li><p>如果job有extended limit/JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK，不需要在创建父进程的时候指定任何选项，子进程都不会自动被关联到父进程的job object。</p>
+<li><p>如果job有extended limit&#x2F;JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK，不需要在创建父进程的时候指定任何选项，子进程都不会自动被关联到父进程的job object。</p>
 </li>
 </ul>
 <p>如果job是嵌套的，那么层级里的父job的breakaway设置会影响到层级里的其他job所关联的子进程。</p>
@@ -283,7 +283,7 @@
 <li>JOBOBJECT_NOTIFICATION_LIMIT_INFORMATION</li>
 </ul>
 <p>如果job是嵌套的，层级里的父job会影响子job</p>
-<p>如果job有一个关联的I/O completion端口，它可以在资源超限后收到通知。当资源超限或者某个事件来到，系统会发送消息给completion端口。使用带有job object信息类JobObjectAssociateCompletionPortInformation和一个JOBOBJECT_ASSOCIATE_COMPLETION_PORT结构体指针的函数SetInformationJobObject可以将一个completion端口关联到job。注意最好是在job不活动的时候做这个关联，以降低丢失消息的风险。</p>
+<p>如果job有一个关联的I&#x2F;O completion端口，它可以在资源超限后收到通知。当资源超限或者某个事件来到，系统会发送消息给completion端口。使用带有job object信息类JobObjectAssociateCompletionPortInformation和一个JOBOBJECT_ASSOCIATE_COMPLETION_PORT结构体指针的函数SetInformationJobObject可以将一个completion端口关联到job。注意最好是在job不活动的时候做这个关联，以降低丢失消息的风险。</p>
 <p>如果job调用了PostQueuedCompletionStatus函数，所有的消息都会被job直接发送。某个线程必须使用GetQueuedCompletionStatus函数来监控complition端口从而拿到消息。</p>
 <p>带有JobObjectNotificationLimitInformation信息类的限制的异常，并不能保证被发送给completion端口，带有JobObjectNotificationLimitInformationx的通知是可以保证的。</p>
 <h3 id="Job的资源账户"><a href="#Job的资源账户" class="headerlink" title="Job的资源账户"></a>Job的资源账户</h3><p>job object记录了其关联的所有进程的基本资源信息（包括终止的进程），使用QueryInformationJobObject函数可以获取这些资源信息。</p>
@@ -317,7 +317,7 @@
 <li>scheduling class limit</li>
 <li>working set minimum and maximum</li>
 </ul>
-<h4 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h4><p>当特点的事件（例如创建新进程、资源限制越界）发生，一个消息会被发送到job关联的I/O completion端口。job也可以接收消息。对于一个非嵌套的job，消息会被发送到该job关联的completion端口。对于一个嵌套的job,消息会被发送到该job所在的job链上的每一个job关联的completion端口。所以说子job不必一定有自己的completion端口。</p>
+<h4 id="通知"><a href="#通知" class="headerlink" title="通知"></a>通知</h4><p>当特点的事件（例如创建新进程、资源限制越界）发生，一个消息会被发送到job关联的I&#x2F;O completion端口。job也可以接收消息。对于一个非嵌套的job，消息会被发送到该job关联的completion端口。对于一个嵌套的job,消息会被发送到该job所在的job链上的每一个job关联的completion端口。所以说子job不必一定有自己的completion端口。</p>
 <h3 id="嵌套Job的资源账户"><a href="#嵌套Job的资源账户" class="headerlink" title="嵌套Job的资源账户"></a>嵌套Job的资源账户</h3><p>嵌套job的资源账户信息描述了该job关联的每一个进程的资源使用情况，包括子job的。job链上的每一个job都聚合了它自己关联的进程以及它所在的job链上的子job所关联的进程。</p>
 <h3 id="终止嵌套Job"><a href="#终止嵌套Job" class="headerlink" title="终止嵌套Job"></a>终止嵌套Job</h3><p>当嵌套job里的一个job终止，系统将会终止这个job以及它的子job关联的所有进程。终止的进程的资源将会被父job来计入。</p>
 <p>与普通job一样，嵌套job也必须有JOB_OBJECT_TERMINATE访问权限。</p>

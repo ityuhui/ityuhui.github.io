@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -328,9 +328,9 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 9090:9090 -v /tmp/prometheus.yml:/etc/prometheus/prometheus.yml \</span><br><span class="line">       prom/prometheus</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li>Kubernetes Deployments / StatefulSets</li>
+<li>Kubernetes Deployments &#x2F; StatefulSets</li>
 </ul>
-<p>可以将上面的 Docker 容器配置在 Deployments / StatefulSets 里运行，使用 ConfigMap 来提供配置。</p>
+<p>可以将上面的 Docker 容器配置在 Deployments &#x2F; StatefulSets 里运行，使用 ConfigMap 来提供配置。</p>
 <p>社区维护了一个Helm可以更加方便的安装</p>
 <ul>
 <li>Helm</li>
@@ -442,7 +442,7 @@
 <p>监控这些组件与监控其他的 Prometheus 端点没什么不同，但有两点需要注意：</p>
 <ul>
 <li>这些组件很多都只能在 localhost上 侦听，使得它们很难被 Prometheus pod 访问。</li>
-<li>这些组件可能没有指向 pod 的 Kubernetes Service， 但是你总是可以创建出来。 </li>
+<li>这些组件可能没有指向 pod 的 Kubernetes Service， 但是你总是可以创建出来。</li>
 </ul>
 <p>下面用Minikube来演示如何监听kube-scheluder:<br>首先安装二进制文件，然后创建一个在所有接口上对外暴露kube-scheduler服务的集群：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start --memory=4096 --bootstrapper=kubeadm --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --extra-config=scheduler.address=0.0.0.0 --extra-config=controller-manager.address=0.0.0.0</span><br></pre></td></tr></table></figure>

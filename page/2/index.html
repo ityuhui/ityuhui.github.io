@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -317,7 +317,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>[源代码] –&gt; 词法分析 –&gt; [token串] –&gt; 编译器第一轮（语法分析） –&gt; [语法树] –&gt; 编译器第二轮（中间语言转换/翻译） –&gt; [中间语言] –&gt; 中间语言 VM 执行/解释 –&gt; [原生机器语言]</p>
+          <h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><p>[源代码] –&gt; 词法分析 –&gt; [token串] –&gt; 编译器第一轮（语法分析） –&gt; [语法树] –&gt; 编译器第二轮（中间语言转换&#x2F;翻译） –&gt; [中间语言] –&gt; 中间语言 VM 执行&#x2F;解释 –&gt; [原生机器语言]</p>
 <p>编译器第一轮和第二轮可以合并成一轮，直接输出中间语言，在现代语言实现里不常见，只用于教学。</p>
 <p>以 VM 为分界点，前面可以看成 解释型 语言，用 VM 来解释执行，可能用到即时编译。<br>如果走完全过程，发布原生机器语言，就是 编译型 语言</p>
           <!--noindex-->
@@ -799,9 +799,9 @@
           <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>可以使用<code>netstat -o</code>或者<code>netstat --timer</code>来查看socket的keepalive</p>
 <p>TCP keepalive 是 TCP协议提供的连接保活机制。有三个参数：</p>
 <ul>
-<li>/proc/sys/net/ipv4/tcp_keepalive_time<br>默认: 7200 秒</li>
-<li>/proc/sys/net/ipv4/tcp_keepalive_probes<br>默认: 9</li>
-<li>/proc/sys/net/ipv4/tcp_keepalive_intvl<br>默认: 75 秒</li>
+<li>&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;tcp_keepalive_time<br>默认: 7200 秒</li>
+<li>&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;tcp_keepalive_probes<br>默认: 9</li>
+<li>&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;tcp_keepalive_intvl<br>默认: 75 秒</li>
 </ul>
           <!--noindex-->
             <div class="post-button">

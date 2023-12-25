@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -264,10 +264,10 @@
 </li>
 <li>由于一些系统进程所在的docker镜像被GFW阻隔，所以必须使用技术手段访问</li>
 <li>需要配置docker pull代理</li>
-<li>需要对Google的docker image托管网站k8s.gcr.io在外网的机器上做nslookup，把查到的地址写到本地的/etc/hosts文件里</li>
+<li>需要对Google的docker image托管网站k8s.gcr.io在外网的机器上做nslookup，把查到的地址写到本地的&#x2F;etc&#x2F;hosts文件里</li>
 </ul>
 <h4 id="添加compute-node"><a href="#添加compute-node" class="headerlink" title="添加compute node"></a>添加compute node</h4><ul>
-<li>在compute node上和master上的/etc/hosts里，添加好记录使其可以互相访问</li>
+<li>在compute node上和master上的&#x2F;etc&#x2F;hosts里，添加好记录使其可以互相访问</li>
 <li>compute node需要安装好kubeadmin工具</li>
 <li>安装好master之后，会出现一个用于添加compute node的命令，在compute node上执行这个命令就可以了。但是命令里的Token在24小时之后会过期，所以需要重新获得token, 参考上面的Creating a single control-plane cluster with kubeadm</li>
 </ul>
@@ -290,7 +290,7 @@
 <li><p><code>kubectl cp podName:容器路径/xxx.datasource -n namespaces /主机目录</code><br>这样可以把容器内文件cp到主机目录</p>
 </li>
 </ol>
-<p>*注意：从容器拷贝文件到主机的时候podNname:这里不要加/ 之前加了/会一直报错</p>
+<p>*注意：从容器拷贝文件到主机的时候podNname:这里不要加&#x2F; 之前加了&#x2F;会一直报错</p>
 <h4 id="pod-分组"><a href="#pod-分组" class="headerlink" title="pod 分组"></a>pod 分组</h4><h5 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h5><h5 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h5><h4 id="获得pod的动态信息"><a href="#获得pod的动态信息" class="headerlink" title="获得pod的动态信息"></a>获得pod的动态信息</h4><p>DOWNWARD API</p>
 <h4 id="向pod传入配置"><a href="#向pod传入配置" class="headerlink" title="向pod传入配置"></a>向pod传入配置</h4><ul>
 <li>ConfigMap</li>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -268,11 +268,11 @@
 </ul>
 <p>来读取yaml文件内的元素</p>
 <ul>
-<li>stream ::= STREAM-START document* STREAM-END</li>
-<li>document ::= DOCUMENT-START node DOCUMENT-END</li>
-<li>node ::= ALIAS | SCALAR | sequence | mapping</li>
-<li>sequence ::= SEQUENCE-START node* SEQUENCE-END</li>
-<li>mapping ::= MAPPING-START (node node)* MAPPING-END</li>
+<li>stream ::&#x3D; STREAM-START document* STREAM-END</li>
+<li>document ::&#x3D; DOCUMENT-START node DOCUMENT-END</li>
+<li>node ::&#x3D; ALIAS | SCALAR | sequence | mapping</li>
+<li>sequence ::&#x3D; SEQUENCE-START node* SEQUENCE-END</li>
+<li>mapping ::&#x3D; MAPPING-START (node node)* MAPPING-END</li>
 </ul>
 <p>这种方法需要自己实现一个状态机，根据事件来判断下一步处理的事件，同时读取元素。</p>
 <h3 id="基于document"><a href="#基于document" class="headerlink" title="基于document"></a>基于document</h3><p>使用这种模式，libyaml将整个yaml读入内存，应用程序不需要再处理上面两种模式里的事件或者token, 只需要按照libyaml在内存中的数据结构安排，将其遍历出来，比较方便，也类似于libxml的模式。</p>

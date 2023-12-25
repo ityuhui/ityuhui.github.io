@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -257,13 +257,13 @@
 </blockquote>
 <span id="more"></span>
 
-<h1 id="获得libcurl"><a href="#获得libcurl" class="headerlink" title="获得libcurl"></a>获得libcurl</h1><h2 id="到官方网站下载源代码包到本地"><a href="#到官方网站下载源代码包到本地" class="headerlink" title="到官方网站下载源代码包到本地"></a>到官方网站下载源代码包到本地</h2><p>例如我的目录 $home/opt/libcurl</p>
+<h1 id="获得libcurl"><a href="#获得libcurl" class="headerlink" title="获得libcurl"></a>获得libcurl</h1><h2 id="到官方网站下载源代码包到本地"><a href="#到官方网站下载源代码包到本地" class="headerlink" title="到官方网站下载源代码包到本地"></a>到官方网站下载源代码包到本地</h2><p>例如我的目录 $home&#x2F;opt&#x2F;libcurl</p>
 <h2 id="编译源代码"><a href="#编译源代码" class="headerlink" title="编译源代码"></a>编译源代码</h2><blockquote>
-<p>./configure<br>make</p>
+<p>.&#x2F;configure<br>make</p>
 </blockquote>
 <p>得到静态库 libcurl.a<br>其实也得到了动态库，但是为了简单，我没有使用。</p>
-<h2 id="拷贝头文件"><a href="#拷贝头文件" class="headerlink" title="拷贝头文件"></a>拷贝头文件</h2><p>将include/curl目录拷贝到/usr/local/include下面</p>
-<h2 id="其实OSX系统自带libcurl"><a href="#其实OSX系统自带libcurl" class="headerlink" title="其实OSX系统自带libcurl"></a>其实OSX系统自带libcurl</h2><p>/usr/lib/libcurl.dylib，也可以链接使用</p>
+<h2 id="拷贝头文件"><a href="#拷贝头文件" class="headerlink" title="拷贝头文件"></a>拷贝头文件</h2><p>将include&#x2F;curl目录拷贝到&#x2F;usr&#x2F;local&#x2F;include下面</p>
+<h2 id="其实OSX系统自带libcurl"><a href="#其实OSX系统自带libcurl" class="headerlink" title="其实OSX系统自带libcurl"></a>其实OSX系统自带libcurl</h2><p>&#x2F;usr&#x2F;lib&#x2F;libcurl.dylib，也可以链接使用</p>
 <h1 id="使用libcurl"><a href="#使用libcurl" class="headerlink" title="使用libcurl"></a>使用libcurl</h1><h2 id="创建工程，将-libcurl-a拷贝到此工程目录下"><a href="#创建工程，将-libcurl-a拷贝到此工程目录下" class="headerlink" title="创建工程，将 libcurl.a拷贝到此工程目录下"></a>创建工程，将 libcurl.a拷贝到此工程目录下</h2><p><a target="_blank" rel="noopener" href="https://github.com/ityuhui/mycurlsample">https://github.com/ityuhui/mycurlsample</a></p>
 <h2 id="编写程序"><a href="#编写程序" class="headerlink" title="编写程序"></a>编写程序</h2>
     </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -256,7 +256,7 @@
 <p>很多数据分析师喜欢使用Microsoft Excel来进行数据的收集、建模和分析，但是，当金融模型的数据量很大，或者模型的计算非常复杂时，在单机上执行Excel数学运算将会极其耗费时间，所以，将Exel workbook上的数据分发到集群进行分布式计算非常必要。IBM Spectrum Symphony支持这一应用场景。</p>
 <span id="more"></span>
 
-<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="1-Execl-VBA模式"><a href="#1-Execl-VBA模式" class="headerlink" title="1. Execl VBA模式"></a>1. Execl VBA模式</h3><p>将Excel作为客户端，当点击workbook/sheet上的宏计算按钮之后，Excel通过IBM Spectrum Symphony COM SDK连接Symphony集群，集群把计算任务和workbook分发到计算节点上，由服务端程序打开Excel workbook进行计算，计算结果返回给客户机器的Excel后，Excel将其填入单元格内。</p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><h3 id="1-Execl-VBA模式"><a href="#1-Execl-VBA模式" class="headerlink" title="1. Execl VBA模式"></a>1. Execl VBA模式</h3><p>将Excel作为客户端，当点击workbook&#x2F;sheet上的宏计算按钮之后，Excel通过IBM Spectrum Symphony COM SDK连接Symphony集群，集群把计算任务和workbook分发到计算节点上，由服务端程序打开Excel workbook进行计算，计算结果返回给客户机器的Excel后，Excel将其填入单元格内。</p>
 <p>这种模式下，服务端也可能是由编程语言自制的程序，Excel客户端只发来数据，不发来workbook, 服务端将发来的数据进行处理，返回给Excel客户端。</p>
 <h3 id="2-定制客户端和服务端程序的模式"><a href="#2-定制客户端和服务端程序的模式" class="headerlink" title="2. 定制客户端和服务端程序的模式"></a>2. 定制客户端和服务端程序的模式</h3><p>使用任意一种编程语言编写自制的客户端程序，将参数和Excel workbook通过IBM Spectrum Symphony SDK发送给Symphony集群上自制的服务端程序，由服务端程序进行计算，计算结果返回给客户端，客户端再将结果进行后续的处理。</p>
 <p>这种模式下，服务端也可根据需要，打开计算节点上的Excel对发送过来的workbook进行处理，将结果返回给客户端。</p>

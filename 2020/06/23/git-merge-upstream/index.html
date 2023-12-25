@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -272,7 +272,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git rebase --continue</span><br><span class="line">git commit</span><br></pre></td></tr></table></figure>
 
 <h3 id="merge"><a href="#merge" class="headerlink" title="merge"></a>merge</h3><p>我自己只用rebase</p>
-<h2 id="git-fetch-and-git-merge"><a href="#git-fetch-and-git-merge" class="headerlink" title="git fetch and git merge"></a>git fetch and git merge</h2><p>虽然从效果上看 git pull = git fetch + git mrege/rebase，但是最好用两步的方法</p>
+<h2 id="git-fetch-and-git-merge"><a href="#git-fetch-and-git-merge" class="headerlink" title="git fetch and git merge"></a>git fetch and git merge</h2><p>虽然从效果上看 git pull &#x3D; git fetch + git mrege&#x2F;rebase，但是最好用两步的方法</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git fetch orgin master //将远程仓库的master分支下载到本地当前branch中</span><br><span class="line"></span><br><span class="line">git log -p master  ..origin/master //比较本地的master分支和origin/master分支的差别</span><br><span class="line"></span><br><span class="line">git merge origin/master //进行合并，注意merge/rebase命令后面跟的是branch，不能直接跟名字，例如origin</span><br></pre></td></tr></table></figure>
 
 <h2 id="处理不同分支之间的指定文件的差异"><a href="#处理不同分支之间的指定文件的差异" class="headerlink" title="处理不同分支之间的指定文件的差异"></a>处理不同分支之间的指定文件的差异</h2><h3 id="在不同分支之间比较文件"><a href="#在不同分支之间比较文件" class="headerlink" title="在不同分支之间比较文件"></a>在不同分支之间比较文件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git diff branch1 branch2 filename</span><br><span class="line">git diff branch localfilename</span><br></pre></td></tr></table></figure>
@@ -318,7 +318,8 @@
 <h2 id="让-Windows-平台上的-git-bash-识别中文名"><a href="#让-Windows-平台上的-git-bash-识别中文名" class="headerlink" title="让 Windows 平台上的 git bash 识别中文名"></a>让 Windows 平台上的 git bash 识别中文名</h2><p>Step:</p>
 <ol>
 <li><p>创建文件</p>
- <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.bashrc</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch ~/.bashrc</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>文件内容如下：</p>
  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> LANG=<span class="string">&quot;zh_CN.UTF-8&quot;</span></span><br><span class="line"><span class="built_in">export</span> LC_ALL=<span class="string">&quot;zh_CN.UTF-8&quot;</span></span><br></pre></td></tr></table></figure></li>
 </ol>
