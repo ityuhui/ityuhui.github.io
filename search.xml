@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>如何学习之二</title>
+      <link href="/2024/01/25/how-to-learn-tech-2/"/>
+      <url>/2024/01/25/how-to-learn-tech-2/</url>
+      
+        <content type="html"><![CDATA[<p>根据调查，国外年轻程序员学习或者提高技能的途径是这样的:</p><span id="more"></span><h2 id="第一选择-竞赛网站"><a href="#第一选择-竞赛网站" class="headerlink" title="第一选择 竞赛网站"></a>第一选择 竞赛网站</h2><p>例如</p><ul><li><p><a href="https://www.kaggle.com/">Kaggle</a></p></li><li><p>LeetCode</p></li><li><p><a href="https://www.topcoder.com/">TopCoder</a></p></li></ul><h2 id="第二选择-视频网站"><a href="#第二选择-视频网站" class="headerlink" title="第二选择 视频网站"></a>第二选择 视频网站</h2><p>例如</p><ul><li>YouTube</li></ul><h2 id="第三选择-在线课程"><a href="#第三选择-在线课程" class="headerlink" title="第三选择 在线课程"></a>第三选择 在线课程</h2><p>例如</p><ul><li>Udemy</li></ul><h2 id="第四选择-参考书或者在线文档"><a href="#第四选择-参考书或者在线文档" class="headerlink" title="第四选择 参考书或者在线文档"></a>第四选择 参考书或者在线文档</h2><p>例如</p><ul><li>官方文档</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术方面的思考和总结 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 学习 </tag>
+            
+            <tag> 新知识 </tag>
+            
+            <tag> 途径 </tag>
+            
+            <tag> 方法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>为 SpringBoot REST 项目生成 Swagger/OpenAPI 3.0 文档</title>
       <link href="/2023/10/18/springdoc-swagger-openapi/"/>
       <url>/2023/10/18/springdoc-swagger-openapi/</url>
@@ -2397,7 +2428,7 @@
     
     
     <entry>
-      <title>如何学习</title>
+      <title>如何学习之一</title>
       <link href="/2013/08/24/how-to-learn-tech/"/>
       <url>/2013/08/24/how-to-learn-tech/</url>
       
