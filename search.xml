@@ -4,11 +4,40 @@
   
     
     <entry>
+      <title>Java 数据结构</title>
+      <link href="/2024/09/02/java-data-structure/"/>
+      <url>/2024/09/02/java-data-structure/</url>
+      
+        <content type="html"><![CDATA[<h2 id="常用-Data-Structure"><a href="#常用-Data-Structure" class="headerlink" title="常用 Data Structure"></a>常用 Data Structure</h2><h3 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] array = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br></pre></td></tr></table></figure><h3 id="ArrayList"><a href="#ArrayList" class="headerlink" title="ArrayList"></a>ArrayList</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; arrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br></pre></td></tr></table></figure><h3 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; linkedList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br></pre></td></tr></table></figure><h3 id="HashMap"><a href="#HashMap" class="headerlink" title="HashMap"></a>HashMap</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; hashMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br></pre></td></tr></table></figure><h3 id="treeMap"><a href="#treeMap" class="headerlink" title="treeMap"></a>treeMap</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Integer&gt; treeMap = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br></pre></td></tr></table></figure><p>其他更高级的数据结构看参考</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://www.runoob.com/java/java-data-structures.html">https://www.runoob.com/java/java-data-structures.html</a></p><h2 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h2><p><a href="https://ityuhui.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">Data Structure</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 数据结构 </tag>
+            
+            <tag> data structure </tag>
+            
+            <tag> Java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++ STL里的容器</title>
       <link href="/2024/09/02/C-Data-Structure/"/>
       <url>/2024/09/02/C-Data-Structure/</url>
       
-        <content type="html"><![CDATA[<h2 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h2><p>vector: 数组实现，单向，相当于Java的 ArrayList<br>list： 双向链表，相当于Java的 LinkedList<br>deque：双向队列</p><span id="more"></span><h2 id="关联容器，用树实现"><a href="#关联容器，用树实现" class="headerlink" title="关联容器，用树实现"></a>关联容器，用树实现</h2><p>map</p><h2 id="hash容器"><a href="#hash容器" class="headerlink" title="hash容器"></a>hash容器</h2><p>unordered_map</p><h2 id="容器适配器，使用容器实现"><a href="#容器适配器，使用容器实现" class="headerlink" title="容器适配器，使用容器实现"></a>容器适配器，使用容器实现</h2><p>stack：实现deque实现<br>queue：使用deque实现<br>priority_queue：使用vector实现</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="./data-structure-summary.md">Data Structure Summary</a></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="顺序容器"><a href="#顺序容器" class="headerlink" title="顺序容器"></a>顺序容器</h2><p>vector: 数组实现，单向，相当于Java的 ArrayList<br>list： 双向链表，相当于Java的 LinkedList<br>deque：双向队列</p><span id="more"></span><h2 id="关联容器，用树实现"><a href="#关联容器，用树实现" class="headerlink" title="关联容器，用树实现"></a>关联容器，用树实现</h2><p>map</p><h2 id="hash容器"><a href="#hash容器" class="headerlink" title="hash容器"></a>hash容器</h2><p>unordered_map</p><h2 id="容器适配器，使用容器实现"><a href="#容器适配器，使用容器实现" class="headerlink" title="容器适配器，使用容器实现"></a>容器适配器，使用容器实现</h2><p>stack：实现deque实现<br>queue：使用deque实现<br>priority_queue：使用vector实现</p><h2 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h2><p><a href="https://ityuhui.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">Data Structure</a></p>]]></content>
       
       
       <categories>
@@ -2244,7 +2273,7 @@
       <link href="/2015/03/11/data-structure-summary/"/>
       <url>/2015/03/11/data-structure-summary/</url>
       
-        <content type="html"><![CDATA[<h2 id="底层"><a href="#底层" class="headerlink" title="底层"></a>底层</h2><p>在数据结构的范畴里，底层物理实现只有两种：</p><ul><li>数组 array</li><li>链表 linked</li></ul><span id="more"></span><h2 id="高层"><a href="#高层" class="headerlink" title="高层"></a>高层</h2><h3 id="最常见的（一般高级一点的编程语言自带实现）"><a href="#最常见的（一般高级一点的编程语言自带实现）" class="headerlink" title="最常见的（一般高级一点的编程语言自带实现）"></a>最常见的（一般高级一点的编程语言自带实现）</h3><ul><li>线性表 list</li><li>哈希表 hash</li></ul><h3 id="比较常见的"><a href="#比较常见的" class="headerlink" title="比较常见的"></a>比较常见的</h3><ul><li>栈 stack</li><li>队列 queue</li></ul><h3 id="高级的"><a href="#高级的" class="headerlink" title="高级的"></a>高级的</h3><ul><li>堆 heap</li><li>树 tree</li><li>图 graphic</li></ul><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="./C-Data-Structure.md">C++ 数据结构</a></p>]]></content>
+        <content type="html"><![CDATA[<h2 id="底层"><a href="#底层" class="headerlink" title="底层"></a>底层</h2><p>在数据结构的范畴里，底层物理实现只有两种：</p><ul><li>数组 array</li><li>链表 linked</li></ul><span id="more"></span><h2 id="高层"><a href="#高层" class="headerlink" title="高层"></a>高层</h2><h3 id="最常见的（一般高级一点的编程语言自带实现）"><a href="#最常见的（一般高级一点的编程语言自带实现）" class="headerlink" title="最常见的（一般高级一点的编程语言自带实现）"></a>最常见的（一般高级一点的编程语言自带实现）</h3><ul><li>线性表 list</li><li>哈希表 hash</li></ul><h3 id="比较常见的"><a href="#比较常见的" class="headerlink" title="比较常见的"></a>比较常见的</h3><ul><li>栈 stack</li><li>队列 queue</li></ul><h3 id="高级的"><a href="#高级的" class="headerlink" title="高级的"></a>高级的</h3><ul><li>堆 heap</li><li>树 tree</li><li>图 graphic</li></ul><h2 id="相关"><a href="#相关" class="headerlink" title="相关"></a>相关</h2><p><a href="https://ityuhui.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">Data Structure</a></p>]]></content>
       
       
       <categories>
