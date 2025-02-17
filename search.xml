@@ -4,6 +4,59 @@
   
     
     <entry>
+      <title>2025 年度举办的部分计算机顶会</title>
+      <link href="/2025/02/17/top-conference-2025/"/>
+      <url>/2025/02/17/top-conference-2025/</url>
+      
+        <content type="html"><![CDATA[<h2 id="计算机系统"><a href="#计算机系统" class="headerlink" title="计算机系统"></a>计算机系统</h2><p><a href="https://www.usenix.org/conference/osdi25/">OSDI 2025</a><br><a href="https://sigops.org/s/conferences/sosp/2025/">SOSP 2025</a></p><h2 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h2><p><a href="https://nips.cc/Conferences/2025">NIPS 2025</a><br><a href="https://icml.cc/Conferences/2025">ICML 2025</a><br><a href="https://iclr.cc/Conferences/2025">ICLR 2025</a></p><span id="more"></span><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><p><a href="https://conferences.sigcomm.org/sigcomm/2025/">SIGCOMM 2025</a></p><h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p><a href="https://2025.sigmod.org/">SIGMOD 2025</a><br><a href="https://vldb.org/2025/">VLDB 2025</a></p><h2 id="计算机图形学"><a href="#计算机图形学" class="headerlink" title="计算机图形学"></a>计算机图形学</h2><p><a href="https://s2025.siggraph.org/">SIGGRAPH 2025</a></p><h3 id="计算机系统-次级"><a href="#计算机系统-次级" class="headerlink" title="计算机系统-次级"></a>计算机系统-次级</h3><p><a href="https://www.usenix.org/conference/atc25">ATC 2025</a><br><a href="https://www.usenix.org/conference/fast25">FAST 2025</a><br><a href="https://2025.eurosys.org/">EuroSys 2025</a><br><a href="https://www.podc.org/podc2025">PODC and Edsger W. Dijkstra Prize 2025</a></p><h3 id="计算机网络-次级"><a href="#计算机网络-次级" class="headerlink" title="计算机网络-次级"></a>计算机网络-次级</h3><p><a href="https://www.usenix.org/conference/nsdi25">NSDI 2025</a></p><h3 id="数据库-次级"><a href="#数据库-次级" class="headerlink" title="数据库-次级"></a>数据库-次级</h3><p>ICDE 2025</p><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="http://webdocs.cs.ualberta.ca/~zaiane/htmldocs/ConfRanking.html">http://webdocs.cs.ualberta.ca/~zaiane/htmldocs/ConfRanking.html</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机学术会议 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 顶会 </tag>
+            
+            <tag> 会议 </tag>
+            
+            <tag> 研究 </tag>
+            
+            <tag> research </tag>
+            
+            <tag> paper </tag>
+            
+            <tag> top </tag>
+            
+            <tag> conference </tag>
+            
+            <tag> osdi </tag>
+            
+            <tag> sosp </tag>
+            
+            <tag> sigcomm </tag>
+            
+            <tag> atc </tag>
+            
+            <tag> fast </tag>
+            
+            <tag> nsdi </tag>
+            
+            <tag> eurosys </tag>
+            
+            <tag> podc </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>编程语言的数据结构</title>
       <link href="/2024/09/23/data-structure-summary/"/>
       <url>/2024/09/23/data-structure-summary/</url>
